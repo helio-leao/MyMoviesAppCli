@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_TOKEN } from '@env';
+import { API_TOKEN } from 'react-native-dotenv';
 
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
