@@ -1,0 +1,219 @@
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ToastAndroid, Image } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import { fetchMovieDetails, getFullImagePath, CREW_JOBS } from '../services/apiService';
+import { useEffect, useState } from 'react';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import RowMovieList from '../components/RowMovieList';
+import { IMAGES } from '../constants/images';
+
+
+export default function MovieDetailsScreen() {
+
+  const [movieDetails, setMovieDetails] = useState(null);
+  const route = useRoute();
+
+
+  useEffect(() => {
+    async function getMovieDetails() {
+      try {
+        const movieDetails = await fetchMovieDetails(route.params.id);
+        setMovieDetails(movieDetails);
+      } catch (error) {
+        console.error(error);
+        ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+      }
+    }
+    getMovieDetails();
+  }, []);
+
+
+  function onWatchLaterPress() {
+    console.log('TODO: watch later press, id', movieDetails.id);
+  }
+
+
+  return (
+    <View style={styles.container}>
+      {/* image */}
+      <Image
+        style={styles.backdropImage}
+        source={{uri: getFullImagePath(movieDetails?.backdrop_path) || IMAGES.backdropPlaceholder}}
+      />
+      
+      {/* gradient container */}
+      <View
+        style={styles.gradientContainer}
+      >
+        {/* title */}
+        <Text style={styles.title}>
+          {movieDetails?.title}
+        </Text>
+        
+        {/* genres */}
+        <View>
+          <ScrollView horizontal={true}>
+            <View style={styles.genresContainer}>
+              {movieDetails?.genres.map(genre => (
+                <View key={genre.id} style={styles.genrePill}>
+                  <Text style={styles.genreText}>{genre.name}</Text>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+
+        <ScrollView>
+          <View style={styles.contentScrollContainer}>
+
+            {/* ratings and watch later button */}
+            <View style={styles.ratingsAndWatchLaterContainer}>
+              <View style={styles.ratingsContainer}>
+                <Fontisto name="star" size={30} color="yellow" />
+                <View>
+                  <Text style={styles.contentText}>
+                    <Text style={styles.ratingsText}>
+                      {movieDetails?.vote_average.toFixed(1)}
+                    </Text>
+                    {'/10'}
+                  </Text>
+                  <Text style={styles.contentText}>{movieDetails?.vote_count}</Text>
+                </View>
+              </View>
+
+              <TouchableOpacity style={styles.watchLaterButton} onPress={onWatchLaterPress}>
+                <FontAwesome name="clock-o" size={20} color="white" />
+                <Text style={styles.watchLaterButtonText}>Ver Depois</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={{marginHorizontal: 10}}>
+              <Text style={styles.contentText}>
+                Direção: {movieDetails?.credits.crew
+                  .filter(person => person.job === CREW_JOBS.director)
+                  .map(director => director.name)
+                  .slice(0, 3)
+                  .join(', ')}
+              </Text>
+              <Text style={styles.contentText}>
+                Roteiro: {movieDetails?.credits.crew
+                  .filter(person => person.job === CREW_JOBS.screenplay ||
+                    person.job === CREW_JOBS.writer || person.job === CREW_JOBS.author)
+                  .map(writer => writer.name)
+                  .slice(0, 3)
+                  .join(', ')}
+              </Text>
+              <Text style={[styles.contentText, {marginBottom: 20}]}>
+                Elenco: {movieDetails?.credits.cast
+                  .map(actor => actor.name)
+                  .slice(0, 3)
+                  .join(', ')}
+              </Text>
+              {movieDetails?.overview && (
+                <Text style={[styles.contentText, {marginBottom: 20}]}>
+                  {movieDetails.overview}
+                </Text>
+              )}
+              <Text style={styles.contentText}>
+                Título Original: {movieDetails?.original_title}
+              </Text>
+              <Text style={styles.contentText}>
+                Lançamento: {movieDetails?.release_date &&
+                  new Intl.DateTimeFormat('pt-BR').format(new Date(movieDetails.release_date))}
+              </Text>
+            </View>
+
+            {movieDetails?.recommendations.total_results > 0 && (
+              <View style={{marginTop: 30}}>
+                <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
+                  Recomendações
+                </Text>
+                <RowMovieList
+                  moviesData={movieDetails.recommendations.results}
+                  contentContainerStyle={{paddingHorizontal: 10}}
+                />
+              </View>
+            )}
+
+          </View>
+        </ScrollView>
+        
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#111',
+  },
+  backdropImage: {
+    aspectRatio: 16/9,
+  },
+  gradientContainer: {
+    flex: 1,
+    marginTop: -100,
+  },
+  title: {
+    marginTop: 40,
+    fontSize: 40,
+    color: '#fff',
+    marginHorizontal: 10,
+  },
+  genresContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+    gap: 8,
+  },
+  genrePill: {
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    height: 26,
+    paddingHorizontal: 12,
+    borderRadius: 12,
+  },
+  genreText: { 
+    fontSize: 14,
+  },
+  ratingsAndWatchLaterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 10,
+    marginBottom: 20,
+  },
+  ratingsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+  },
+  ratingsText: {
+    fontSize: 20,
+    fontWeight: '800',
+  },
+  watchLaterButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  watchLaterButtonText: {
+    color: '#fff',
+  },
+  contentScrollContainer: {
+    marginBottom: 20,
+  },
+  contentText: {
+    fontSize: 18,
+    color: '#fff',
+  },
+  recommendationsRowTitle: {
+    color: '#fff',
+    fontSize: 20,
+    marginBottom: 10,
+  },
+});
