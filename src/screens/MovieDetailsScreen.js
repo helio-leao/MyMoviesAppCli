@@ -6,6 +6,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import RowMovieList from '../components/RowMovieList';
 import { IMAGES } from '../constants/images';
+import LinearGradient from 'react-native-linear-gradient';
 
 
 export default function MovieDetailsScreen() {
@@ -42,8 +43,10 @@ export default function MovieDetailsScreen() {
       />
       
       {/* gradient container */}
-      <View
+      <LinearGradient
         style={styles.gradientContainer}
+        colors={['#11111100', '#111']}
+        start={{x: 0, y: 0}} end={{x: 0, y: 0.15}}
       >
         {/* title */}
         <Text style={styles.title}>
@@ -138,7 +141,7 @@ export default function MovieDetailsScreen() {
           </View>
         </ScrollView>
         
-      </View>
+      </LinearGradient>
     </View>
   );
 }
@@ -177,6 +180,7 @@ const styles = StyleSheet.create({
   },
   genreText: { 
     fontSize: 14,
+    color: '#000'
   },
   ratingsAndWatchLaterContainer: {
     flexDirection: 'row',
