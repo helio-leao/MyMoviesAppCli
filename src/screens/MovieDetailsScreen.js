@@ -45,8 +45,8 @@ export default function MovieDetailsScreen() {
       {/* gradient container */}
       <LinearGradient
         style={styles.gradientContainer}
-        colors={['#11111100', '#111']}
-        start={{x: 0, y: 0}} end={{x: 0, y: 0.15}}
+        colors={['#111', '#11111100']}
+        start={{x: 0, y: 0.15}} end={{x: 0, y: 0}}
       >
         {/* title */}
         <Text style={styles.title}>
