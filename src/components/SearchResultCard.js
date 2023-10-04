@@ -42,7 +42,7 @@ function TVCard({item}) {
 function PersonCard({item}) {
 
   function handleCardPress() {    
-    console.log('TODO: person card press')
+    console.log('TODO: person card press', item.id)
   }
 
   async function handleFollowPress() {
@@ -75,7 +75,7 @@ function PersonCard({item}) {
         {/* <Text style={styles.resultCardText}>{item.media_type}</Text> */}
 
         {/* button */}
-        <TouchableOpacity style={styles.cardButton} onPress={handleFollowPress}>
+        <TouchableOpacity testID={`follow-${item.id}`} style={styles.cardButton} onPress={handleFollowPress}>
           <FontAwesome name="user-plus" size={16} color="white" />
           <Text style={styles.resultCardTextSmall}>Seguir</Text>
         </TouchableOpacity>

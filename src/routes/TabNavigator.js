@@ -63,6 +63,7 @@ export default function TabNavigator() {
         name='HomeStack'
         component={HomeStack}
         options={{
+          tabBarTestID: 'tab-home',
           tabBarIcon: ({color, size, focused}) => (            
             <Ionicons name={focused ? "home" : "home-outline"} size={size} color={color} />
           ),
@@ -74,6 +75,7 @@ export default function TabNavigator() {
         name='SearchStack'
         component={SearchStack}
         options={{
+          tabBarTestID: 'tab-search',
           tabBarIcon: ({color, size}) => (
             <FontAwesome name="search" size={size} color={color} />
           ),
@@ -85,6 +87,7 @@ export default function TabNavigator() {
         name='FollowingStack'
         component={FollowingStack}
         options={{
+          tabBarTestID: 'tab-following',
           tabBarIcon: ({color, size}) => (
             <FontAwesome name="users" size={size} color={color} />
           ),

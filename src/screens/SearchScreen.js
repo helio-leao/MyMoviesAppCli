@@ -27,6 +27,7 @@ export default function SearchScreen() {
       {/* searchbar */}
       <View>
         <TextInput
+          testID='search-input'
           style={styles.searchBarInput}
           placeholder='O que você procura?'
           value={query}

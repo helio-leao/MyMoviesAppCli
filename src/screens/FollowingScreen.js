@@ -120,7 +120,7 @@ export default function SearchScreen() {
           data={followedPersons}
           keyExtractor={item => String(item.id)}
           renderItem={({item}) => (
-            <View>
+            <View testID={String(item.id)}>
               <Image
                 style={styles.personCardImage}
                 source={{uri: getFullImagePath(item.profile_path) || IMAGES.profilePlaceholder}}
