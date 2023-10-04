@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, FlatList, TouchableOpacity, View, Image, Text } from 'react-native';
 import { IMAGES } from '../constants/images';
 import { getFullImagePath } from '../services/apiService';
 import { useNavigation } from '@react-navigation/native';
@@ -29,6 +29,7 @@ export default function RowMovieList({contentContainerStyle, moviesData}) {
             style={styles.poster}
             source={{uri: getFullImagePath(item.poster_path) || IMAGES.posterPlaceholder}} 
           />
+          <Text style={{color: '#fff'}}>{item.title}</Text>
         </TouchableOpacity>
       )}
       ItemSeparatorComponent={<View style={{width: 20}} />}
