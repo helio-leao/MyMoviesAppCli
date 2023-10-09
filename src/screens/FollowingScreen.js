@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, Text, ToastAndroid, TouchableOpacity, View, Image } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import * as StorageService from '../services/storageService';
 import { fetchMoviesWithPeople, getFullImagePath } from '../services/apiService';
 import MoviesGrid from '../components/GridMovieList';
@@ -26,7 +26,7 @@ export default function SearchScreen() {
         setIsLoadingPeople(false);
       } catch (error) {
         console.error(error);
-        ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+        // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
       }
     }
     loadFollowedPersons();
@@ -50,7 +50,7 @@ export default function SearchScreen() {
       setMoviesData(results);
     } catch (error) {
       console.error(error);
-      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+      // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     }
   }
 
@@ -62,7 +62,7 @@ export default function SearchScreen() {
       setMoviesData(prev => [...prev, ...results]);
     } catch (error) {
       console.error(error);
-      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+      // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     }
   }
 
@@ -73,7 +73,7 @@ export default function SearchScreen() {
       setFollowedPersons(updatedFollowedPersons);
     } catch (error) {
       console.log(error);
-      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+      // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     }
   }
 
@@ -120,7 +120,7 @@ export default function SearchScreen() {
           data={followedPersons}
           keyExtractor={item => String(item.id)}
           renderItem={({item}) => (
-            <View>
+            <View testID={String(item.id)}>
               <Image
                 style={styles.personCardImage}
                 source={{uri: getFullImagePath(item.profile_path) || IMAGES.profilePlaceholder}}

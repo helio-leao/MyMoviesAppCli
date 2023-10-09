@@ -22,7 +22,7 @@ export default function MovieDetailsScreen() {
         setMovieDetails(movieDetails);
       } catch (error) {
         console.error(error);
-        ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+        // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
       }
     }
     getMovieDetails();

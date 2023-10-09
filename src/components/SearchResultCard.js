@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View, Text, ToastAndroid, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
 import { getFullImagePath, MEDIA_TYPE } from '../services/apiService';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -50,13 +50,13 @@ function PersonCard({item}) {
 
     try {
       await StorageService.addFollowedPerson({ id, name, profile_path });
-      ToastAndroid.show(`Você seguiu ${name}.`, ToastAndroid.SHORT);
+        // ToastAndroid.show(`Você seguiu ${name}.`, ToastAndroid.SHORT);
     } catch (error) {
       if(StorageService.ERROR.ALREADY_STORED === error.message) {
         console.log(error);
-        ToastAndroid.show(`Você já segue ${name}.`, ToastAndroid.SHORT);
+        // ToastAndroid.show(`Você já segue ${name}.`, ToastAndroid.SHORT);
       } else {
-        ToastAndroid.show(`Ocorreu um erro.`, ToastAndroid.SHORT);
+        // ToastAndroid.show(`Ocorreu um erro.`, ToastAndroid.SHORT);
       }
     }
   }
@@ -75,7 +75,7 @@ function PersonCard({item}) {
         {/* <Text style={styles.resultCardText}>{item.media_type}</Text> */}
 
         {/* button */}
-        <TouchableOpacity style={styles.cardButton} onPress={handleFollowPress}>
+        <TouchableOpacity testID={`follow-${item.id}`} style={styles.cardButton} onPress={handleFollowPress}>
           <FontAwesome name="user-plus" size={16} color="white" />
           <Text style={styles.resultCardTextSmall}>Seguir</Text>
         </TouchableOpacity>
