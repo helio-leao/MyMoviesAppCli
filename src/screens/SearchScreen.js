@@ -30,6 +30,7 @@ export default function SearchScreen() {
           testID='search-input'
           style={styles.searchBarInput}
           placeholder='O que você procura?'
+          placeholderTextColor='#888'
           value={query}
           onChangeText={setQuery}
           onSubmitEditing={handleSearch}
@@ -62,6 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#111',
   },
   searchBarInput: {
+    color: '#000',
     backgroundColor: '#fff',
     borderRadius: 4,
     margin: 20,
