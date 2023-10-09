@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ToastAndroid, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { fetchMovieDetails, getFullImagePath, CREW_JOBS } from '../services/apiService';
 import { useEffect, useState } from 'react';

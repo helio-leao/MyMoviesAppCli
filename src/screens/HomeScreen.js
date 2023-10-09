@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, View, ToastAndroid, ScrollView, Text, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, ScrollView, Text, ActivityIndicator } from 'react-native';
 import { fetchDayTrendingMovies, fetchPopularMovies, fetchTopRatedMovies } from '../services/apiService';
 import RowMovieList from '../components/RowMovieList';
 
