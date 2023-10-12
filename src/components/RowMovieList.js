@@ -14,10 +14,15 @@ export default function RowMovieList({contentContainerStyle, moviesData}) {
   function handleCardPress(item) {
     switch (item.media_type) {
       case MEDIA_TYPE.MOVIE:
-        navigation.push('MovieDetailsScreen', {id: item.id});        
-        break;        
+        navigation.push('MovieDetailsScreen', {id: item.id});
+        break;
       case MEDIA_TYPE.TV:
         navigation.push('TvShowDetailsScreen', {id: item.id});
+        break;
+      default:
+        console.warn('item media type is ' + item.media_type +
+          ', opening with MovieDetailsScreen');
+        navigation.push('MovieDetailsScreen', {id: item.id});
         break;
     }
   }
