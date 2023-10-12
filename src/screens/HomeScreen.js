@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, Text, ActivityIndicator } from 'react-native';
 import { fetchDayTrendingMovies, fetchPopularMovies, fetchTopRatedMovies } from '../services/apiService';
-import RowMovieList from '../components/RowMovieList';
+import RowMediaList from '../components/RowMediaList';
 
 
 export default function HomeScreen() {
@@ -43,7 +43,7 @@ export default function HomeScreen() {
         <View style={styles.moviesRowsContainer}>
           <View>
             <Text style={styles.moviesRowTitle}>Populares</Text>
-            <RowMovieList
+            <RowMediaList
               moviesData={popularMovies}
               contentContainerStyle={styles.moviesRowContentContainer}
             />
@@ -51,7 +51,7 @@ export default function HomeScreen() {
 
           <View>
             <Text style={styles.moviesRowTitle}>Em alta</Text>
-            <RowMovieList
+            <RowMediaList
               moviesData={dayTrendingMovies}
               contentContainerStyle={styles.moviesRowContentContainer}
             />
@@ -59,7 +59,7 @@ export default function HomeScreen() {
 
           <View>
             <Text style={styles.moviesRowTitle}>Melhores avaliações</Text>
-            <RowMovieList
+            <RowMediaList
               moviesData={topRatedMovies}
               contentContainerStyle={styles.moviesRowContentContainer}
             />

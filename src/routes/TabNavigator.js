@@ -9,7 +9,7 @@ import FollowingScreen from '../screens/FollowingScreen';
 import MovieDetailsScreen from '../screens/MovieDetailsScreen';
 import TvShowDetailsScreen from '../screens/TvShowDetailsScreen';
 
-
+// TODO: have exportable enums with screens and stacks names
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

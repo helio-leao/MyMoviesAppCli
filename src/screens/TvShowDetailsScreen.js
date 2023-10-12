@@ -4,7 +4,7 @@ import { getFullImagePath, fetchTvShowDetails } from '../services/apiService';
 import { useEffect, useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import RowMovieList from '../components/RowMovieList';
+import RowMediaList from '../components/RowMediaList';
 import { IMAGES } from '../constants/images';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -161,7 +161,7 @@ export default function TvShowDetailsScreen() {
                 <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
                   Recomendações
                 </Text>
-                <RowMovieList
+                <RowMediaList
                   moviesData={tvShowDetails.recommendations.results}
                   contentContainerStyle={{paddingHorizontal: 10}}
                 />
