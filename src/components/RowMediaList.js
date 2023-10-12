@@ -22,9 +22,7 @@ export default function RowMovieList({contentContainerStyle, moviesData}) {
         console.log('TODO: person screen', {id: item.id});
         break;
       default:
-        console.warn('item media_type is ' + item.media_type +
-          ', opening with MovieDetailsScreen');
-        navigation.push('MovieDetailsScreen', {id: item.id});
+        console.warn('item media_type is ' + item.media_type);
         break;
     }
   }

@@ -40,7 +40,6 @@ function FollowingStack() {
     <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}>
       <Stack.Screen name='FollowingScreen' component={FollowingScreen} options={{title: 'Seguindo'}} />
       <Stack.Screen name='MovieDetailsScreen' component={MovieDetailsScreen} options={{title: 'Detalhes do filme'}} />
-      {/* <Stack.Screen name='TvShowDetailsScreen' component={TvShowDetailsScreen} options={{title: 'Detalhes do seriado'}} /> */}
     </Stack.Navigator>
   );
 }

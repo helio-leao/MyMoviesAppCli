@@ -31,10 +31,10 @@ function TVCard({item}) {
         {/* <Text style={styles.resultCardText}>{item.media_type}</Text> */}
 
         {/* button */}
-        <TouchableOpacity style={styles.cardButton}  onPress={handleWatchLaterPress}>
+        {/* <TouchableOpacity style={styles.cardButton}  onPress={handleWatchLaterPress}>
           <FontAwesome name="clock-o" size={16} color="white" />
           <Text style={styles.resultCardTextSmall}>Ver depois</Text>
-        </TouchableOpacity> 
+        </TouchableOpacity>  */}
       </View>      
     </TouchableOpacity>
   )
@@ -110,10 +110,10 @@ function MovieCard({item}) {
         {/* <Text style={styles.resultCardText}>{item.media_type}</Text> */}
 
         {/* button */}
-        <TouchableOpacity style={styles.cardButton}  onPress={handleWatchLaterPress}>
+        {/* <TouchableOpacity style={styles.cardButton}  onPress={handleWatchLaterPress}>
           <FontAwesome name="clock-o" size={16} color="white" />
           <Text style={styles.resultCardTextSmall}>Ver depois</Text>
-        </TouchableOpacity> 
+        </TouchableOpacity>  */}
       </View>      
     </TouchableOpacity>
   )
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     width: 120,
     aspectRatio: 2/3,
     borderRadius: 4,
-    marginRight: 10,
+    marginRight: 20,
   },
   resultCardDataContainer: {
     flex: 1,

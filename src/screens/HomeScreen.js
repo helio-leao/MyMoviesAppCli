@@ -1,24 +1,28 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, Text, ActivityIndicator } from 'react-native';
-import { fetchDayTrendingMovies, fetchPopularMovies, fetchTopRatedMovies } from '../services/apiService';
+import { fetchPopularMovies, fetchPopularTvShows, fetchTrendingMovies, fetchTrendingTvShows } from '../services/apiService';
 import RowMediaList from '../components/RowMediaList';
 
+// ISSUE: there's a bug where popular movies and popular tv shows don't come with media_type from api
+// it sends by default to movie details screen, fix needed
 
 export default function HomeScreen() {
 
   const [popularMovies, setPopularMovies] = useState([]);
   const [dayTrendingMovies, setDayTrendingMovies] = useState([]);
-  const [topRatedMovies, setTopRatedMovies] = useState([]);
-  const [isLoadingMovies, setIsLoadingMovies] = useState(true);
+  const [popularTvShows, setPopularTvShows] = useState([]);
+  const [dayTrendingTvShows, setDayTrendingTvShows] = useState([]);
+  const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
 
 
   useEffect(() => {
     async function loadMoviesData() {
       try {
         setPopularMovies((await fetchPopularMovies()).results);
-        setDayTrendingMovies((await fetchDayTrendingMovies()).results);
-        setTopRatedMovies((await fetchTopRatedMovies()).results);
-        setIsLoadingMovies(false);
+        setDayTrendingMovies((await fetchTrendingMovies()).results);
+        setPopularTvShows((await fetchPopularTvShows()).results);
+        setDayTrendingTvShows((await fetchTrendingTvShows()).results);
+        setShowLoadingIndicator(false);
       } catch (error) {
         console.error(error);
         // ToastAndroid.show(`Ocorreu um erro.`, ToastAndroid.SHORT);
@@ -28,7 +32,7 @@ export default function HomeScreen() {
   }, []);
 
 
-  if(isLoadingMovies) {
+  if(showLoadingIndicator) {
     return (
       <View style={[styles.container, {justifyContent: 'center', alignItems: 'center'}]}>
         <ActivityIndicator color={'white'} size={'large'} />
@@ -42,7 +46,7 @@ export default function HomeScreen() {
 
         <View style={styles.moviesRowsContainer}>
           <View>
-            <Text style={styles.moviesRowTitle}>Populares</Text>
+            <Text style={styles.moviesRowTitle}>Filmes populares</Text>
             <RowMediaList
               moviesData={popularMovies}
               contentContainerStyle={styles.moviesRowContentContainer}
@@ -50,7 +54,7 @@ export default function HomeScreen() {
           </View>
 
           <View>
-            <Text style={styles.moviesRowTitle}>Em alta</Text>
+            <Text style={styles.moviesRowTitle}>Filmes em alta</Text>
             <RowMediaList
               moviesData={dayTrendingMovies}
               contentContainerStyle={styles.moviesRowContentContainer}
@@ -58,9 +62,17 @@ export default function HomeScreen() {
           </View>
 
           <View>
-            <Text style={styles.moviesRowTitle}>Melhores avaliações</Text>
+            <Text style={styles.moviesRowTitle}>Séries populares</Text>
             <RowMediaList
-              moviesData={topRatedMovies}
+              moviesData={popularTvShows}
+              contentContainerStyle={styles.moviesRowContentContainer}
+            />
+          </View>
+
+          <View>
+            <Text style={styles.moviesRowTitle}>Séries em alta</Text>
+            <RowMediaList
+              moviesData={dayTrendingTvShows}
               contentContainerStyle={styles.moviesRowContentContainer}
             />
           </View>

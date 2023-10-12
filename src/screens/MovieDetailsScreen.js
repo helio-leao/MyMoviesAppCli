@@ -84,10 +84,10 @@ export default function MovieDetailsScreen() {
                 </View>
               </View>
 
-              <TouchableOpacity style={styles.watchLaterButton} onPress={onWatchLaterPress}>
+              {/* <TouchableOpacity style={styles.watchLaterButton} onPress={onWatchLaterPress}>
                 <FontAwesome name="clock-o" size={20} color="white" />
                 <Text style={styles.watchLaterButtonText}>Ver Depois</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
 
             <View style={{marginHorizontal: 10}}>

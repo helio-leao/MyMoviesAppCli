@@ -8,7 +8,7 @@ const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original'; // NOTE: refer to 
 const generalQuery = `include_adult=false&language=pt-BR`;
 
 
-const TRENDING_TIME_WINDOW = {
+export const TRENDING_TIME_WINDOW = {
   day: 'day',
   week: 'week',
 }
@@ -26,33 +26,20 @@ export const CREW_JOBS = {
   author: 'Author',
 }
 
-
-export async function fetchNowPlayingMovies(page = 1) {
-  return await fetchData(`/movie/now_playing`, `page=${page}`);
-}
-
 export async function fetchPopularMovies(page = 1) {
   return await fetchData(`/movie/popular`, `page=${page}`);
 }
 
-export async function fetchTopRatedMovies(page = 1) {
-  return await fetchData(`/movie/top_rated`, `page=${page}`);
+export async function fetchPopularTvShows(page = 1) {
+  return await fetchData(`/tv/popular`, `page=${page}`);
 }
 
-export async function fetchUpcomingMovies(page = 1) {
-  return await fetchData(`/movie/upcoming`, `page=${page}`);
-}
-
-export async function fetchDayTrendingMovies() {
-  return await fetchTrendingMovies(TRENDING_TIME_WINDOW.day);
-}
-
-export async function fetchWeekTrendingMovies() {
-  return await fetchTrendingMovies(TRENDING_TIME_WINDOW.week);
-}
-
-async function fetchTrendingMovies(timeWindow) {
+export async function fetchTrendingMovies(timeWindow = TRENDING_TIME_WINDOW.day) {
   return await fetchData(`/trending/movie/${timeWindow}`);
+}
+
+export async function fetchTrendingTvShows(timeWindow = TRENDING_TIME_WINDOW.day) {
+  return await fetchData(`/trending/tv/${timeWindow}`);
 }
 
 export async function fetchMovieDetails(movieId) {
