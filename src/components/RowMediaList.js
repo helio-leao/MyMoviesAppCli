@@ -3,6 +3,7 @@ import { IMAGES } from '../constants/images';
 import { getFullImagePath } from '../services/apiService';
 import { useNavigation } from '@react-navigation/native';
 import { MEDIA_TYPE } from '../services/apiService';
+import { Screens } from '../routes/TabNavigator';
 
 
 export default function RowMovieList({contentContainerStyle, moviesData}) {
@@ -13,10 +14,10 @@ export default function RowMovieList({contentContainerStyle, moviesData}) {
   function handleCardPress(item) {
     switch (item.media_type) {
       case MEDIA_TYPE.MOVIE:
-        navigation.push('MovieDetailsScreen', {id: item.id});
+        navigation.push(Screens.MovieDetailsScreen, {id: item.id});
         break;
       case MEDIA_TYPE.TV:
-        navigation.push('TvShowDetailsScreen', {id: item.id});
+        navigation.push(Screens.TvShowDetailsScreen, {id: item.id});
         break;
       case MEDIA_TYPE.PERSON:
         console.log('TODO: person screen', {id: item.id});

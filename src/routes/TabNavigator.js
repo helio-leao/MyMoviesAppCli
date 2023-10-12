@@ -9,7 +9,14 @@ import FollowingScreen from '../screens/FollowingScreen';
 import MovieDetailsScreen from '../screens/MovieDetailsScreen';
 import TvShowDetailsScreen from '../screens/TvShowDetailsScreen';
 
-// TODO: have exportable enums with screens and stacks names
+export const Screens = {
+  HomeScreen: 'HomeScreen',
+  MovieDetailsScreen: 'MovieDetailsScreen',
+  TvShowDetailsScreen: 'TvShowDetailsScreen',
+  SearchScreen: 'SearchScreen',
+  FollowingScreen: 'FollowingScreen',
+}
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -17,29 +24,67 @@ const Stack = createNativeStackNavigator();
 
 function HomeStack() {
   return(
-    <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}>
-      <Stack.Screen name='HomeScreen' component={HomeScreen} options={{title: 'Início'}} />
-      <Stack.Screen name='MovieDetailsScreen' component={MovieDetailsScreen} options={{title: 'Detalhes do filme'}} />
-      <Stack.Screen name='TvShowDetailsScreen' component={TvShowDetailsScreen} options={{title: 'Detalhes do seriado'}} />
+    <Stack.Navigator
+      screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}
+    >
+      <Stack.Screen
+        name={Screens.HomeScreen}
+        component={HomeScreen}
+        options={{title: 'Início'}}
+      />
+      <Stack.Screen
+        name={Screens.MovieDetailsScreen}
+        component={MovieDetailsScreen}
+        options={{title: 'Detalhes do filme'}}
+      />
+      <Stack.Screen
+        name={Screens.TvShowDetailsScreen}
+        component={TvShowDetailsScreen}
+        options={{title: 'Detalhes do seriado'}}
+      />
     </Stack.Navigator>
   );
 }
 
 function SearchStack() {
   return (
-    <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}>
-      <Stack.Screen name='SearchScreen' component={SearchScreen} options={{title: 'Busca'}} />
-      <Stack.Screen name='MovieDetailsScreen' component={MovieDetailsScreen} options={{title: 'Detalhes do filme'}} />
-      <Stack.Screen name='TvShowDetailsScreen' component={TvShowDetailsScreen} options={{title: 'Detalhes do seriado'}} />
+    <Stack.Navigator
+      screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}
+    >
+      <Stack.Screen
+        name={Screens.SearchScreen}
+        component={SearchScreen}
+        options={{title: 'Busca'}}
+      />
+      <Stack.Screen
+        name={Screens.MovieDetailsScreen}
+        component={MovieDetailsScreen}
+        options={{title: 'Detalhes do filme'}}
+      />
+      <Stack.Screen
+        name={Screens.TvShowDetailsScreen}
+        component={TvShowDetailsScreen}
+        options={{title: 'Detalhes do seriado'}}
+      />
     </Stack.Navigator>
   );
 }
 
 function FollowingStack() {
   return (
-    <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}>
-      <Stack.Screen name='FollowingScreen' component={FollowingScreen} options={{title: 'Seguindo'}} />
-      <Stack.Screen name='MovieDetailsScreen' component={MovieDetailsScreen} options={{title: 'Detalhes do filme'}} />
+    <Stack.Navigator
+      screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}
+    >
+      <Stack.Screen
+        name={Screens.FollowingScreen}
+        component={FollowingScreen}
+        options={{title: 'Seguindo'}}
+      />
+      <Stack.Screen
+        name={Screens.MovieDetailsScreen}
+        component={MovieDetailsScreen}
+        options={{title: 'Detalhes do filme'}}
+      />
     </Stack.Navigator>
   );
 }

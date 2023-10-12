@@ -4,13 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as StorageService from './../services/storageService';
 import { IMAGES } from '../constants/images';
+import { Screens } from '../routes/TabNavigator';
 
 
 function TVCard({item}) {
   const navigation = useNavigation();
 
   function handleCardPress() {    
-    navigation.push('TvShowDetailsScreen', {id: item.id});
+    navigation.push(Screens.TvShowDetailsScreen, {id: item.id});
   }
 
   function handleWatchLaterPress() {
@@ -89,7 +90,7 @@ function MovieCard({item}) {
   const navigation = useNavigation();
 
   function handleCardPress() {    
-    navigation.push('MovieDetailsScreen', {id: item.id});
+    navigation.push(Screens.MovieDetailsScreen, {id: item.id});
   }
 
   function handleWatchLaterPress() {
