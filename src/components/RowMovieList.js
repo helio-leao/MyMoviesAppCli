@@ -2,15 +2,24 @@ import { StyleSheet, FlatList, TouchableOpacity, View, Image } from 'react-nativ
 import { IMAGES } from '../constants/images';
 import { getFullImagePath } from '../services/apiService';
 import { useNavigation } from '@react-navigation/native';
+import { MEDIA_TYPE } from '../services/apiService';
 
+// TODO: change component name (actually being used by movies and tv shows)
 
 export default function RowMovieList({contentContainerStyle, moviesData}) {
 
   const navigation = useNavigation();
 
 
-  function handleCardPress(id) {
-    navigation.push('MovieDetailsScreen', {id});
+  function handleCardPress(item) {
+    switch (item.media_type) {
+      case MEDIA_TYPE.MOVIE:
+        navigation.push('MovieDetailsScreen', {id: item.id});        
+        break;        
+      case MEDIA_TYPE.TV:
+        navigation.push('TvShowDetailsScreen', {id: item.id});
+        break;
+    }
   }
 
 
@@ -23,7 +32,7 @@ export default function RowMovieList({contentContainerStyle, moviesData}) {
       renderItem={({item}) => (
         <TouchableOpacity
           style={styles.cardContainer}
-          onPress={() => handleCardPress(item.id)}
+          onPress={() => handleCardPress(item)}
         >
           <Image
             style={styles.poster}

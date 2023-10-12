@@ -7,9 +7,10 @@ import { IMAGES } from '../constants/images';
 
 
 function TVCard({item}) {
+  const navigation = useNavigation();
 
   function handleCardPress() {    
-    console.log('TODO: tv card press')
+    navigation.push('TvShowDetailsScreen', {id: item.id});
   }
 
   function handleWatchLaterPress() {

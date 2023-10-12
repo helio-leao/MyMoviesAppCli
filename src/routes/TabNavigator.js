@@ -1,12 +1,13 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
 import FollowingScreen from '../screens/FollowingScreen';
 import MovieDetailsScreen from '../screens/MovieDetailsScreen';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import TvShowDetailsScreen from '../screens/TvShowDetailsScreen';
 
 
 
@@ -19,6 +20,7 @@ function HomeStack() {
     <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}>
       <Stack.Screen name='HomeScreen' component={HomeScreen} options={{title: 'Início'}} />
       <Stack.Screen name='MovieDetailsScreen' component={MovieDetailsScreen} options={{title: 'Detalhes do filme'}} />
+      <Stack.Screen name='TvShowDetailsScreen' component={TvShowDetailsScreen} options={{title: 'Detalhes do seriado'}} />
     </Stack.Navigator>
   );
 }
@@ -28,6 +30,7 @@ function SearchStack() {
     <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}>
       <Stack.Screen name='SearchScreen' component={SearchScreen} options={{title: 'Busca'}} />
       <Stack.Screen name='MovieDetailsScreen' component={MovieDetailsScreen} options={{title: 'Detalhes do filme'}} />
+      <Stack.Screen name='TvShowDetailsScreen' component={TvShowDetailsScreen} options={{title: 'Detalhes do seriado'}} />
     </Stack.Navigator>
   );
 }
@@ -37,6 +40,7 @@ function FollowingStack() {
     <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}>
       <Stack.Screen name='FollowingScreen' component={FollowingScreen} options={{title: 'Seguindo'}} />
       <Stack.Screen name='MovieDetailsScreen' component={MovieDetailsScreen} options={{title: 'Detalhes do filme'}} />
+      {/* <Stack.Screen name='TvShowDetailsScreen' component={TvShowDetailsScreen} options={{title: 'Detalhes do seriado'}} /> */}
     </Stack.Navigator>
   );
 }

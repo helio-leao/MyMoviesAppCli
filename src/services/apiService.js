@@ -59,6 +59,10 @@ export async function fetchMovieDetails(movieId) {
   return await fetchData(`/movie/${movieId}`, `append_to_response=recommendations,credits`);
 }
 
+export async function fetchTvShowDetails(tvShowId) {
+  return await fetchData(`/tv/${tvShowId}`, `append_to_response=recommendations,credits`);
+}
+
 export async function fetchMulti(name = '', page = 1) {
   return await fetchData(`/search/multi`, `query=${name}&page=${page}`);
 }
