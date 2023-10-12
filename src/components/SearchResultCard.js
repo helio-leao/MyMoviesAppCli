@@ -14,7 +14,7 @@ function TVCard({item}) {
   }
 
   function handleWatchLaterPress() {
-    console.log('TODO: handleWatchLater')
+    console.log('TODO: watch later pressed, id:', item.id)
   } 
 
   return (
@@ -43,7 +43,7 @@ function TVCard({item}) {
 function PersonCard({item}) {
 
   function handleCardPress() {    
-    console.log('TODO: person card press')
+    console.log('TODO: card press, person id:', item.id)
   }
 
   async function handleFollowPress() {
@@ -93,7 +93,7 @@ function MovieCard({item}) {
   }
 
   function handleWatchLaterPress() {
-    console.log('TODO: handleWatchLater')
+    console.log('TODO: watch later pressed, id:', item.id)
   }
 
   return (

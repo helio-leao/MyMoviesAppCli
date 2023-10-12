@@ -18,7 +18,7 @@ const TV_SHOW_STATUS = {
   PILOT: 'Pilot',
 }
 
-function formattedStatus(status) {
+function formatStatus(status) {
   switch (status) {
     case TV_SHOW_STATUS.RETURNING_SERIES:
       return 'Em Andamento';
@@ -141,6 +141,9 @@ export default function TvShowDetailsScreen() {
                 Título Original: {tvShowDetails?.original_name}
               </Text>
               <Text style={styles.contentText}>
+                Status: {tvShowDetails?.status && formatStatus(tvShowDetails.status)}
+              </Text>
+              <Text style={styles.contentText}>
                 Temporadas: {tvShowDetails?.seasons.filter(tvShow => tvShow.name !== 'Especiais').length}
               </Text>
               <Text style={styles.contentText}>
@@ -150,9 +153,6 @@ export default function TvShowDetailsScreen() {
               <Text style={styles.contentText}>
                 Última Transmissão: {tvShowDetails?.last_air_date &&
                   new Intl.DateTimeFormat('pt-BR').format(new Date(tvShowDetails.last_air_date))}
-              </Text>
-              <Text style={styles.contentText}>
-                Status: {tvShowDetails?.status && formattedStatus(tvShowDetails.status)}
               </Text>
             </View>
 
