@@ -11,7 +11,7 @@ export default function HomeScreen() {
   const [dayTrendingMovies, setDayTrendingMovies] = useState([]);
   const [popularTvShows, setPopularTvShows] = useState([]);
   const [dayTrendingTvShows, setDayTrendingTvShows] = useState([]);
-  const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function HomeScreen() {
         setPopularTvShows((await fetchPopularTvShows()).results);
         setDayTrendingTvShows((await fetchTrendingTvShows()).results);
 
-        setShowLoadingIndicator(false);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
         // ToastAndroid.show(`Ocorreu um erro.`, ToastAndroid.SHORT);
@@ -33,7 +33,7 @@ export default function HomeScreen() {
   }, []);
 
 
-  if(showLoadingIndicator) {
+  if(isLoading) {
     return (
       <View style={[styles.container, {justifyContent: 'center', alignItems: 'center'}]}>
         <ActivityIndicator color={'white'} size={'large'} />

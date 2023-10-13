@@ -1,36 +1,27 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { getFullImagePath, fetchTvShowDetails } from '../services/apiService';
+import { getFullImagePath, fetchTvShowDetails, TvShowStatus } from '../services/apiService';
 import { useEffect, useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import { IMAGES } from '../constants/images';
+import { ImagePlaceholder } from '../constants/images';
 import LinearGradient from 'react-native-linear-gradient';
 import RowTvShowList from '../components/RowTvShowList';
 
 
-const TV_SHOW_STATUS = {
-  RETURNING_SERIES: 'Returning Series',
-  PLANNED: 'Planned',
-  IN_PRODUCTION: 'In Production',
-  ENDED: 'Ended',
-  CANCELED: 'Canceled',
-  PILOT: 'Pilot',
-}
-
-function formatStatus(status) {
+function formatTvShowStatus(status) {
   switch (status) {
-    case TV_SHOW_STATUS.RETURNING_SERIES:
+    case TvShowStatus.RETURNING_SERIES:
       return 'Em Andamento';
-    case TV_SHOW_STATUS.PLANNED:
+    case TvShowStatus.PLANNED:
       return 'Planejado';
-    case TV_SHOW_STATUS.IN_PRODUCTION:
+    case TvShowStatus.IN_PRODUCTION:
       return 'Em Produção';
-    case TV_SHOW_STATUS.ENDED:
+    case TvShowStatus.ENDED:
       return 'Terminado';
-    case TV_SHOW_STATUS.CANCELED:
+    case TvShowStatus.CANCELED:
       return 'Cancelado';
-    case TV_SHOW_STATUS.PILOT:
+    case TvShowStatus.PILOT:
       return 'Pilot';  
     default:
       return status; 
@@ -68,7 +59,7 @@ export default function TvShowDetailsScreen() {
       {/* image */}
       <Image
         style={styles.backdropImage}
-        source={{uri: getFullImagePath(tvShowDetails?.backdrop_path) || IMAGES.backdropPlaceholder}}
+        source={{uri: getFullImagePath(tvShowDetails?.backdrop_path) || ImagePlaceholder.BACKDROP}}
       />
       
       {/* gradient container */}
@@ -141,7 +132,7 @@ export default function TvShowDetailsScreen() {
                 Título Original: {tvShowDetails?.original_name}
               </Text>
               <Text style={styles.contentText}>
-                Status: {tvShowDetails?.status && formatStatus(tvShowDetails.status)}
+                Status: {tvShowDetails?.status && formatTvShowStatus(tvShowDetails.status)}
               </Text>
               <Text style={styles.contentText}>
                 Temporadas: {tvShowDetails?.seasons.filter(tvShow => tvShow.name !== 'Especiais').length}

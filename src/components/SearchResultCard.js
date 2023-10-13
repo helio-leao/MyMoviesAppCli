@@ -1,17 +1,17 @@
 import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
-import { getFullImagePath, MEDIA_TYPE } from '../services/apiService';
+import { getFullImagePath, MediaType } from '../services/apiService';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as StorageService from './../services/storageService';
-import { IMAGES } from '../constants/images';
-import { Screens } from '../routes/TabNavigator';
+import { ImagePlaceholder } from '../constants/images';
+import { Screen } from '../routes/TabNavigator';
 
 
 function TVCard({item}) {
   const navigation = useNavigation();
 
   function handleCardPress() {    
-    navigation.push(Screens.TvShowDetailsScreen, {id: item.id});
+    navigation.push(Screen.TV_SHOW_DETAILS, {id: item.id});
   }
 
   function handleWatchLaterPress() {
@@ -23,7 +23,7 @@ function TVCard({item}) {
       {/* image */}
       <Image
         style={styles.resultCardImage}
-        source={{uri: getFullImagePath(item.poster_path) || IMAGES.posterPlaceholder}} 
+        source={{uri: getFullImagePath(item.poster_path) || ImagePlaceholder.POSTER}} 
       />
 
       {/* data container */}
@@ -54,7 +54,7 @@ function PersonCard({item}) {
       await StorageService.addFollowedPerson({ id, name, profile_path });
         // ToastAndroid.show(`Você seguiu ${name}.`, ToastAndroid.SHORT);
     } catch (error) {
-      if(StorageService.ERROR.ALREADY_STORED === error.message) {
+      if(StorageService.Error.ALREADY_STORED === error.message) {
         console.log(error);
         // ToastAndroid.show(`Você já segue ${name}.`, ToastAndroid.SHORT);
       } else {
@@ -68,7 +68,7 @@ function PersonCard({item}) {
       {/* image */}
       <Image
         style={styles.resultCardImage}
-        source={{uri: getFullImagePath(item.profile_path) || IMAGES.profilePlaceholder}} 
+        source={{uri: getFullImagePath(item.profile_path) || ImagePlaceholder.PROFILE}} 
       />
 
       {/* data container */}
@@ -90,7 +90,7 @@ function MovieCard({item}) {
   const navigation = useNavigation();
 
   function handleCardPress() {    
-    navigation.push(Screens.MovieDetailsScreen, {id: item.id});
+    navigation.push(Screen.MOVIE_DETAILS, {id: item.id});
   }
 
   function handleWatchLaterPress() {
@@ -102,7 +102,7 @@ function MovieCard({item}) {
       {/* image */}
       <Image
         style={styles.resultCardImage}
-        source={{uri: getFullImagePath(item.poster_path) || IMAGES.posterPlaceholder}}
+        source={{uri: getFullImagePath(item.poster_path) || ImagePlaceholder.POSTER}}
       />
 
       {/* data container */}
@@ -122,11 +122,11 @@ function MovieCard({item}) {
 
 export default function SearchResultCard({item}) {
   switch(item.media_type) {
-    case MEDIA_TYPE.MOVIE:
+    case MediaType.MOVIE:
       return <MovieCard item={item} />
-    case MEDIA_TYPE.TV:
+    case MediaType.TV:
       return <TVCard item={item} />
-    case MEDIA_TYPE.PERSON:
+    case MediaType.PERSON:
       return <PersonCard item={item} />
   }
 }

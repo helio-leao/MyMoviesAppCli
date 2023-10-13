@@ -3,7 +3,7 @@ import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, 
 import * as StorageService from '../services/storageService';
 import { fetchMoviesWithPeople, getFullImagePath } from '../services/apiService';
 import MoviesGrid from '../components/GridMovieList';
-import { IMAGES } from '../constants/images';
+import { ImagePlaceholder } from '../constants/images';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 
@@ -123,7 +123,7 @@ export default function SearchScreen() {
             <View testID={String(item.id)}>
               <Image
                 style={styles.personCardImage}
-                source={{uri: getFullImagePath(item.profile_path) || IMAGES.profilePlaceholder}}
+                source={{uri: getFullImagePath(item.profile_path) || ImagePlaceholder.PROFILE}}
               />
               <TouchableOpacity style={styles.unfollowButtonContainer} onPress={() => handleUnfollow(item.id)}>
                 <FontAwesome name="user-times" size={18} color="white" />

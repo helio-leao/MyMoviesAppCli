@@ -1,18 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const FOLLOWING_KEY = 'following';
 
-export const ERROR = {
+
+export const Error = {
   ALREADY_STORED: 'ID already in storage.',
 }
-
-const FOLLOWING_KEY = 'following';
 
 
 export async function addFollowedPerson(newPerson) {
   const followedPersons = await getFollowedPersons();
 
   if(followedPersons.find(person => newPerson.id === person.id)) {
-    throw Error(ERROR.ALREADY_STORED);
+    throw Error(Error.ALREADY_STORED);
   }
   
   await AsyncStorage.setItem(FOLLOWING_KEY, JSON.stringify([...followedPersons, newPerson]));

@@ -9,12 +9,13 @@ import FollowingScreen from '../screens/FollowingScreen';
 import MovieDetailsScreen from '../screens/MovieDetailsScreen';
 import TvShowDetailsScreen from '../screens/TvShowDetailsScreen';
 
-export const Screens = {
-  HomeScreen: 'HomeScreen',
-  MovieDetailsScreen: 'MovieDetailsScreen',
-  TvShowDetailsScreen: 'TvShowDetailsScreen',
-  SearchScreen: 'SearchScreen',
-  FollowingScreen: 'FollowingScreen',
+
+export const Screen = {
+  HOME: 'HomeScreen',
+  MOVIE_DETAILS: 'MovieDetailsScreen',
+  TV_SHOW_DETAILS: 'TvShowDetailsScreen',
+  SEARCH: 'SearchScreen',
+  FOLLOWING: 'FollowingScreen',
 }
 
 
@@ -28,17 +29,17 @@ function HomeStack() {
       screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}
     >
       <Stack.Screen
-        name={Screens.HomeScreen}
+        name={Screen.HOME}
         component={HomeScreen}
         options={{title: 'Início'}}
       />
       <Stack.Screen
-        name={Screens.MovieDetailsScreen}
+        name={Screen.MOVIE_DETAILS}
         component={MovieDetailsScreen}
         options={{title: 'Detalhes do filme'}}
       />
       <Stack.Screen
-        name={Screens.TvShowDetailsScreen}
+        name={Screen.TV_SHOW_DETAILS}
         component={TvShowDetailsScreen}
         options={{title: 'Detalhes do seriado'}}
       />
@@ -52,17 +53,17 @@ function SearchStack() {
       screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}
     >
       <Stack.Screen
-        name={Screens.SearchScreen}
+        name={Screen.SEARCH}
         component={SearchScreen}
         options={{title: 'Busca'}}
       />
       <Stack.Screen
-        name={Screens.MovieDetailsScreen}
+        name={Screen.MOVIE_DETAILS}
         component={MovieDetailsScreen}
         options={{title: 'Detalhes do filme'}}
       />
       <Stack.Screen
-        name={Screens.TvShowDetailsScreen}
+        name={Screen.TV_SHOW_DETAILS}
         component={TvShowDetailsScreen}
         options={{title: 'Detalhes do seriado'}}
       />
@@ -76,12 +77,12 @@ function FollowingStack() {
       screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}
     >
       <Stack.Screen
-        name={Screens.FollowingScreen}
+        name={Screen.FOLLOWING}
         component={FollowingScreen}
         options={{title: 'Seguindo'}}
       />
       <Stack.Screen
-        name={Screens.MovieDetailsScreen}
+        name={Screen.MOVIE_DETAILS}
         component={MovieDetailsScreen}
         options={{title: 'Detalhes do filme'}}
       />
