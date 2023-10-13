@@ -84,10 +84,7 @@ export default function SearchScreen() {
   }
 
   function isLastPage() {
-    if(!pageData){
-      return true;
-    }
-    return pageData.page === pageData.total_pages;
+    return pageData != null && pageData.page === pageData.total_pages;
   }
 
 
