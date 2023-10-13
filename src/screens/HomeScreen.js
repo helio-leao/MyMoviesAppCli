@@ -8,9 +8,9 @@ import RowTvShowList from '../components/RowTvShowList';
 export default function HomeScreen() {
 
   const [popularMovies, setPopularMovies] = useState([]);
-  const [dayTrendingMovies, setDayTrendingMovies] = useState([]);
+  const [trendingMovies, setTrendingMovies] = useState([]);
   const [popularTvShows, setPopularTvShows] = useState([]);
-  const [dayTrendingTvShows, setDayTrendingTvShows] = useState([]);
+  const [trendingTvShows, setTrendingTvShows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
 
@@ -18,11 +18,9 @@ export default function HomeScreen() {
     async function loadMoviesData() {
       try {
         setPopularMovies((await fetchPopularMovies()).results);
-        setDayTrendingMovies((await fetchTrendingMovies()).results);
-
+        setTrendingMovies((await fetchTrendingMovies()).results);
         setPopularTvShows((await fetchPopularTvShows()).results);
-        setDayTrendingTvShows((await fetchTrendingTvShows()).results);
-
+        setTrendingTvShows((await fetchTrendingTvShows()).results);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -57,7 +55,7 @@ export default function HomeScreen() {
           <View>
             <Text style={styles.moviesRowTitle}>Filmes em alta</Text>
             <RowMovieList
-              moviesData={dayTrendingMovies}
+              moviesData={trendingMovies}
               contentContainerStyle={styles.moviesRowContentContainer}
             />
           </View>
@@ -73,7 +71,7 @@ export default function HomeScreen() {
           <View>
             <Text style={styles.moviesRowTitle}>Séries em alta</Text>
             <RowTvShowList
-              tvShowsData={dayTrendingTvShows}
+              tvShowsData={trendingTvShows}
               contentContainerStyle={styles.moviesRowContentContainer}
             />
           </View>
