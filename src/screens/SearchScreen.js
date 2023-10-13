@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FlatList, StyleSheet, TextInput, TouchableOpacity, View, Text, ToastAndroid } from 'react-native';
+import { FlatList, StyleSheet, TextInput, TouchableOpacity, View, Text } from 'react-native';
 import { fetchMulti } from '../services/apiService';
 import SearchResultCard from '../components/SearchResultCard';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';

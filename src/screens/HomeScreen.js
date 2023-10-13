@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, Text, ActivityIndicator } from 'react-native';
 import { fetchPopularMovies, fetchPopularTvShows, fetchTrendingMovies, fetchTrendingTvShows } from '../services/apiService';
-import RowMediaList from '../components/RowMediaList';
+import RowMovieList from '../components/RowMovieList';
+import RowTvShowList from '../components/RowTvShowList';
 
-// ISSUE: there's a bug where popular movies and popular tv shows don't come with media_type from api
-// it sends by default to movie details screen, fix needed
 
 export default function HomeScreen() {
 
@@ -20,8 +19,10 @@ export default function HomeScreen() {
       try {
         setPopularMovies((await fetchPopularMovies()).results);
         setDayTrendingMovies((await fetchTrendingMovies()).results);
+
         setPopularTvShows((await fetchPopularTvShows()).results);
         setDayTrendingTvShows((await fetchTrendingTvShows()).results);
+
         setShowLoadingIndicator(false);
       } catch (error) {
         console.error(error);
@@ -47,7 +48,7 @@ export default function HomeScreen() {
         <View style={styles.moviesRowsContainer}>
           <View>
             <Text style={styles.moviesRowTitle}>Filmes populares</Text>
-            <RowMediaList
+            <RowMovieList
               moviesData={popularMovies}
               contentContainerStyle={styles.moviesRowContentContainer}
             />
@@ -55,7 +56,7 @@ export default function HomeScreen() {
 
           <View>
             <Text style={styles.moviesRowTitle}>Filmes em alta</Text>
-            <RowMediaList
+            <RowMovieList
               moviesData={dayTrendingMovies}
               contentContainerStyle={styles.moviesRowContentContainer}
             />
@@ -63,16 +64,16 @@ export default function HomeScreen() {
 
           <View>
             <Text style={styles.moviesRowTitle}>Séries populares</Text>
-            <RowMediaList
-              moviesData={popularTvShows}
+            <RowTvShowList
+              tvShowsData={popularTvShows}
               contentContainerStyle={styles.moviesRowContentContainer}
             />
           </View>
 
           <View>
             <Text style={styles.moviesRowTitle}>Séries em alta</Text>
-            <RowMediaList
-              moviesData={dayTrendingTvShows}
+            <RowTvShowList
+              tvShowsData={dayTrendingTvShows}
               contentContainerStyle={styles.moviesRowContentContainer}
             />
           </View>

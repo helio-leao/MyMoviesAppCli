@@ -2,30 +2,16 @@ import { StyleSheet, FlatList, TouchableOpacity, View, Image } from 'react-nativ
 import { IMAGES } from '../constants/images';
 import { getFullImagePath } from '../services/apiService';
 import { useNavigation } from '@react-navigation/native';
-import { MEDIA_TYPE } from '../services/apiService';
 import { Screens } from '../routes/TabNavigator';
 
 
-export default function RowMovieList({contentContainerStyle, moviesData}) {
+export default function RowTvShowList({contentContainerStyle, tvShowsData}) {
 
   const navigation = useNavigation();
 
 
   function handleCardPress(item) {
-    switch (item.media_type) {
-      case MEDIA_TYPE.MOVIE:
-        navigation.push(Screens.MovieDetailsScreen, {id: item.id});
-        break;
-      case MEDIA_TYPE.TV:
-        navigation.push(Screens.TvShowDetailsScreen, {id: item.id});
-        break;
-      case MEDIA_TYPE.PERSON:
-        console.log('TODO: person screen', {id: item.id});
-        break;
-      default:
-        console.warn('item media_type is ' + item.media_type);
-        break;
-    }
+    navigation.push(Screens.TvShowDetailsScreen, {id: item.id});
   }
 
 
@@ -34,7 +20,7 @@ export default function RowMovieList({contentContainerStyle, moviesData}) {
       keyExtractor={item => String(item.id)}
       horizontal={true}
       contentContainerStyle={contentContainerStyle}
-      data={moviesData}
+      data={tvShowsData}
       renderItem={({item}) => (
         <TouchableOpacity
           style={styles.cardContainer}
