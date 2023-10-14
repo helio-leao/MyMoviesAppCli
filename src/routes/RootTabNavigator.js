@@ -91,7 +91,7 @@ function FollowingStack() {
 }
 
 
-export default function TabNavigator() {
+export default function RootTabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={{

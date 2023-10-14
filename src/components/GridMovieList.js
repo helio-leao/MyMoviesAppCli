@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity, FlatList, View, ActivityIndicator, Image 
 import { getFullImagePath } from '../services/apiService';
 import { useNavigation } from '@react-navigation/native';
 import { ImagePlaceholder } from '../constants/images';
-import { Screen } from '../routes/TabNavigator';
+import { Screen } from '../routes/RootTabNavigator';
 
 
 export default function GridMovieList({

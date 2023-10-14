@@ -2,7 +2,7 @@ import { StyleSheet, FlatList, TouchableOpacity, View, Image } from 'react-nativ
 import { ImagePlaceholder } from '../constants/images';
 import { getFullImagePath } from '../services/apiService';
 import { useNavigation } from '@react-navigation/native';
-import { Screen } from '../routes/TabNavigator';
+import { Screen } from '../routes/RootTabNavigator';
 
 
 export default function RowMovieList({contentContainerStyle, moviesData}) {

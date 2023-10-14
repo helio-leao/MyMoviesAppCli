@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as StorageService from './../services/storageService';
 import { ImagePlaceholder } from '../constants/images';
-import { Screen } from '../routes/TabNavigator';
+import { Screen } from '../routes/RootTabNavigator';
 
 
 function TVCard({item}) {
