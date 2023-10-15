@@ -2,9 +2,9 @@ import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
 import { getFullImagePath, MediaType } from '../services/apiService';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import * as StorageService from './../services/storageService';
 import { ImagePlaceholder } from '../constants/images';
 import { Screen } from '../routes/RootTabNavigator';
+import { Error, addFollowedPerson } from '../services/storageService';
 
 
 function TVCard({item}) {
@@ -51,10 +51,10 @@ function PersonCard({item}) {
     const {id, name, profile_path} = item;
 
     try {
-      await StorageService.addFollowedPerson({ id, name, profile_path });
+      await addFollowedPerson({ id, name, profile_path });
         // ToastAndroid.show(`Você seguiu ${name}.`, ToastAndroid.SHORT);
     } catch (error) {
-      if(StorageService.Error.ALREADY_STORED === error.message) {
+      if(Error.ALREADY_STORED === error.message) {
         console.log(error);
         // ToastAndroid.show(`Você já segue ${name}.`, ToastAndroid.SHORT);
       } else {

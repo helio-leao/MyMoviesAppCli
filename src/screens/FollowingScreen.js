@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
-import * as StorageService from '../services/storageService';
 import { fetchMoviesWithPeople, getFullImagePath } from '../services/apiService';
 import MoviesGrid from '../components/GridMovieList';
 import { ImagePlaceholder } from '../constants/images';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { getFollowedPersons, removeFollowedPerson } from '../services/storageService';
 
 
 // TODO: roll to top of flatlist on unfollow
@@ -21,7 +21,7 @@ export default function SearchScreen() {
   useEffect(() => {
     async function loadFollowedPersons() {
       try {
-        const followedPersons = await StorageService.getFollowedPersons();
+        const followedPersons = await getFollowedPersons();
         setFollowedPersons(followedPersons);
         setIsLoadingPeople(false);
       } catch (error) {
@@ -68,8 +68,8 @@ export default function SearchScreen() {
 
   async function handleUnfollow(id) {
     try {
-      await StorageService.removeFollowedPerson(id);
-      const updatedFollowedPersons = await StorageService.getFollowedPersons();
+      await removeFollowedPerson(id);
+      const updatedFollowedPersons = await getFollowedPersons();
       setFollowedPersons(updatedFollowedPersons);
     } catch (error) {
       console.log(error);
