@@ -41,7 +41,7 @@ function HomeStack() {
       <Stack.Screen
         name={Screen.TV_SHOW_DETAILS}
         component={TvShowDetailsScreen}
-        options={{title: 'Detalhes do seriado'}}
+        options={{title: 'Detalhes da série'}}
       />
     </Stack.Navigator>
   );
@@ -65,7 +65,7 @@ function SearchStack() {
       <Stack.Screen
         name={Screen.TV_SHOW_DETAILS}
         component={TvShowDetailsScreen}
-        options={{title: 'Detalhes do seriado'}}
+        options={{title: 'Detalhes da série'}}
       />
     </Stack.Navigator>
   );

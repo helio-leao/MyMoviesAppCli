@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const FOLLOWING_KEY = 'following';
+const FOLLOWED_PEOPLE_STORAGE_KEY = '@social:followed_people';
 
 
 export const Error = {
@@ -10,22 +10,22 @@ export const Error = {
 
 
 export async function addFollowedPerson(newPerson) {
-  const followedPersons = await getFollowedPersons();
+  const followedPeople = await getFollowedPeople();
 
-  if(followedPersons.find(person => newPerson.id === person.id)) {
+  if(followedPeople.find(person => newPerson.id === person.id)) {
     throw Error(Error.ALREADY_STORED);
   }
   
-  await AsyncStorage.setItem(FOLLOWING_KEY, JSON.stringify([...followedPersons, newPerson]));
+  await AsyncStorage.setItem(FOLLOWED_PEOPLE_STORAGE_KEY, JSON.stringify([...followedPeople, newPerson]));
 }
 
-export async function getFollowedPersons() {
-  const followedPersons = await AsyncStorage.getItem(FOLLOWING_KEY);
-  return followedPersons ? JSON.parse(followedPersons) : [];
+export async function getFollowedPeople() {
+  const followedPeople = await AsyncStorage.getItem(FOLLOWED_PEOPLE_STORAGE_KEY);
+  return followedPeople ? JSON.parse(followedPeople) : [];
 }
 
 export async function removeFollowedPerson(id) {
-  const followedPersons = await getFollowedPersons();
-  const updatedFollowedPersons = followedPersons.filter(person => person.id !== id);
-  await AsyncStorage.setItem(FOLLOWING_KEY, JSON.stringify(updatedFollowedPersons));
+  const followedPeople = await getFollowedPeople();
+  const updatedFollowedPeople = followedPeople.filter(person => person.id !== id);
+  await AsyncStorage.setItem(FOLLOWED_PEOPLE_STORAGE_KEY, JSON.stringify(updatedFollowedPeople));
 }

@@ -8,13 +8,13 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 export default function SearchScreen() {
 
   const [query, setQuery] = useState('');
-  const [pageResults, setPageResults] = useState(null);
+  const [pageData, setPageData] = useState(null);
 
 
   async function handleSearch() {
     try {
       const data = await fetchMulti(query);
-      setPageResults(data);
+      setPageData(data);
     } catch (error) {
       console.error(error);
       // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
@@ -43,7 +43,7 @@ export default function SearchScreen() {
       {/* result list */}
       <FlatList
         contentContainerStyle={styles.resultsContainer}
-        data={pageResults?.results}
+        data={pageData?.results}
         keyExtractor={item => String(item.id)}
         renderItem={({item}) => <SearchResultCard item={item} />}
         ItemSeparatorComponent={<View style={{ height: 10 }} />}

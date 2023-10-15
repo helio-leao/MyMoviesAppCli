@@ -4,48 +4,49 @@ import { fetchMoviesWithPeople, getFullImagePath } from '../services/apiService'
 import MoviesGrid from '../components/GridMovieList';
 import { ImagePlaceholder } from '../constants/images';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { getFollowedPersons, removeFollowedPerson } from '../services/storageService';
+import { getFollowedPeople, removeFollowedPerson } from '../services/storageService';
 
 
 // TODO: roll to top of flatlist on unfollow
+// TODO: simplify the logic for pageData and moviesData
 
 
 export default function SearchScreen() {
 
-  const [followedPersons, setFollowedPersons] = useState([]);
+  const [followedPeople, setFollowedPeople] = useState([]);
   const [isLoadingPeople, setIsLoadingPeople] = useState(true);
   const [pageData, setPageData] = useState(null);
   const [moviesData, setMoviesData] = useState([]);
 
 
   useEffect(() => {
-    async function loadFollowedPersons() {
+    async function loadFollowedPeople() {
       try {
-        const followedPersons = await getFollowedPersons();
-        setFollowedPersons(followedPersons);
+        const followedPeople = await getFollowedPeople();
+        setFollowedPeople(followedPeople);
         setIsLoadingPeople(false);
       } catch (error) {
         console.error(error);
         // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
       }
     }
-    loadFollowedPersons();
+    loadFollowedPeople();
   }, []);
 
   useEffect(() => {
     loadMovies();
-  }, [followedPersons])
+  }, [followedPeople])
 
 
   async function loadMovies() {
-    if(followedPersons.length === 0) {
+    if(followedPeople.length === 0) {
       setPageData(null);
       setMoviesData([]);
       return;
     }
     try {
-      const personsIds = followedPersons.map(person => person.id);
-      const {results, ...pageData} = await fetchMoviesWithPeople(personsIds);
+      const peopleIds = followedPeople.map(person => person.id);
+      const {results, ...pageData} = await fetchMoviesWithPeople(peopleIds);
       setPageData(pageData);
       setMoviesData(results);
     } catch (error) {
@@ -56,8 +57,8 @@ export default function SearchScreen() {
 
   async function loadMoreMovies(page) {
     try {
-      const personsIds = followedPersons.map(person => person.id);
-      const {results, ...pageData} = await fetchMoviesWithPeople(personsIds, page);
+      const peopleIds = followedPeople.map(person => person.id);
+      const {results, ...pageData} = await fetchMoviesWithPeople(peopleIds, page);
       setPageData(pageData);
       setMoviesData(prev => [...prev, ...results]);
     } catch (error) {
@@ -69,8 +70,8 @@ export default function SearchScreen() {
   async function handleUnfollow(id) {
     try {
       await removeFollowedPerson(id);
-      const updatedFollowedPersons = await getFollowedPersons();
-      setFollowedPersons(updatedFollowedPersons);
+      const updatedFollowedPeople = await getFollowedPeople();
+      setFollowedPeople(updatedFollowedPeople);
     } catch (error) {
       console.log(error);
       // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
@@ -96,7 +97,7 @@ export default function SearchScreen() {
     );
   }
 
-  if(followedPersons.length === 0) {
+  if(followedPeople.length === 0) {
     return (
       <View style={[styles.container, {justifyContent: 'center', alignItems: 'center'}]}>
         <Text style={{color: '#333', fontSize: 18}}>
@@ -109,12 +110,12 @@ export default function SearchScreen() {
   return (
     <View style={styles.container}>
 
-      {/* persons */}
-      <View style={styles.personsCardsContainer}>
+      {/* people */}
+      <View style={styles.peopleCardsContainer}>
         <FlatList
-          contentContainerStyle={styles.personsFlatlistContentContainer}
+          contentContainerStyle={styles.peopleFlatlistContentContainer}
           horizontal={true}
-          data={followedPersons}
+          data={followedPeople}
           keyExtractor={item => String(item.id)}
           renderItem={({item}) => (
             <View testID={String(item.id)}>
@@ -150,11 +151,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#111',
   },
-  personsFlatlistContentContainer: {
+  peopleFlatlistContentContainer: {
     flexGrow: 1,
     padding: 20,
   },
-  personsCardsContainer: {
+  peopleCardsContainer: {
     backgroundColor: '#222',
   },
   personCardImage: {
