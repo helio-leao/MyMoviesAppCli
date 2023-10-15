@@ -11,7 +11,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 export default function MovieDetailsScreen() {
 
-  const [movieDetails, setMovieDetails] = useState(null);
+  const [movieData, setMovieData] = useState(null);
   const route = useRoute();
 
 
@@ -19,7 +19,7 @@ export default function MovieDetailsScreen() {
     async function getMovieDetails() {
       try {
         const movieDetails = await fetchMovieDetails(route.params.id);
-        setMovieDetails(movieDetails);
+        setMovieData(movieDetails);
       } catch (error) {
         console.error(error);
         // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
@@ -30,7 +30,7 @@ export default function MovieDetailsScreen() {
 
 
   function onWatchLaterPress() {
-    console.log('TODO: watch later press, id', movieDetails.id);
+    console.log('TODO: watch later press, id', movieData.id);
   }
 
 
@@ -39,7 +39,7 @@ export default function MovieDetailsScreen() {
       {/* image */}
       <Image
         style={styles.backdropImage}
-        source={{uri: getFullImagePath(movieDetails?.backdrop_path) || ImagePlaceholder.BACKDROP}}
+        source={{uri: getFullImagePath(movieData?.backdrop_path) || ImagePlaceholder.BACKDROP}}
       />
       
       {/* gradient container */}
@@ -50,14 +50,14 @@ export default function MovieDetailsScreen() {
       >
         {/* title */}
         <Text style={styles.title}>
-          {movieDetails?.title}
+          {movieData?.title}
         </Text>
         
         {/* genres */}
         <View>
           <ScrollView horizontal={true}>
             <View style={styles.genresContainer}>
-              {movieDetails?.genres.map(genre => (
+              {movieData?.genres.map(genre => (
                 <View key={genre.id} style={styles.genrePill}>
                   <Text style={styles.genreText}>{genre.name}</Text>
                 </View>
@@ -76,11 +76,11 @@ export default function MovieDetailsScreen() {
                 <View>
                   <Text style={styles.contentText}>
                     <Text style={styles.ratingsText}>
-                      {movieDetails?.vote_average.toFixed(1)}
+                      {movieData?.vote_average.toFixed(1)}
                     </Text>
                     {'/10'}
                   </Text>
-                  <Text style={styles.contentText}>{movieDetails?.vote_count}</Text>
+                  <Text style={styles.contentText}>{movieData?.vote_count}</Text>
                 </View>
               </View>
 
@@ -92,14 +92,14 @@ export default function MovieDetailsScreen() {
 
             <View style={{marginHorizontal: 10}}>
               <Text style={styles.contentText}>
-                Direção: {movieDetails?.credits.crew
+                Direção: {movieData?.credits.crew
                   .filter(person => person.job === CrewJob.DIRECTOR)
                   .map(director => director.name)
                   .slice(0, 3)
                   .join(', ')}
               </Text>
               <Text style={styles.contentText}>
-                Roteiro: {movieDetails?.credits.crew
+                Roteiro: {movieData?.credits.crew
                   .filter(person => person.job === CrewJob.SCREENPLAY ||
                     person.job === CrewJob.WRITER || person.job === CrewJob.AUTHOR)
                   .map(writer => writer.name)
@@ -107,32 +107,32 @@ export default function MovieDetailsScreen() {
                   .join(', ')}
               </Text>
               <Text style={[styles.contentText, {marginBottom: 20}]}>
-                Elenco: {movieDetails?.credits.cast
+                Elenco: {movieData?.credits.cast
                   .map(actor => actor.name)
                   .slice(0, 3)
                   .join(', ')}
               </Text>
-              {movieDetails?.overview && (
+              {movieData?.overview && (
                 <Text style={[styles.contentText, {marginBottom: 20}]}>
-                  {movieDetails.overview}
+                  {movieData.overview}
                 </Text>
               )}
               <Text style={styles.contentText}>
-                Título Original: {movieDetails?.original_title}
+                Título Original: {movieData?.original_title}
               </Text>
               <Text style={styles.contentText}>
-                Lançamento: {movieDetails?.release_date &&
-                  new Intl.DateTimeFormat('pt-BR').format(new Date(movieDetails.release_date))}
+                Lançamento: {movieData?.release_date &&
+                  new Intl.DateTimeFormat('pt-BR').format(new Date(movieData.release_date))}
               </Text>
             </View>
 
-            {movieDetails?.recommendations.total_results > 0 && (
+            {movieData?.recommendations.total_results > 0 && (
               <View style={{marginTop: 30}}>
                 <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
                   Recomendações
                 </Text>
                 <RowMovieList
-                  moviesData={movieDetails.recommendations.results}
+                  moviesData={movieData.recommendations.results}
                   contentContainerStyle={{paddingHorizontal: 10}}
                 />
               </View>

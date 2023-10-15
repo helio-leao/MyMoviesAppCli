@@ -31,7 +31,7 @@ function formatTvShowStatus(status) {
 
 export default function TvShowDetailsScreen() {
 
-  const [tvShowDetails, setTvShowDetails] = useState(null);
+  const [tvShowData, setTvShowData] = useState(null);
   const route = useRoute();
 
 
@@ -39,7 +39,7 @@ export default function TvShowDetailsScreen() {
     async function getTvShowDetails() {
       try {
         const tvShowDetails = await fetchTvShowDetails(route.params.id);
-        setTvShowDetails(tvShowDetails);
+        setTvShowData(tvShowDetails);
       } catch (error) {
         console.error(error);
         // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
@@ -50,7 +50,7 @@ export default function TvShowDetailsScreen() {
 
 
   function onWatchLaterPress() {
-    console.log('TODO: watch later press, id', tvShowDetails.id);
+    console.log('TODO: watch later press, id', tvShowData.id);
   }
 
 
@@ -59,7 +59,7 @@ export default function TvShowDetailsScreen() {
       {/* image */}
       <Image
         style={styles.backdropImage}
-        source={{uri: getFullImagePath(tvShowDetails?.backdrop_path) || ImagePlaceholder.BACKDROP}}
+        source={{uri: getFullImagePath(tvShowData?.backdrop_path) || ImagePlaceholder.BACKDROP}}
       />
       
       {/* gradient container */}
@@ -70,14 +70,14 @@ export default function TvShowDetailsScreen() {
       >
         {/* title */}
         <Text style={styles.title}>
-          {tvShowDetails?.name}
+          {tvShowData?.name}
         </Text>
         
         {/* genres */}
         <View>
           <ScrollView horizontal={true}>
             <View style={styles.genresContainer}>
-              {tvShowDetails?.genres.map(genre => (
+              {tvShowData?.genres.map(genre => (
                 <View key={genre.id} style={styles.genrePill}>
                   <Text style={styles.genreText}>{genre.name}</Text>
                 </View>
@@ -96,11 +96,11 @@ export default function TvShowDetailsScreen() {
                 <View>
                   <Text style={styles.contentText}>
                     <Text style={styles.ratingsText}>
-                      {tvShowDetails?.vote_average.toFixed(1)}
+                      {tvShowData?.vote_average.toFixed(1)}
                     </Text>
                     {'/10'}
                   </Text>
-                  <Text style={styles.contentText}>{tvShowDetails?.vote_count}</Text>
+                  <Text style={styles.contentText}>{tvShowData?.vote_count}</Text>
                 </View>
               </View>
 
@@ -112,48 +112,48 @@ export default function TvShowDetailsScreen() {
 
             <View style={{marginHorizontal: 10}}>
               <Text style={styles.contentText}>
-                Criado por: {tvShowDetails?.created_by
+                Criado por: {tvShowData?.created_by
                   .map(creator => creator.name)
                   .slice(0, 3)
                   .join(', ')}
               </Text>
               <Text style={[styles.contentText, {marginBottom: 20}]}>
-                Elenco: {tvShowDetails?.credits.cast
+                Elenco: {tvShowData?.credits.cast
                   .map(actor => actor.name)
                   .slice(0, 3)
                   .join(', ')}
               </Text>
-              {tvShowDetails?.overview && (
+              {tvShowData?.overview && (
                 <Text style={[styles.contentText, {marginBottom: 20}]}>
-                  {tvShowDetails.overview}
+                  {tvShowData.overview}
                 </Text>
               )}
               <Text style={styles.contentText}>
-                Título Original: {tvShowDetails?.original_name}
+                Título Original: {tvShowData?.original_name}
               </Text>
               <Text style={styles.contentText}>
-                Status: {tvShowDetails?.status && formatTvShowStatus(tvShowDetails.status)}
+                Status: {tvShowData?.status && formatTvShowStatus(tvShowData.status)}
               </Text>
               <Text style={styles.contentText}>
-                Temporadas: {tvShowDetails?.seasons.filter(tvShow => tvShow.name !== 'Especiais').length}
+                Temporadas: {tvShowData?.seasons.filter(tvShow => tvShow.name !== 'Especiais').length}
               </Text>
               <Text style={styles.contentText}>
-                Primeira Transmissão: {tvShowDetails?.first_air_date &&
-                  new Intl.DateTimeFormat('pt-BR').format(new Date(tvShowDetails.first_air_date))}
+                Primeira Transmissão: {tvShowData?.first_air_date &&
+                  new Intl.DateTimeFormat('pt-BR').format(new Date(tvShowData.first_air_date))}
               </Text>
               <Text style={styles.contentText}>
-                Última Transmissão: {tvShowDetails?.last_air_date &&
-                  new Intl.DateTimeFormat('pt-BR').format(new Date(tvShowDetails.last_air_date))}
+                Última Transmissão: {tvShowData?.last_air_date &&
+                  new Intl.DateTimeFormat('pt-BR').format(new Date(tvShowData.last_air_date))}
               </Text>
             </View>
 
-            {tvShowDetails?.recommendations.total_results > 0 && (
+            {tvShowData?.recommendations.total_results > 0 && (
               <View style={{marginTop: 30}}>
                 <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
                   Recomendações
                 </Text>
                 <RowTvShowList
-                  tvShowsData={tvShowDetails.recommendations.results}
+                  tvShowsData={tvShowData.recommendations.results}
                   contentContainerStyle={{paddingHorizontal: 10}}
                 />
               </View>
