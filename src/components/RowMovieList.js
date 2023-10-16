@@ -1,8 +1,7 @@
 import { StyleSheet, FlatList, TouchableOpacity, View, Image } from 'react-native';
-import { ImagePlaceholder } from '../constants/images';
+import { ImagePlaceholder } from '../utils/constants';
 import { getFullImagePath } from '../services/apiService';
 import { useNavigation } from '@react-navigation/native';
-import { Screen } from '../routes/RootTabNavigator';
 
 
 export default function RowMovieList({contentContainerStyle, moviesData}) {
@@ -11,7 +10,7 @@ export default function RowMovieList({contentContainerStyle, moviesData}) {
 
 
   function handleCardPress(item) {
-    navigation.push(Screen.MOVIE_DETAILS, {id: item.id});
+    navigation.push('MovieDetailsScreen', {id: item.id});
   }
 
 

@@ -1,8 +1,7 @@
 import { StyleSheet, TouchableOpacity, FlatList, View, ActivityIndicator, Image } from 'react-native';
 import { getFullImagePath } from '../services/apiService';
 import { useNavigation } from '@react-navigation/native';
-import { ImagePlaceholder } from '../constants/images';
-import { Screen } from '../routes/RootTabNavigator';
+import { ImagePlaceholder } from '../utils/constants';
 
 
 export default function GridMovieList({
@@ -14,7 +13,7 @@ export default function GridMovieList({
   const navigation = useNavigation();
 
   function onCardPress(id) {
-    navigation.push(Screen.MOVIE_DETAILS, {id});
+    navigation.push('MovieDetailsScreen', {id});
   }  
 
   return (

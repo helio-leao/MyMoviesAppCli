@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import RowMovieList from '../components/RowMovieList';
-import { ImagePlaceholder } from '../constants/images';
+import { ImagePlaceholder } from '../utils/constants';
 import LinearGradient from 'react-native-linear-gradient';
 
 

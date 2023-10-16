@@ -2,8 +2,7 @@ import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
 import { getFullImagePath, MediaType } from '../services/apiService';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { ImagePlaceholder } from '../constants/images';
-import { Screen } from '../routes/RootTabNavigator';
+import { ImagePlaceholder } from '../utils/constants';
 import { Error, addFollowedPerson } from '../services/storageService';
 
 
@@ -11,7 +10,7 @@ function TVCard({item}) {
   const navigation = useNavigation();
 
   function handleCardPress() {    
-    navigation.push(Screen.TV_SHOW_DETAILS, {id: item.id});
+    navigation.push('TvShowDetailsScreen', {id: item.id});
   }
 
   function handleWatchLaterPress() {
@@ -90,7 +89,7 @@ function MovieCard({item}) {
   const navigation = useNavigation();
 
   function handleCardPress() {    
-    navigation.push(Screen.MOVIE_DETAILS, {id: item.id});
+    navigation.push('MovieDetailsScreen', {id: item.id});
   }
 
   function handleWatchLaterPress() {

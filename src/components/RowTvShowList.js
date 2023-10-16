@@ -1,8 +1,7 @@
 import { StyleSheet, FlatList, TouchableOpacity, View, Image } from 'react-native';
-import { ImagePlaceholder } from '../constants/images';
+import { ImagePlaceholder } from '../utils/constants';
 import { getFullImagePath } from '../services/apiService';
 import { useNavigation } from '@react-navigation/native';
-import { Screen } from '../routes/RootTabNavigator';
 
 
 export default function RowTvShowList({contentContainerStyle, tvShowsData}) {
@@ -11,7 +10,7 @@ export default function RowTvShowList({contentContainerStyle, tvShowsData}) {
 
 
   function handleCardPress(item) {
-    navigation.push(Screen.TV_SHOW_DETAILS, {id: item.id});
+    navigation.push('TvShowDetailsScreen', {id: item.id});
   }
 
 

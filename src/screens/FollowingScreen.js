@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import { fetchMoviesWithPeople, getFullImagePath } from '../services/apiService';
 import MoviesGrid from '../components/GridMovieList';
-import { ImagePlaceholder } from '../constants/images';
+import { ImagePlaceholder } from '../utils/constants';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { getFollowedPeople, removeFollowedPerson } from '../services/storageService';
 

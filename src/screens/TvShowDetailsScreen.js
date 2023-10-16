@@ -4,7 +4,7 @@ import { getFullImagePath, fetchTvShowDetails, TvShowStatus } from '../services/
 import { useEffect, useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import { ImagePlaceholder } from '../constants/images';
+import { ImagePlaceholder } from '../utils/constants';
 import LinearGradient from 'react-native-linear-gradient';
 import RowTvShowList from '../components/RowTvShowList';
 
