@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
-import { fetchMoviesWithPeople, getFullImagePath } from '../services/apiService';
 import MoviesGrid from '../components/GridMovieList';
 import { ImagePlaceholder } from '../utils/constants';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { getFollowedPeople, removeFollowedPerson } from '../services/storageService';
+import ApiService from '../services/ApiService';
+import StorageService from '../services/StorageService';
 
 
 // TODO: roll to top of flatlist on unfollow
@@ -22,7 +22,7 @@ export default function SearchScreen() {
   useEffect(() => {
     async function loadFollowedPeople() {
       try {
-        const followedPeople = await getFollowedPeople();
+        const followedPeople = await StorageService.getFollowedPeople();
         setFollowedPeople(followedPeople);
         setIsLoadingPeople(false);
       } catch (error) {
@@ -46,7 +46,7 @@ export default function SearchScreen() {
     }
     try {
       const peopleIds = followedPeople.map(person => person.id);
-      const {results, ...pageData} = await fetchMoviesWithPeople(peopleIds);
+      const {results, ...pageData} = await ApiService.fetchMoviesWithPeople(peopleIds);
       setPageData(pageData);
       setMoviesData(results);
     } catch (error) {
@@ -58,7 +58,7 @@ export default function SearchScreen() {
   async function loadMoreMovies(page) {
     try {
       const peopleIds = followedPeople.map(person => person.id);
-      const {results, ...pageData} = await fetchMoviesWithPeople(peopleIds, page);
+      const {results, ...pageData} = await ApiService.fetchMoviesWithPeople(peopleIds, page);
       setPageData(pageData);
       setMoviesData(prev => [...prev, ...results]);
     } catch (error) {
@@ -69,8 +69,8 @@ export default function SearchScreen() {
 
   async function handleUnfollow(id) {
     try {
-      await removeFollowedPerson(id);
-      const updatedFollowedPeople = await getFollowedPeople();
+      await StorageService.removeFollowedPerson(id);
+      const updatedFollowedPeople = await StorageService.getFollowedPeople();
       setFollowedPeople(updatedFollowedPeople);
     } catch (error) {
       console.log(error);
@@ -121,7 +121,7 @@ export default function SearchScreen() {
             <View testID={String(item.id)}>
               <Image
                 style={styles.personCardImage}
-                source={{uri: getFullImagePath(item.profile_path) || ImagePlaceholder.PROFILE}}
+                source={{uri: ApiService.fetchFullImagePath(item.profile_path) || ImagePlaceholder.PROFILE}}
               />
               <TouchableOpacity style={styles.unfollowButtonContainer} onPress={() => handleUnfollow(item.id)}>
                 <FontAwesome name="user-times" size={18} color="white" />

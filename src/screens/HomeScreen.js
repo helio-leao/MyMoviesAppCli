@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, Text, ActivityIndicator } from 'react-native';
-import { fetchPopularMovies, fetchPopularTvShows, fetchTrendingMovies, fetchTrendingTvShows } from '../services/apiService';
 import RowMovieList from '../components/RowMovieList';
 import RowTvShowList from '../components/RowTvShowList';
+import ApiService from '../services/ApiService';
 
 
 export default function HomeScreen() {
@@ -17,10 +17,10 @@ export default function HomeScreen() {
   useEffect(() => {
     async function loadMoviesData() {
       try {
-        setPopularMovies((await fetchPopularMovies()).results);
-        setTrendingMovies((await fetchTrendingMovies()).results);
-        setPopularTvShows((await fetchPopularTvShows()).results);
-        setTrendingTvShows((await fetchTrendingTvShows()).results);
+        setPopularMovies((await ApiService.fetchPopularMovies()).results);
+        setTrendingMovies((await ApiService.fetchTrendingMovies()).results);
+        setPopularTvShows((await ApiService.fetchPopularTvShows()).results);
+        setTrendingTvShows((await ApiService.fetchTrendingTvShows()).results);
         setIsLoading(false);
       } catch (error) {
         console.error(error);

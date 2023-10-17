@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { FlatList, StyleSheet, TextInput, TouchableOpacity, View, Text } from 'react-native';
-import { fetchMulti } from '../services/apiService';
 import SearchResultCard from '../components/SearchResultCard';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import ApiService from '../services/ApiService';
 
 
 export default function SearchScreen() {
@@ -13,7 +13,7 @@ export default function SearchScreen() {
 
   async function handleSearch() {
     try {
-      const data = await fetchMulti(query);
+      const data = await ApiService.fetchMulti(query);
       setPageData(data);
     } catch (error) {
       console.error(error);

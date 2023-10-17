@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, FlatList, View, ActivityIndicator, Image } from 'react-native';
-import { getFullImagePath } from '../services/apiService';
 import { useNavigation } from '@react-navigation/native';
 import { ImagePlaceholder } from '../utils/constants';
+import ApiService from '../services/ApiService';
 
 
 export default function GridMovieList({
@@ -27,7 +27,7 @@ export default function GridMovieList({
         >
           <Image
             style={styles().cardPoster}
-            source={{uri: getFullImagePath(item.poster_path) || ImagePlaceholder.POSTER}}
+            source={{uri: ApiService.fetchFullImagePath(item.poster_path) || ImagePlaceholder.POSTER}}
           />
         </TouchableOpacity>
       )}

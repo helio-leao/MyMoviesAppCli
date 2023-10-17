@@ -1,6 +1,6 @@
 import axios from "axios";
-import { API_TOKEN } from 'react-native-dotenv';
 
+const { API_TOKEN } = process.env;
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original';
@@ -8,25 +8,25 @@ const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original';
 const GENERAL_QUERY = `include_adult=false&language=pt-BR`;
 
 
-export const TrendingTimeWindow = {
+const TrendingTimeWindow = {
   DAY: 'day',
   WEEK: 'week',
 }
 
-export const MediaType = {
+const MediaType = {
   MOVIE: 'movie',
   TV: 'tv',
   PERSON: 'person',
 }
 
-export const CrewJob = {
+const CrewJob = {
   DIRECTOR: 'Director',
   SCREENPLAY: 'Screenplay',
   WRITER: 'Writer',
   AUTHOR: 'Author',
 }
 
-export const TvShowStatus = {
+const TvShowStatus = {
   RETURNING_SERIES: 'Returning Series',
   PLANNED: 'Planned',
   IN_PRODUCTION: 'In Production',
@@ -36,36 +36,36 @@ export const TvShowStatus = {
 }
 
 
-export async function fetchPopularMovies(page = 1) {
+async function fetchPopularMovies(page = 1) {
   return await fetchData(`/movie/popular`, `page=${page}`);
 }
 
-export async function fetchPopularTvShows(page = 1) {
+async function fetchPopularTvShows(page = 1) {
   return await fetchData(`/tv/popular`, `page=${page}`);
 }
 
-export async function fetchTrendingMovies(timeWindow = TrendingTimeWindow.DAY) {
+async function fetchTrendingMovies(timeWindow = TrendingTimeWindow.DAY) {
   return await fetchData(`/trending/movie/${timeWindow}`);
 }
 
-export async function fetchTrendingTvShows(timeWindow = TrendingTimeWindow.DAY) {
+async function fetchTrendingTvShows(timeWindow = TrendingTimeWindow.DAY) {
   return await fetchData(`/trending/tv/${timeWindow}`);
 }
 
-export async function fetchMovieDetails(movieId) {
+async function fetchMovieDetails(movieId) {
   return await fetchData(`/movie/${movieId}`, `append_to_response=recommendations,credits`);
 }
 
-export async function fetchTvShowDetails(tvShowId) {
+async function fetchTvShowDetails(tvShowId) {
   return await fetchData(`/tv/${tvShowId}`, `append_to_response=recommendations,credits`);
 }
 
-export async function fetchMulti(name = '', page = 1) {
+async function fetchMulti(name = '', page = 1) {
   return await fetchData(`/search/multi`, `query=${name}&page=${page}`);
 }
 
 // NOTE: removed genre is documentary (id 99)
-export async function fetchMoviesWithPeople(peopleIds = [], page = 1) {
+async function fetchMoviesWithPeople(peopleIds = [], page = 1) {
   return await fetchData(
     `/discover/movie`,
     `include_video=false&page=${page}&sort_by=primary_release_date.desc&with_people=${peopleIds
@@ -73,7 +73,7 @@ export async function fetchMoviesWithPeople(peopleIds = [], page = 1) {
   );
 }
 
-export function getFullImagePath(imagePath) {
+function fetchFullImagePath(imagePath) {
   if(imagePath) {
     return IMAGE_BASE_URL + imagePath;
   }
@@ -85,4 +85,21 @@ async function fetchData(endpoint, query = '') {
   const response = await axios.get(url, { headers: {Authorization: `Bearer ${API_TOKEN}`} });
   console.log(url);
   return response.data;
+}
+
+
+export default {
+  TrendingTimeWindow,
+  MediaType,
+  CrewJob,
+  TvShowStatus,
+  fetchPopularMovies,
+  fetchPopularTvShows,
+  fetchTrendingMovies,
+  fetchTrendingTvShows,
+  fetchMovieDetails,
+  fetchTvShowDetails,
+  fetchMulti,
+  fetchMoviesWithPeople,
+  fetchFullImagePath,
 }

@@ -1,27 +1,27 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { getFullImagePath, fetchTvShowDetails, TvShowStatus } from '../services/apiService';
 import { useEffect, useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { ImagePlaceholder } from '../utils/constants';
 import LinearGradient from 'react-native-linear-gradient';
 import RowTvShowList from '../components/RowTvShowList';
+import ApiService from '../services/ApiService';
 
 
 function formatTvShowStatus(status) {
   switch (status) {
-    case TvShowStatus.RETURNING_SERIES:
+    case ApiService.TvShowStatus.RETURNING_SERIES:
       return 'Em Andamento';
-    case TvShowStatus.PLANNED:
+    case ApiService.TvShowStatus.PLANNED:
       return 'Planejado';
-    case TvShowStatus.IN_PRODUCTION:
+    case ApiService.TvShowStatus.IN_PRODUCTION:
       return 'Em Produção';
-    case TvShowStatus.ENDED:
+    case ApiService.TvShowStatus.ENDED:
       return 'Terminado';
-    case TvShowStatus.CANCELED:
+    case ApiService.TvShowStatus.CANCELED:
       return 'Cancelado';
-    case TvShowStatus.PILOT:
+    case ApiService.TvShowStatus.PILOT:
       return 'Pilot';  
     default:
       return status; 
@@ -38,7 +38,7 @@ export default function TvShowDetailsScreen() {
   useEffect(() => {
     async function getTvShowDetails() {
       try {
-        const tvShowDetails = await fetchTvShowDetails(route.params.id);
+        const tvShowDetails = await ApiService.fetchTvShowDetails(route.params.id);
         setTvShowData(tvShowDetails);
       } catch (error) {
         console.error(error);
@@ -59,7 +59,7 @@ export default function TvShowDetailsScreen() {
       {/* image */}
       <Image
         style={styles.backdropImage}
-        source={{uri: getFullImagePath(tvShowData?.backdrop_path) || ImagePlaceholder.BACKDROP}}
+        source={{uri: ApiService.fetchFullImagePath(tvShowData?.backdrop_path) || ImagePlaceholder.BACKDROP}}
       />
       
       {/* gradient container */}

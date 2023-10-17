@@ -1,9 +1,9 @@
 import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
-import { getFullImagePath, MediaType } from '../services/apiService';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { ImagePlaceholder } from '../utils/constants';
-import { Error, addFollowedPerson } from '../services/storageService';
+import ApiService from '../services/ApiService';
+import StorageService from '../services/StorageService';
 
 
 function TVCard({item}) {
@@ -22,7 +22,7 @@ function TVCard({item}) {
       {/* image */}
       <Image
         style={styles.resultCardImage}
-        source={{uri: getFullImagePath(item.poster_path) || ImagePlaceholder.POSTER}} 
+        source={{uri: ApiService.fetchFullImagePath(item.poster_path) || ImagePlaceholder.POSTER}} 
       />
 
       {/* data container */}
@@ -50,10 +50,10 @@ function PersonCard({item}) {
     const {id, name, profile_path} = item;
 
     try {
-      await addFollowedPerson({ id, name, profile_path });
+      await StorageService.addFollowedPerson({ id, name, profile_path });
         // ToastAndroid.show(`Você seguiu ${name}.`, ToastAndroid.SHORT);
     } catch (error) {
-      if(Error.ALREADY_STORED === error.message) {
+      if(StorageService.Error.ALREADY_STORED === error.message) {
         console.log(error);
         // ToastAndroid.show(`Você já segue ${name}.`, ToastAndroid.SHORT);
       } else {
@@ -67,7 +67,7 @@ function PersonCard({item}) {
       {/* image */}
       <Image
         style={styles.resultCardImage}
-        source={{uri: getFullImagePath(item.profile_path) || ImagePlaceholder.PROFILE}} 
+        source={{uri: ApiService.fetchFullImagePath(item.profile_path) || ImagePlaceholder.PROFILE}} 
       />
 
       {/* data container */}
@@ -101,7 +101,7 @@ function MovieCard({item}) {
       {/* image */}
       <Image
         style={styles.resultCardImage}
-        source={{uri: getFullImagePath(item.poster_path) || ImagePlaceholder.POSTER}}
+        source={{uri: ApiService.fetchFullImagePath(item.poster_path) || ImagePlaceholder.POSTER}}
       />
 
       {/* data container */}
@@ -121,11 +121,11 @@ function MovieCard({item}) {
 
 export default function SearchResultCard({item}) {
   switch(item.media_type) {
-    case MediaType.MOVIE:
+    case ApiService.MediaType.MOVIE:
       return <MovieCard item={item} />
-    case MediaType.TV:
+    case ApiService.MediaType.TV:
       return <TVCard item={item} />
-    case MediaType.PERSON:
+    case ApiService.MediaType.PERSON:
       return <PersonCard item={item} />
   }
 }

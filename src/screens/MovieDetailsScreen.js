@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { fetchMovieDetails, getFullImagePath, CrewJob } from '../services/apiService';
 import { useEffect, useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import RowMovieList from '../components/RowMovieList';
 import { ImagePlaceholder } from '../utils/constants';
 import LinearGradient from 'react-native-linear-gradient';
+import ApiService from '../services/ApiService';
 
 
 export default function MovieDetailsScreen() {
@@ -18,7 +18,7 @@ export default function MovieDetailsScreen() {
   useEffect(() => {
     async function getMovieDetails() {
       try {
-        const movieDetails = await fetchMovieDetails(route.params.id);
+        const movieDetails = await ApiService.fetchMovieDetails(route.params.id);
         setMovieData(movieDetails);
       } catch (error) {
         console.error(error);
@@ -39,7 +39,7 @@ export default function MovieDetailsScreen() {
       {/* image */}
       <Image
         style={styles.backdropImage}
-        source={{uri: getFullImagePath(movieData?.backdrop_path) || ImagePlaceholder.BACKDROP}}
+        source={{uri: ApiService.fetchFullImagePath(movieData?.backdrop_path) || ImagePlaceholder.BACKDROP}}
       />
       
       {/* gradient container */}
@@ -93,15 +93,15 @@ export default function MovieDetailsScreen() {
             <View style={{marginHorizontal: 10}}>
               <Text style={styles.contentText}>
                 Direção: {movieData?.credits.crew
-                  .filter(person => person.job === CrewJob.DIRECTOR)
+                  .filter(person => person.job === ApiService.CrewJob.DIRECTOR)
                   .map(director => director.name)
                   .slice(0, 3)
                   .join(', ')}
               </Text>
               <Text style={styles.contentText}>
                 Roteiro: {movieData?.credits.crew
-                  .filter(person => person.job === CrewJob.SCREENPLAY ||
-                    person.job === CrewJob.WRITER || person.job === CrewJob.AUTHOR)
+                  .filter(person => person.job === ApiService.CrewJob.SCREENPLAY ||
+                    person.job === ApiService.CrewJob.WRITER || person.job === ApiService.CrewJob.AUTHOR)
                   .map(writer => writer.name)
                   .slice(0, 3)
                   .join(', ')}
