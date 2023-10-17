@@ -74,10 +74,7 @@ async function fetchMoviesWithPeople(peopleIds = [], page = 1) {
 }
 
 function fetchFullImagePath(imagePath) {
-  if(imagePath) {
-    return IMAGE_BASE_URL + imagePath;
-  }
-  return null;
+  return imagePath ? IMAGE_BASE_URL + imagePath : null;
 }
 
 async function fetchData(endpoint, query = '') {
