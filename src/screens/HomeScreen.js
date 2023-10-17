@@ -17,10 +17,23 @@ export default function HomeScreen() {
   useEffect(() => {
     async function loadMoviesData() {
       try {
-        setPopularMovies((await ApiService.fetchPopularMovies()).results);
-        setTrendingMovies((await ApiService.fetchTrendingMovies()).results);
-        setPopularTvShows((await ApiService.fetchPopularTvShows()).results);
-        setTrendingTvShows((await ApiService.fetchTrendingTvShows()).results);
+        const [
+          popularMoviesData,
+          trendingMoviesData,
+          popularTvShowsData,
+          trendingTvShowsData
+        ] = await Promise.all([
+          ApiService.fetchPopularMovies(),
+          ApiService.fetchTrendingMovies(),
+          ApiService.fetchPopularTvShows(),
+          ApiService.fetchTrendingTvShows()
+        ]);
+  
+        setPopularMovies(popularMoviesData.results);
+        setTrendingMovies(trendingMoviesData.results);
+        setPopularTvShows(popularTvShowsData.results);
+        setTrendingTvShows(trendingTvShowsData.results);
+
         setIsLoading(false);
       } catch (error) {
         console.error(error);
