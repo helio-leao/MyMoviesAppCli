@@ -15,8 +15,8 @@ export default function RowMovieList({contentContainerStyle, moviesData}) {
 
   return (
     <FlatList
+      horizontal
       keyExtractor={item => String(item.id)}
-      horizontal={true}
       contentContainerStyle={contentContainerStyle}
       data={moviesData}
       renderItem={({item}) => (

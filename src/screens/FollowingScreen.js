@@ -113,8 +113,8 @@ export default function SearchScreen() {
       {/* people */}
       <View style={styles.peopleCardsContainer}>
         <FlatList
+          horizontal
           contentContainerStyle={styles.peopleFlatlistContentContainer}
-          horizontal={true}
           data={followedPeople}
           keyExtractor={item => String(item.id)}
           renderItem={({item}) => (

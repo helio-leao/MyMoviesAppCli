@@ -75,7 +75,7 @@ export default function TvShowDetailsScreen() {
         
         {/* genres */}
         <View>
-          <ScrollView horizontal={true}>
+          <ScrollView horizontal>
             <View style={styles.genresContainer}>
               {tvShowData?.genres.map(genre => (
                 <View key={genre.id} style={styles.genrePill}>

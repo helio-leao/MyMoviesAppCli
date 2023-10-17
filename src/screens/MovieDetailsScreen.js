@@ -55,7 +55,7 @@ export default function MovieDetailsScreen() {
         
         {/* genres */}
         <View>
-          <ScrollView horizontal={true}>
+          <ScrollView horizontal>
             <View style={styles.genresContainer}>
               {movieData?.genres.map(genre => (
                 <View key={genre.id} style={styles.genrePill}>

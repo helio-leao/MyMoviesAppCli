@@ -17,8 +17,8 @@ export default function RowTvShowList({contentContainerStyle, tvShowsData}) {
 
   return (
     <FlatList
+      horizontal
       keyExtractor={item => String(item.id)}
-      horizontal={true}
       contentContainerStyle={contentContainerStyle}
       data={tvShowsData}
       renderItem={({item}) => (
