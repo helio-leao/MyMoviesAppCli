@@ -69,7 +69,7 @@ export default function TvShowDetailsScreen() {
         start={{x: 0, y: 0.15}} end={{x: 0, y: 0}}
       >
         {/* title */}
-        <Text style={styles.title}>
+        <Text style={styles.title} numberOfLines={2}>
           {tvShowData?.name}
         </Text>
         

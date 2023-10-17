@@ -49,7 +49,7 @@ export default function MovieDetailsScreen() {
         start={{x: 0, y: 0.15}} end={{x: 0, y: 0}}
       >
         {/* title */}
-        <Text style={styles.title}>
+        <Text style={styles.title} numberOfLines={2}>
           {movieData?.title}
         </Text>
         
