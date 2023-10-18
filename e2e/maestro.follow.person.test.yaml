@@ -1,0 +1,15 @@
+appId: com.mymoviesappcli
+---
+- launchApp
+- tapOn:
+    id: tab-search
+- tapOn:
+    id: search-input
+- inputText: Ari Aster
+- pressKey: enter
+- tapOn:
+    id: follow-1145520
+- tapOn:
+    id: tab-following
+- assertVisible:
+    id: 1145520
