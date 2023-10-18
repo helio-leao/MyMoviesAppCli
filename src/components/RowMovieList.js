@@ -29,7 +29,7 @@ export default function RowMovieList({contentContainerStyle, moviesData}) {
             style={styles.poster}
             source={{uri: getFullImagePath(item.poster_path) || IMAGES.posterPlaceholder}} 
           />
-          <Text style={{color: '#fff'}}>{item.title}</Text>
+          {/* <Text style={{color: '#fff'}}>{item.title}</Text> */}
         </TouchableOpacity>
       )}
       ItemSeparatorComponent={<View style={{width: 20}} />}

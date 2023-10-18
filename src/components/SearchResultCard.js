@@ -50,13 +50,13 @@ function PersonCard({item}) {
 
     try {
       await StorageService.addFollowedPerson({ id, name, profile_path });
-      ToastAndroid.show(`Você seguiu ${name}.`, ToastAndroid.SHORT);
+      // ToastAndroid.show(`Você seguiu ${name}.`, ToastAndroid.SHORT);
     } catch (error) {
       if(StorageService.ERROR.ALREADY_STORED === error.message) {
         console.log(error);
-        ToastAndroid.show(`Você já segue ${name}.`, ToastAndroid.SHORT);
+        // ToastAndroid.show(`Você já segue ${name}.`, ToastAndroid.SHORT);
       } else {
-        ToastAndroid.show(`Ocorreu um erro.`, ToastAndroid.SHORT);
+        // ToastAndroid.show(`Ocorreu um erro.`, ToastAndroid.SHORT);
       }
     }
   }

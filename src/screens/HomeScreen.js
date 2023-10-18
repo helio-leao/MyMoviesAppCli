@@ -21,7 +21,7 @@ export default function HomeScreen() {
         setIsLoadingMovies(false);
       } catch (error) {
         console.error(error);
-        ToastAndroid.show(`Ocorreu um erro.`, ToastAndroid.SHORT);
+        // ToastAndroid.show(`Ocorreu um erro.`, ToastAndroid.SHORT);
       }
     }
     loadMoviesData();
