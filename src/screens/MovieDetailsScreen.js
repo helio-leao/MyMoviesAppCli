@@ -39,7 +39,10 @@ export default function MovieDetailsScreen() {
       {/* image */}
       <Image
         style={styles.backdropImage}
-        source={{uri: ApiService.fetchFullImagePath(movieData?.backdrop_path) || ImagePlaceholder.BACKDROP}}
+        source={movieData?.backdrop_path ?
+          {uri: ApiService.fetchFullImagePath(movieData.backdrop_path)}
+          : ImagePlaceholder.BACKDROP
+        }
       />
       
       {/* gradient container */}
@@ -153,6 +156,8 @@ const styles = StyleSheet.create({
   },
   backdropImage: {
     aspectRatio: 16/9,
+    width: '100%',
+    height: undefined,
   },
   gradientContainer: {
     flex: 1,

@@ -59,7 +59,10 @@ export default function TvShowDetailsScreen() {
       {/* image */}
       <Image
         style={styles.backdropImage}
-        source={{uri: ApiService.fetchFullImagePath(tvShowData?.backdrop_path) || ImagePlaceholder.BACKDROP}}
+        source={tvShowData?.backdrop_path ?
+          {uri: ApiService.fetchFullImagePath(tvShowData.backdrop_path)}
+          : ImagePlaceholder.BACKDROP
+        }
       />
       
       {/* gradient container */}
@@ -174,6 +177,8 @@ const styles = StyleSheet.create({
   },
   backdropImage: {
     aspectRatio: 16/9,
+    width: '100%',
+    height: undefined,
   },
   gradientContainer: {
     flex: 1,

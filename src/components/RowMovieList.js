@@ -3,6 +3,7 @@ import { ImagePlaceholder } from '../utils/constants';
 import { useNavigation } from '@react-navigation/native';
 import ApiService from '../services/ApiService';
 
+
 export default function RowMovieList({contentContainerStyle, moviesData}) {
 
   const navigation = useNavigation();
@@ -26,7 +27,10 @@ export default function RowMovieList({contentContainerStyle, moviesData}) {
         >
           <Image
             style={styles.poster}
-            source={{uri: ApiService.fetchFullImagePath(item.poster_path) || ImagePlaceholder.POSTER}} 
+            source={item?.poster_path ?
+              {uri: ApiService.fetchFullImagePath(item.poster_path)}
+              : ImagePlaceholder.POSTER
+            }
           />
         </TouchableOpacity>
       )}
@@ -41,5 +45,7 @@ const styles = StyleSheet.create({
   },
   poster: {
     aspectRatio: 2/3,
+    width: '100%',
+    height: undefined,
   },
 });

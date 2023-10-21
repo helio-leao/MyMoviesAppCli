@@ -121,7 +121,10 @@ export default function SearchScreen() {
             <View testID={String(item.id)}>
               <Image
                 style={styles.personCardImage}
-                source={{uri: ApiService.fetchFullImagePath(item.profile_path) || ImagePlaceholder.PROFILE}}
+                source={item.profile_path ?
+                  {uri: ApiService.fetchFullImagePath(item.profile_path)}
+                  : ImagePlaceholder.PROFILE
+                }
               />
               <TouchableOpacity style={styles.unfollowButtonContainer} onPress={() => handleUnfollow(item.id)}>
                 <FontAwesome name="user-times" size={18} color="white" />
@@ -160,6 +163,7 @@ const styles = StyleSheet.create({
   },
   personCardImage: {
     width: 100,
+    height: undefined,
     aspectRatio: 2/3,
     borderRadius: 4,
   },

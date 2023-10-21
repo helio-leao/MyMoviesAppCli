@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import ApiService from '../services/ApiService';
 
 
-
 export default function RowTvShowList({contentContainerStyle, tvShowsData}) {
 
   const navigation = useNavigation();
@@ -28,7 +27,10 @@ export default function RowTvShowList({contentContainerStyle, tvShowsData}) {
         >
           <Image
             style={styles.poster}
-            source={{uri: ApiService.fetchFullImagePath(item.poster_path) || ImagePlaceholder.POSTER}} 
+            source={item?.poster_path ?
+              {uri: ApiService.fetchFullImagePath(item.poster_path)}
+              : ImagePlaceholder.POSTER
+            }
           />
         </TouchableOpacity>
       )}
@@ -43,5 +45,7 @@ const styles = StyleSheet.create({
   },
   poster: {
     aspectRatio: 2/3,
+    width: '100%',
+    height: undefined,
   },
 });

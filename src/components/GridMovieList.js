@@ -12,9 +12,11 @@ export default function GridMovieList({
 }) {
   const navigation = useNavigation();
 
+
   function onCardPress(id) {
     navigation.push('MovieDetailsScreen', {id});
-  }  
+  }
+
 
   return (
     <FlatList
@@ -27,7 +29,10 @@ export default function GridMovieList({
         >
           <Image
             style={styles().cardPoster}
-            source={{uri: ApiService.fetchFullImagePath(item.poster_path) || ImagePlaceholder.POSTER}}
+            source={item.poster_path ?
+              {uri: ApiService.fetchFullImagePath(item.poster_path)}
+              : ImagePlaceholder.POSTER
+            }
           />
         </TouchableOpacity>
       )}
@@ -49,6 +54,8 @@ const styles = (numColumns) => StyleSheet.create({
   },
   cardPoster: {
     aspectRatio: 2/3,
+    width: '100%',
+    height: undefined,
   },
   footerIndicatorContainer: {
     justifyContent: 'center',

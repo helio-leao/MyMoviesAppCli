@@ -22,12 +22,15 @@ function TVCard({item}) {
       {/* image */}
       <Image
         style={styles.resultCardImage}
-        source={{uri: ApiService.fetchFullImagePath(item.poster_path) || ImagePlaceholder.POSTER}} 
+        source={item.poster_path ?
+          {uri: ApiService.fetchFullImagePath(item.poster_path)}
+          : ImagePlaceholder.POSTER
+        }
       />
 
       {/* data container */}
       <View style={styles.resultCardDataContainer}>
-        <Text style={styles.resultCardTitle}>{item.name}</Text>
+        <Text style={styles.resultCardTitle} numberOfLines={2}>{item.name}</Text>
         {/* <Text style={styles.resultCardText}>{item.media_type}</Text> */}
 
         {/* button */}
@@ -67,12 +70,15 @@ function PersonCard({item}) {
       {/* image */}
       <Image
         style={styles.resultCardImage}
-        source={{uri: ApiService.fetchFullImagePath(item.profile_path) || ImagePlaceholder.PROFILE}} 
+        source={item.profile_path ?
+          {uri: ApiService.fetchFullImagePath(item.profile_path)}
+          : ImagePlaceholder.PROFILE
+        }
       />
 
       {/* data container */}
       <View style={styles.resultCardDataContainer}>
-        <Text style={styles.resultCardTitle}>{item.name}</Text>
+        <Text style={styles.resultCardTitle} numberOfLines={2}>{item.name}</Text>
         {/* <Text style={styles.resultCardText}>{item.media_type}</Text> */}
 
         {/* button */}
@@ -101,12 +107,15 @@ function MovieCard({item}) {
       {/* image */}
       <Image
         style={styles.resultCardImage}
-        source={{uri: ApiService.fetchFullImagePath(item.poster_path) || ImagePlaceholder.POSTER}}
+        source={item.poster_path ?
+          {uri: ApiService.fetchFullImagePath(item.poster_path)}
+          : ImagePlaceholder.POSTER
+        }
       />
 
       {/* data container */}
       <View style={styles.resultCardDataContainer}>
-        <Text style={styles.resultCardTitle}>{item.title}</Text>
+        <Text style={styles.resultCardTitle} numberOfLines={2}>{item.title}</Text>
         {/* <Text style={styles.resultCardText}>{item.media_type}</Text> */}
 
         {/* button */}
@@ -127,6 +136,8 @@ export default function SearchResultCard({item}) {
       return <TVCard item={item} />
     case ApiService.MediaType.PERSON:
       return <PersonCard item={item} />
+    default:
+      return null
   }
 }
 
@@ -135,8 +146,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   resultCardImage: {
-    width: 120,
     aspectRatio: 2/3,
+    width: 120,
+    height: undefined,
     borderRadius: 4,
     marginRight: 20,
   },
