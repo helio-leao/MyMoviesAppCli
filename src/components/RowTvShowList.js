@@ -27,7 +27,7 @@ export default function RowTvShowList({contentContainerStyle, tvShowsData}) {
         >
           <Image
             style={styles.poster}
-            source={item?.poster_path ?
+            source={item.poster_path ?
               {uri: ApiService.fetchFullImagePath(item.poster_path)}
               : ImagePlaceholder.POSTER
             }

@@ -27,7 +27,7 @@ export default function RowMovieList({contentContainerStyle, moviesData}) {
         >
           <Image
             style={styles.poster}
-            source={item?.poster_path ?
+            source={item.poster_path ?
               {uri: ApiService.fetchFullImagePath(item.poster_path)}
               : ImagePlaceholder.POSTER
             }
