@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, Image, ToastAndroid } from 'react-native';
 import MoviesGrid from '../components/GridMovieList';
 import { ImagePlaceholder } from '../utils/constants';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -27,7 +27,7 @@ export default function SearchScreen() {
         setIsLoadingPeople(false);
       } catch (error) {
         console.error(error);
-        // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+        ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
       }
     }
     loadFollowedPeople();
@@ -51,7 +51,7 @@ export default function SearchScreen() {
       setMoviesData(results);
     } catch (error) {
       console.error(error);
-      // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     }
   }
 
@@ -63,7 +63,7 @@ export default function SearchScreen() {
       setMoviesData(prev => [...prev, ...results]);
     } catch (error) {
       console.error(error);
-      // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     }
   }
 
@@ -74,7 +74,7 @@ export default function SearchScreen() {
       setFollowedPeople(updatedFollowedPeople);
     } catch (error) {
       console.log(error);
-      // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     }
   }
 

@@ -3,20 +3,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const FOLLOWED_PEOPLE_STORAGE_KEY = '@social:followed_people';
 
-
-const Error = {
-  ALREADY_STORED: 'ID already in storage.',
-}
-
-
+// NOTE: alternative to the result object return strategy could be the try/catch here sending one
+// generic error up like "Ocorreu um erro." and logging the error with console.log or .warn or .error
+// NOTE: it's common to use ok too instead of success
 async function addFollowedPerson(newPerson) {
   const followedPeople = await getFollowedPeople();
 
   if(followedPeople.find(person => newPerson.id === person.id)) {
-    throw Error(Error.ALREADY_STORED);
+    return {success: false, message: `Você já segue ${newPerson.name}.`};
   }
   
   await AsyncStorage.setItem(FOLLOWED_PEOPLE_STORAGE_KEY, JSON.stringify([...followedPeople, newPerson]));
+  return {success: true};
 }
 
 async function getFollowedPeople() {
@@ -32,7 +30,6 @@ async function removeFollowedPerson(id) {
 
 
 export default {
-  Error,
   addFollowedPerson,
   getFollowedPeople,
   removeFollowedPerson,

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FlatList, StyleSheet, TextInput, TouchableOpacity, View, Text } from 'react-native';
+import { FlatList, StyleSheet, TextInput, TouchableOpacity, View, Text, ToastAndroid } from 'react-native';
 import SearchResultCard from '../components/SearchResultCard';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ApiService from '../services/ApiService';
@@ -17,7 +17,7 @@ export default function SearchScreen() {
       setPageData(data);
     } catch (error) {
       console.error(error);
-      // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     }
   }
 

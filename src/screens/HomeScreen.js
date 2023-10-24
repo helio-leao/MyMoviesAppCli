@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, View, ScrollView, Text, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, ScrollView, Text, ActivityIndicator, ToastAndroid } from 'react-native';
 import RowMovieList from '../components/RowMovieList';
 import RowTvShowList from '../components/RowTvShowList';
 import ApiService from '../services/ApiService';
@@ -37,7 +37,7 @@ export default function HomeScreen() {
         setIsLoading(false);
       } catch (error) {
         console.error(error);
-        // ToastAndroid.show(`Ocorreu um erro.`, ToastAndroid.SHORT);
+        ToastAndroid.show(`Ocorreu um erro.`, ToastAndroid.SHORT);
       }
     }
     loadMoviesData();

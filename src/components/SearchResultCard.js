@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text, Image, ToastAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { ImagePlaceholder } from '../utils/constants';
@@ -15,7 +15,7 @@ function TVCard({item}) {
 
   function handleWatchLaterPress() {
     console.log('TODO: watch later pressed, id:', item.id)
-  } 
+  }
 
   return (
     <TouchableOpacity style={styles.resultCardContainer} onPress={handleCardPress}>
@@ -53,15 +53,16 @@ function PersonCard({item}) {
     const {id, name, profile_path} = item;
 
     try {
-      await StorageService.addFollowedPerson({ id, name, profile_path });
-        // ToastAndroid.show(`Você seguiu ${name}.`, ToastAndroid.SHORT);
-    } catch (error) {
-      if(StorageService.Error.ALREADY_STORED === error.message) {
-        console.log(error);
-        // ToastAndroid.show(`Você já segue ${name}.`, ToastAndroid.SHORT);
+      const result = await StorageService.addFollowedPerson({ id, name, profile_path });
+
+      if(result.success) {
+        ToastAndroid.show(`Você seguiu ${name}.`, ToastAndroid.SHORT);
       } else {
-        // ToastAndroid.show(`Ocorreu um erro.`, ToastAndroid.SHORT);
+        ToastAndroid.show(result.message, ToastAndroid.SHORT);
       }
+    } catch (error) {
+      console.log(error);
+      ToastAndroid.show(`Ocorreu um erro.`, ToastAndroid.SHORT);
     }
   }
 

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, ToastAndroid } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -22,7 +22,7 @@ export default function MovieDetailsScreen() {
         setMovieData(movieDetails);
       } catch (error) {
         console.error(error);
-        // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+        ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
       }
     }
     getMovieDetails();
