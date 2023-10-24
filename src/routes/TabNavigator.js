@@ -7,6 +7,7 @@ import FollowingScreen from '../screens/FollowingScreen';
 import MovieDetailsScreen from '../screens/MovieDetailsScreen';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import CreateUserScreen from '../screens/CreateUserScreen';
 
 
 
@@ -80,6 +81,17 @@ export default function TabNavigator() {
             <FontAwesome name="search" size={size} color={color} />
           ),
           tabBarLabel: 'Buscar',
+        }}
+      />
+
+      <Tab.Screen
+        name='CreateUserScreen'
+        component={CreateUserScreen}
+        options={{
+          tabBarTestID: 'tab-create-user',
+          tabBarIcon: ({color, size}) => (
+            <FontAwesome name="user-plus" size={size} color={color} />
+          ),
         }}
       />
 
