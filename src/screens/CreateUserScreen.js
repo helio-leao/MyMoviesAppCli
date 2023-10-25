@@ -22,7 +22,7 @@ export default function CreateUserScreen() {
       incorrectDataFields.push('email');
     }
 
-    if(!(/^\d{11}$/).test(phone)) {
+    if(phone.length !== 15) {
       incorrectDataFields.push('telefone');
     }
 
@@ -36,35 +36,52 @@ export default function CreateUserScreen() {
     }
   }
 
+  function formatPhone(input) {
+    const digits = input.match(/[\d]/g)?.slice(0, 11) || [];
+    let formatted = digits.join('');
+    
+    if (digits.length > 7) {
+      formatted = '(' + digits.slice(0, 2).join('') + ') ' +
+        + digits.slice(2, 7).join('') + '-' + digits.slice(7).join('');
+    } else if(digits.length > 2) {
+      formatted = '(' + digits.slice(0, 2).join('') + ') ' +
+        + digits.slice(2).join('');
+    } else if(digits.length > 0) {
+      formatted = '(' + digits.join('');
+    }
+    
+    setPhone(formatted);
+  }
+
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Nome</Text>
+      <Text style={styles.label}>Nome *</Text>
       <TextInput
         testID='name-input'
         style={styles.input}
-        placeholder='Nome'
+        placeholder='Pelo menos 6 caracteres'
         value={name}
         onChangeText={setName}
       />
 
-      <Text style={styles.label}>Email</Text>
+      <Text style={styles.label}>Email *</Text>
       <TextInput
         testID='email-input'
         style={styles.input}
-        placeholder='Email'
+        placeholder='exemplo@email.com'
         value={email}
         onChangeText={setEmail}
       />
 
-      <Text style={styles.label}>Telefone</Text>
+      <Text style={styles.label}>Telefone *</Text>
       <TextInput
         testID='phone-input'
         keyboardType='numeric'
         style={styles.input}
-        placeholder='Telefone'
+        placeholder='(99) 99999-9999'
         value={phone}
-        onChangeText={setPhone}
+        onChangeText={formatPhone}
       />
 
       <View style={styles.errorMessageContainer}>
@@ -72,7 +89,7 @@ export default function CreateUserScreen() {
       </View>
 
       <TouchableOpacity style={styles.button} onPress={handleSave}>
-        <Text style={styles.buttonText}>VERIFICAR</Text>
+        <Text style={styles.buttonText}>SALVAR</Text>
       </TouchableOpacity>
     </View>
   );
@@ -102,12 +119,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginHorizontal: 20,
     marginTop: 20,
-    height: 26,
+    height: 20,
     justifyContent: 'center',
   },
   errorMessageText: {
     color: '#f55',
-    fontSize: 18,
     textTransform: 'capitalize',
   },
   button: {
