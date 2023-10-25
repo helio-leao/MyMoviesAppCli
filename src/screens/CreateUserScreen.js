@@ -44,7 +44,7 @@ export default function CreateUserScreen() {
   function handlePhone(input) {
     let formatted = input
       .replace(/[^\d]/g, '')
-      .replace(/([\d]{2})([\d])/, '($1) $2')
+      .replace(/(\d{2})(\d+)/, '($1) $2')
       .replace(/(.{10})(\d+)/, '$1-$2');
     
     setPhone(formatted);
