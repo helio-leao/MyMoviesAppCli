@@ -14,7 +14,7 @@ export default function CreateUserScreen() {
   function handleSave() {
     let incorrectDataFields = [];
 
-    if(name.trim().length < 6) {
+    if(name.trim().length < 2) {
       incorrectDataFields.push('nome');
     }
 
@@ -28,8 +28,13 @@ export default function CreateUserScreen() {
 
 
     if(incorrectDataFields.length !== 0) {
-      setErrorMessage(incorrectDataFields.join(', ')
-        + (incorrectDataFields.length > 1 ? ' inválidos' : ' inválido'));
+      const lastError = incorrectDataFields.pop();
+
+      if(incorrectDataFields.length > 0) {
+        setErrorMessage(`${incorrectDataFields.join(', ')} e ${lastError} inválidos`);
+      } else {
+        setErrorMessage(`${lastError} inválido`);
+      }
     } else {
       setErrorMessage('');
       Alert.alert('Verificado com sucesso')
@@ -37,17 +42,19 @@ export default function CreateUserScreen() {
   }
 
   function formatPhone(input) {
-    const digits = input.match(/[\d]/g)?.slice(0, 11) || [];
-    let formatted = digits.join('');
-    
-    if (digits.length > 7) {
-      formatted = '(' + digits.slice(0, 2).join('') + ') ' +
-        + digits.slice(2, 7).join('') + '-' + digits.slice(7).join('');
-    } else if(digits.length > 2) {
-      formatted = '(' + digits.slice(0, 2).join('') + ') ' +
-        + digits.slice(2).join('');
-    } else if(digits.length > 0) {
-      formatted = '(' + digits.join('');
+    const digits = (input.match(/[\d]/g)?.slice(0, 11) || []).join('');
+    const groups = digits.match(/^([\d]{1,2})([\d]{1,5})?([\d]{1,4})?$/) || [];
+
+    let formatted = '';
+
+    if(groups[1]) {
+      formatted += `(${groups[1]}`;
+    }
+    if(groups[2]) {
+      formatted += `) ${groups[2]}`;
+    }
+    if(groups[3]) {
+      formatted += `-${groups[3]}`;
     }
     
     setPhone(formatted);
@@ -60,7 +67,7 @@ export default function CreateUserScreen() {
       <TextInput
         testID='name-input'
         style={styles.input}
-        placeholder='Pelo menos 6 caracteres'
+        placeholder='Pelo menos 2 caracteres'
         value={name}
         onChangeText={setName}
       />
@@ -124,7 +131,6 @@ const styles = StyleSheet.create({
   },
   errorMessageText: {
     color: '#f55',
-    textTransform: 'capitalize',
   },
   button: {
     backgroundColor: '#444',
