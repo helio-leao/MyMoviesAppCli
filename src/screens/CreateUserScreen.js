@@ -41,21 +41,11 @@ export default function CreateUserScreen() {
     }
   }
 
-  function formatPhone(input) {
-    const digits = (input.match(/[\d]/g)?.slice(0, 11) || []).join('');
-    const groups = digits.match(/^([\d]{1,2})([\d]{1,5})?([\d]{1,4})?$/) || [];
-
-    let formatted = '';
-
-    if(groups[1]) {
-      formatted += `(${groups[1]}`;
-    }
-    if(groups[2]) {
-      formatted += `) ${groups[2]}`;
-    }
-    if(groups[3]) {
-      formatted += `-${groups[3]}`;
-    }
+  function handlePhone(input) {
+    let formatted = input
+      .replace(/[^\d]/g, '')
+      .replace(/([\d]{2})([\d])/, '($1) $2')
+      .replace(/(.{10})(\d+)/, '$1-$2');
     
     setPhone(formatted);
   }
@@ -87,8 +77,9 @@ export default function CreateUserScreen() {
         keyboardType='numeric'
         style={styles.input}
         placeholder='(99) 99999-9999'
+        maxLength={15}
         value={phone}
-        onChangeText={formatPhone}
+        onChangeText={handlePhone}
       />
 
       <View style={styles.errorMessageContainer}>
