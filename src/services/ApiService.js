@@ -111,6 +111,23 @@ async function createRequestToken() {
   return await fetchData('/authentication/token/new');
 }
 
+// TODO: helper function postData
+async function createSession(token) {
+  const body = { request_token: token };
+  const headers = { Authorization: `Bearer ${API_TOKEN}` };
+
+  let url = API_BASE_URL + '/authentication/session/new';
+
+  console.log(url);
+
+  const response = await axios.post(url, body, {headers});
+  return response.data;
+}
+
+function getRequestUserPermissionUrl(token) {
+  return `https://www.themoviedb.org/authenticate/${token}`;
+}
+
 
 export default {
   TrendingTimeWindow,
@@ -127,4 +144,6 @@ export default {
   fetchMoviesWithPeople,
   fetchFullImagePath,
   createRequestToken,
+  getRequestUserPermissionUrl,
+  createSession,
 }

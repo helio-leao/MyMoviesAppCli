@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeTabStack from './HomeTabStack';
 import SearchTabStack from './SearchTabStack';
 import FollowingTabStack from './FollowingTabStack';
+import AuthScreen from '../screens/AuthScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -60,6 +61,18 @@ export default function RootTabNavigator() {
             <FontAwesome name="users" size={size} color={color} />
           ),
           tabBarLabel: 'Seguindo',
+        }}
+      />
+
+      <Tab.Screen
+        name='AuthScreen'
+        component={AuthScreen}
+        options={{
+          tabBarTestID: 'tab-following',
+          tabBarIcon: ({color, size}) => (
+            <FontAwesome name="sign-in" size={size} color={color} />
+          ),
+          tabBarLabel: 'Autenticação',
         }}
       />
     </Tab.Navigator>
