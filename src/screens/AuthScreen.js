@@ -1,12 +1,14 @@
 import { StyleSheet, View, ToastAndroid, TouchableOpacity, Text, Linking } from 'react-native';
 import ApiService from '../services/ApiService';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import AuthStorageService from '../services/AuthStorageService';
+import { SignedUserContext } from '../App';
 
 
 export default function AuthScreen() {
 
   const [requestToken, setRequestToken] = useState('');
+  const {signedUser, setSignedUser} = useContext(SignedUserContext);
 
 
   async function handleLogin() {
@@ -34,6 +36,10 @@ export default function AuthScreen() {
 
       if(response.success) {
         await AuthStorageService.setSessionId(response.session_id);
+
+        const userData = await ApiService.fetchAccountDetailsBySessionId(response.session_id);
+        setSignedUser(userData);
+
         ToastAndroid.show('Logged in.', ToastAndroid.SHORT);
       }
     } catch (error) {
@@ -57,6 +63,7 @@ export default function AuthScreen() {
 
       if(response.success) {
         await AuthStorageService.deleteSessionId();
+        setSignedUser(null);
         ToastAndroid.show('Logged out.', ToastAndroid.SHORT);
       }
     } catch (error) {
