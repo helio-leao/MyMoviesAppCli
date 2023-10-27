@@ -36,11 +36,11 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" backgroundColor='#000' />
 
-      <NavigationContainer>
-        <SignedUserContext.Provider value={{signedUser, setSignedUser}}>
+      <SignedUserContext.Provider value={{signedUser, setSignedUser}}>
+        <NavigationContainer>
           <RootTabNavigator />
-        </SignedUserContext.Provider>
-      </NavigationContainer>
+        </NavigationContainer>
+      </SignedUserContext.Provider>
 
     </SafeAreaView>
   );

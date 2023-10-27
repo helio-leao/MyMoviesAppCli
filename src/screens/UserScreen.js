@@ -5,7 +5,7 @@ import AuthStorageService from '../services/AuthStorageService';
 import { SignedUserContext } from '../App';
 
 
-export default function AuthScreen() {
+export default function UserScreen() {
 
   const [requestToken, setRequestToken] = useState('');
   const {signedUser, setSignedUser} = useContext(SignedUserContext);
@@ -13,7 +13,9 @@ export default function AuthScreen() {
 
   async function handleLogin() {
     try {
-      if(await AuthStorageService.getSessionId()) {
+      const sessionId = await AuthStorageService.getSessionId();
+
+      if(sessionId) {
         ToastAndroid.show('Already logged in.', ToastAndroid.SHORT);
         return;
       }
@@ -21,8 +23,8 @@ export default function AuthScreen() {
       const response = await ApiService.createRequestToken();
 
       if(response.success) {
+        await Linking.openURL(ApiService.fetchRequestUserPermissionUrl(response.request_token));
         setRequestToken(response.request_token);
-        Linking.openURL(ApiService.fetchRequestUserPermissionUrl(response.request_token));
       }
     } catch (error) {
       console.log(error);
@@ -36,7 +38,6 @@ export default function AuthScreen() {
 
       if(response.success) {
         await AuthStorageService.setSessionId(response.session_id);
-
         const userData = await ApiService.fetchAccountDetailsBySessionId(response.session_id);
         setSignedUser(userData);
 
