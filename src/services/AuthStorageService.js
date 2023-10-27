@@ -12,8 +12,13 @@ async function getSessionId() {
   return await AsyncStorage.getItem(SESSION_ID_STORAGE_KEY);
 }
 
+async function deleteSessionId() {
+  await AsyncStorage.removeItem(SESSION_ID_STORAGE_KEY);
+}
+
 
 export default {
   setSessionId,
   getSessionId,
+  deleteSessionId,
 }

@@ -107,6 +107,10 @@ async function fetchData(endpoint, query) {
 
 // AUTHENTICATION FUNCTIONS
 
+function fetchRequestUserPermissionUrl(token) {
+  return `https://www.themoviedb.org/authenticate/${token}`;
+}
+
 async function createRequestToken() {
   return await fetchData('/authentication/token/new');
 }
@@ -124,8 +128,20 @@ async function createSession(token) {
   return response.data;
 }
 
-function getRequestUserPermissionUrl(token) {
-  return `https://www.themoviedb.org/authenticate/${token}`;
+async function deleteSession(sessionId) {
+  const body = { session_id: sessionId };
+  const headers = { Authorization: `Bearer ${API_TOKEN}` };
+
+  let url = API_BASE_URL + '/authentication/session';
+
+  console.log(url);
+
+  const response = await axios.delete(url, {data: body, headers: headers});
+  return response.data;
+}
+
+async function fetchAccountDetailsBySessionId(sessionId) {
+  return await fetchData('/account', `session_id=${sessionId}`);
 }
 
 
@@ -144,6 +160,8 @@ export default {
   fetchMoviesWithPeople,
   fetchFullImagePath,
   createRequestToken,
-  getRequestUserPermissionUrl,
+  fetchRequestUserPermissionUrl,
   createSession,
+  deleteSession,
+  fetchAccountDetailsBySessionId,
 }

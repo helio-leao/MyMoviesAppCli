@@ -1,6 +1,7 @@
 import { StyleSheet, View, ToastAndroid, TouchableOpacity, Text, Linking } from 'react-native';
 import ApiService from '../services/ApiService';
 import { useState } from 'react';
+import AuthStorageService from '../services/AuthStorageService';
 
 
 export default function AuthScreen() {
@@ -8,13 +9,18 @@ export default function AuthScreen() {
   const [requestToken, setRequestToken] = useState('');
 
 
-  async function handleSignin() {
+  async function handleLogin() {
     try {
+      if(await AuthStorageService.getSessionId()) {
+        ToastAndroid.show('Already logged in.', ToastAndroid.SHORT);
+        return;
+      }
+
       const response = await ApiService.createRequestToken();
 
       if(response.success) {
         setRequestToken(response.request_token);
-        Linking.openURL(ApiService.getRequestUserPermissionUrl(response.request_token));
+        Linking.openURL(ApiService.fetchRequestUserPermissionUrl(response.request_token));
       }
     } catch (error) {
       console.log(error);
@@ -27,7 +33,8 @@ export default function AuthScreen() {
       const response = await ApiService.createSession(requestToken);
 
       if(response.success) {
-        console.log(response);
+        await AuthStorageService.setSessionId(response.session_id);
+        ToastAndroid.show('Logged in.', ToastAndroid.SHORT);
       }
     } catch (error) {
       console.log(error);
@@ -37,26 +44,45 @@ export default function AuthScreen() {
     }
   }
 
-  function handleSignout() {
-    
+  async function handleLogout() {
+    try {
+      const sessionId = await AuthStorageService.getSessionId();
+
+      if(!sessionId) {
+        ToastAndroid.show('Already logged out.', ToastAndroid.SHORT);
+        return;
+      }
+
+      const response = await ApiService.deleteSession(sessionId);
+
+      if(response.success) {
+        await AuthStorageService.deleteSessionId();
+        ToastAndroid.show('Logged out.', ToastAndroid.SHORT);
+      }
+    } catch (error) {
+      console.log(error);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+    }
   }
 
 
   return (
     <View style={styles.container}>
+
       {requestToken ? (
         <TouchableOpacity style={[styles.button, {marginBottom: 20}]} onPress={handleConfirmSession}>
           <Text style={styles.buttonText}>Confirm Session</Text>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity style={[styles.button, {marginBottom: 20}]} onPress={handleSignin}>
-          <Text style={styles.buttonText}>Sign in</Text>
+        <TouchableOpacity style={[styles.button, {marginBottom: 20}]} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       )}
 
-      <TouchableOpacity style={styles.button} onPress={handleSignout}>
-        <Text style={styles.buttonText}>Sign out</Text>
+      <TouchableOpacity style={styles.button} onPress={handleLogout}>
+        <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
+
     </View>      
   );
 }
@@ -70,7 +96,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     backgroundColor: '#fff',
-    alignSelf: 'flex-start',
     borderRadius: 4,
   },
   buttonText: {

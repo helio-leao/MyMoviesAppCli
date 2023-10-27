@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const FOLLOWED_PEOPLE_STORAGE_KEY = '@social:followed_people';
+const FOLLOWED_PEOPLE_STORAGE_KEY = '@user:followed_people';
+
 
 // NOTE: alternative to the result object return strategy could be the try/catch here sending one
 // generic error up like "Ocorreu um erro." and logging the error with console.log or .warn or .error
