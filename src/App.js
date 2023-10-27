@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, StatusBar } from 'react-native';
+import { SafeAreaView, StyleSheet, StatusBar, ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import RootTabNavigator from './navigation/RootTabNavigator';
 import { createContext, useEffect, useState } from 'react';
@@ -12,6 +12,7 @@ export const SignedUserContext = createContext();
 export default function App() {
 
   const [signedUser, setSignedUser] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
 
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function App() {
           const signedUser = await ApiService.fetchAccountDetailsBySessionId(sessionId);
           setSignedUser(signedUser);
         }
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -36,11 +38,15 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" backgroundColor='#000' />
 
-      <SignedUserContext.Provider value={{signedUser, setSignedUser}}>
-        <NavigationContainer>
-          <RootTabNavigator />
-        </NavigationContainer>
-      </SignedUserContext.Provider>
+      {isLoading ? (
+        <ActivityIndicator size={'large'} color={'#fff'} />
+      ) : (
+        <SignedUserContext.Provider value={{signedUser, setSignedUser}}>
+          <NavigationContainer>
+            <RootTabNavigator />
+          </NavigationContainer>
+        </SignedUserContext.Provider>
+      )}
 
     </SafeAreaView>
   );
@@ -50,5 +56,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#111',
   },
 });
