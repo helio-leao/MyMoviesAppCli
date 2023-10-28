@@ -11,7 +11,9 @@ export const SignedUserContext = createContext();
 
 export default function App() {
 
+  // NOTE: add sessionId and change context name for SessionDataContext???
   const [signedUser, setSignedUser] = useState();
+
   const [isLoading, setIsLoading] = useState(true);
 
 

@@ -60,7 +60,7 @@ export default function UserScreen() {
       console.log(error);
       console.log('error response: ', error.response.data);
       // NOTE: looks like the toast is triggered even if there's no exception
-      // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     } finally {
       setRequestToken('');
     }

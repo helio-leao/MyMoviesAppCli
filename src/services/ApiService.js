@@ -117,10 +117,14 @@ async function createRequestToken() {
 
 // TODO: helper function postData
 async function createSession(token) {
-  const body = { request_token: token };
-  const headers = { Authorization: `Bearer ${API_TOKEN}` };
+  const url = API_BASE_URL + '/authentication/session/new';
 
-  let url = API_BASE_URL + '/authentication/session/new';
+  const body = {
+    request_token: token
+  };
+  const headers = {
+    Authorization: `Bearer ${API_TOKEN}`
+  };
 
   console.log(url);
 
@@ -129,10 +133,14 @@ async function createSession(token) {
 }
 
 async function deleteSession(sessionId) {
-  const body = { session_id: sessionId };
-  const headers = { Authorization: `Bearer ${API_TOKEN}` };
+  const url = API_BASE_URL + '/authentication/session';
 
-  let url = API_BASE_URL + '/authentication/session';
+  const body = {
+    session_id: sessionId,
+  };
+  const headers = {
+    Authorization: `Bearer ${API_TOKEN}`,
+  };
 
   console.log(url);
 
@@ -142,6 +150,27 @@ async function deleteSession(sessionId) {
 
 async function fetchAccountDetailsBySessionId(sessionId) {
   return await fetchData('/account', `session_id=${sessionId}`);
+}
+
+
+// AUTHENTICATED USER FUNCTIONS
+
+async function addFavorite(accountId, sessionId, mediaData) {
+  const url = API_BASE_URL + `/account/${accountId}/favorite?session_id=${sessionId}`;
+
+  const body = {
+    media_type: mediaData.media_type,
+    media_id: mediaData.id,
+    favorite: true,
+  };
+  const headers = {
+    Authorization: `Bearer ${API_TOKEN}`,
+  };
+
+  console.log(url);
+
+  const response = await axios.post(url, body, {headers});
+  return response.data;
 }
 
 
@@ -164,4 +193,5 @@ export default {
   createSession,
   deleteSession,
   fetchAccountDetailsBySessionId,
+  addFavorite,
 }

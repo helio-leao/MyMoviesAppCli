@@ -1,16 +1,19 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, ToastAndroid } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import RowMovieList from '../components/RowMovieList';
 import { ImagePlaceholder } from '../utils/constants';
 import LinearGradient from 'react-native-linear-gradient';
 import ApiService from '../services/ApiService';
+import { SignedUserContext } from '../App';
+import AuthStorageService from '../services/AuthStorageService';
 
 
 export default function MovieDetailsScreen() {
 
+  const {signedUser} = useContext(SignedUserContext);
   const [movieData, setMovieData] = useState(null);
   const route = useRoute();
 
@@ -29,8 +32,23 @@ export default function MovieDetailsScreen() {
   }, []);
 
 
-  function onWatchLaterPress() {
-    console.log('TODO: watch later press, id', movieData.id);
+  // NOTE: verify if error response comes in the same object if outside try/catch block
+  async function onFavoritePress() {
+    try {
+      const sessionId = await AuthStorageService.getSessionId();
+      const response = await ApiService.addFavorite(
+        signedUser.id,
+        sessionId,
+        {...movieData, media_type: ApiService.MediaType.MOVIE}
+      );
+
+      if(response.success) {
+        ToastAndroid.show('Filme favoritado.', ToastAndroid.SHORT);
+      }
+    } catch (error) {
+      console.log('error response: ', error.response.data);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+    }
   }
 
 
@@ -87,10 +105,12 @@ export default function MovieDetailsScreen() {
                 </View>
               </View>
 
-              {/* <TouchableOpacity style={styles.watchLaterButton} onPress={onWatchLaterPress}>
-                <FontAwesome name="clock-o" size={20} color="white" />
-                <Text style={styles.watchLaterButtonText}>Ver Depois</Text>
-              </TouchableOpacity> */}
+              {signedUser && (
+                <TouchableOpacity style={styles.favoriteButton} onPress={onFavoritePress}>
+                  <FontAwesome name="heart" size={20} color="white" />
+                  <Text style={styles.favoriteButtonText}>Favoritar</Text>
+                </TouchableOpacity>
+              )}
             </View>
 
             <View style={{marginHorizontal: 10}}>
@@ -203,14 +223,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '800',
   },
-  watchLaterButton: {
+  favoriteButton: {
     paddingVertical: 10,
     paddingHorizontal: 12,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
   },
-  watchLaterButtonText: {
+  favoriteButtonText: {
     color: '#fff',
   },
   contentScrollContainer: {
