@@ -40,7 +40,7 @@ export default function UserScreen() {
         await AuthStorageService.deleteSessionId();
         setSignedUser(null);
         ToastAndroid.show('Logged out.', ToastAndroid.SHORT);
-        // NOTE: create another request token???
+        // NOTE: create another request token for another login???
       }
     } catch (error) {
       console.log(error);
@@ -57,9 +57,7 @@ export default function UserScreen() {
       await handleConfirmLogin();    
       ToastAndroid.show('Logged in.', ToastAndroid.SHORT);
     } catch (error) {
-      console.log(error);
       console.log('error response: ', error.response.data);
-      // NOTE: looks like the toast is triggered even if there's no exception
       ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     } finally {
       setRequestToken('');
@@ -73,7 +71,6 @@ export default function UserScreen() {
       await AuthStorageService.setSessionId(response.session_id);
       const userData = await ApiService.fetchAccountDetailsBySessionId(response.session_id);
       setSignedUser(userData);
-      // NOTE: store account details on storage too???
     }
   }
 
