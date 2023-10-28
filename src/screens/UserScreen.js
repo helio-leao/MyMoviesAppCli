@@ -1,6 +1,6 @@
 import { StyleSheet, View, ToastAndroid, TouchableOpacity, Text } from 'react-native';
 import ApiService from '../services/ApiService';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AuthStorageService from '../services/AuthStorageService';
 import { SignedUserContext } from '../App';
 import WebView from 'react-native-webview';
@@ -12,18 +12,24 @@ export default function UserScreen() {
   const [requestToken, setRequestToken] = useState('');
 
 
-  async function handleLogin() {
-    try {
-      const response = await ApiService.createRequestToken();
-
-      if(response.success) {
-        setRequestToken(response.request_token);
+  useEffect(() => {
+    async function createRequestToken() {
+      try {
+        const response = await ApiService.createRequestToken();
+  
+        if(response.success) {
+          setRequestToken(response.request_token);
+        }
+      } catch (error) {
+        console.log(error);
+        ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
       }
-    } catch (error) {
-      console.log(error);
-      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     }
-  }
+
+    if(!signedUser) {
+      createRequestToken();
+    }
+  }, []);
 
   async function handleLogout() {
     try {
@@ -34,6 +40,7 @@ export default function UserScreen() {
         await AuthStorageService.deleteSessionId();
         setSignedUser(null);
         ToastAndroid.show('Logged out.', ToastAndroid.SHORT);
+        // NOTE: create another request token???
       }
     } catch (error) {
       console.log(error);
@@ -41,10 +48,8 @@ export default function UserScreen() {
     }
   }
 
-  // FIXME: sometimes it logs in the user and still triggers the catch clause with
-  // axios 401 error message
-  async function checkLoginConfirmation({url}) {    
-    if(!isLoginConfirmed(url)) {
+  async function checkLoginConfirmation(navState) {    
+    if(!isLoginConfirmed(navState.url)) {
       return;
     }
 
@@ -52,8 +57,10 @@ export default function UserScreen() {
       await handleConfirmLogin();    
       ToastAndroid.show('Logged in.', ToastAndroid.SHORT);
     } catch (error) {
-      console.error(error);
-      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+      console.log(error);
+      console.log('error response: ', error.response.data);
+      // NOTE: looks like the toast is triggered even if there's no exception
+      // ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     } finally {
       setRequestToken('');
     }
@@ -79,22 +86,15 @@ export default function UserScreen() {
   return (
     <View style={styles.container}>
 
-      {signedUser ? (
+      {requestToken ? (
+        <WebView
+          source={{ uri: ApiService.fetchRequestUserPermissionUrl(requestToken) }}
+          onNavigationStateChange={checkLoginConfirmation}
+        />        
+      ) : (
         <TouchableOpacity style={styles.button} onPress={handleLogout}>
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
-      ) : (
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-      )}
-
-      {requestToken && (
-        <WebView
-          source={{ uri: ApiService.fetchRequestUserPermissionUrl(requestToken) }}
-          style={{ marginTop: 20 }}
-          onNavigationStateChange={checkLoginConfirmation}
-        />
       )}
 
     </View>      
