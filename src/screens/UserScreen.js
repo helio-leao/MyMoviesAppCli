@@ -1,4 +1,4 @@
-import { StyleSheet, View, ToastAndroid, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, ToastAndroid, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import ApiService from '../services/ApiService';
 import { useContext, useEffect, useState } from 'react';
 import AuthStorageService from '../services/AuthStorageService';
@@ -10,6 +10,7 @@ export default function UserScreen() {
 
   const {signedUser, setSignedUser} = useContext(SignedUserContext);
   const [requestToken, setRequestToken] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
 
   useEffect(() => {
@@ -20,6 +21,7 @@ export default function UserScreen() {
         if(response.success) {
           setRequestToken(response.request_token);
         }
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
         ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
@@ -28,6 +30,8 @@ export default function UserScreen() {
 
     if(!signedUser) {
       createRequestToken();
+    } else {
+      setIsLoading(false);
     }
   }, []);
 
@@ -79,6 +83,14 @@ export default function UserScreen() {
     return allowUrl === url;
   }
 
+
+  if(isLoading) {
+    return (
+      <View style={[styles.container, {justifyContent: 'center'}]}>
+        <ActivityIndicator size={'large'} color={'#fff'} />
+      </View> 
+    );
+  }
 
   return (
     <View style={styles.container}>
