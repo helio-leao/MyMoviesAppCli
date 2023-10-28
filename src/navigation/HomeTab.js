@@ -8,7 +8,7 @@ import TvShowDetailsScreen from '../screens/TvShowDetailsScreen';
 const Stack = createNativeStackNavigator();
 
 
-export default function HomeTabStack() {
+export default function HomeTab() {
   return(
     <Stack.Navigator
       screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}

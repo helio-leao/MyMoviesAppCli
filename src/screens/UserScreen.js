@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import AuthStorageService from '../services/AuthStorageService';
 import { SignedUserContext } from '../App';
 import WebView from 'react-native-webview';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function UserScreen() {
@@ -11,6 +12,7 @@ export default function UserScreen() {
   const {signedUser, setSignedUser} = useContext(SignedUserContext);
   const [requestToken, setRequestToken] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const navigation = useNavigation();
 
 
   useEffect(() => {
@@ -45,6 +47,7 @@ export default function UserScreen() {
         setSignedUser(null);
         ToastAndroid.show('Logged out.', ToastAndroid.SHORT);
         // NOTE: create another request token for another login???
+        navigation.navigate('HomeTab');
       }
     } catch (error) {
       console.log(error);

@@ -6,7 +6,7 @@ import UserScreen from '../screens/UserScreen';
 const Stack = createNativeStackNavigator();
 
 
-export default function UserTabStack() {
+export default function UserTab() {
   return (
     <Stack.Navigator
       screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}

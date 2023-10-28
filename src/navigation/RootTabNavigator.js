@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import HomeTabStack from './HomeTabStack';
-import SearchTabStack from './SearchTabStack';
-import FollowingTabStack from './FollowingTabStack';
+import HomeTab from './HomeTab';
+import SearchTab from './SearchTab';
+import FollowingTab from './FollowingTab';
 import { SignedUserContext } from '../App';
-import UserTabStack from './UserTabStack';
+import UserTab from './UserTab';
 
 
 const Tab = createBottomTabNavigator();
@@ -31,11 +31,11 @@ export default function RootTabNavigator() {
           borderTopWidth: 0,
         },
       }}
-      initialRouteName='HomeStack'
+      initialRouteName='HomeTab'
     >
       <Tab.Screen
-        name='HomeStack'
-        component={HomeTabStack}
+        name='HomeTab'
+        component={HomeTab}
         options={{
           tabBarTestID: 'tab-home',
           tabBarIcon: ({color, size, focused}) => (            
@@ -46,8 +46,8 @@ export default function RootTabNavigator() {
       />
       
       <Tab.Screen
-        name='SearchStack'
-        component={SearchTabStack}
+        name='SearchTab'
+        component={SearchTab}
         options={{
           tabBarTestID: 'tab-search',
           tabBarIcon: ({color, size}) => (
@@ -58,8 +58,8 @@ export default function RootTabNavigator() {
       />
 
       <Tab.Screen
-        name='FollowingStack'
-        component={FollowingTabStack}
+        name='FollowingTab'
+        component={FollowingTab}
         options={{
           tabBarTestID: 'tab-following',
           tabBarIcon: ({color, size}) => (
@@ -70,8 +70,8 @@ export default function RootTabNavigator() {
       />
 
       <Tab.Screen
-        name='UserTabStack'
-        component={UserTabStack}
+        name='UserTab'
+        component={UserTab}
         options={{
           tabBarTestID: 'tab-user',
           tabBarIcon: ({color, size}) => {
