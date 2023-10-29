@@ -1,7 +1,7 @@
 import { StyleSheet, FlatList, TouchableOpacity, View, Image } from 'react-native';
-import { ImagePlaceholder } from '../utils/constants';
 import { useNavigation } from '@react-navigation/native';
 import ApiService from '../services/ApiService';
+import posterPlaceholder from '../assets/images/posterPlaceholder.png';
 
 
 export default function RowTvShowList({contentContainerStyle, tvShowsData}) {
@@ -29,7 +29,7 @@ export default function RowTvShowList({contentContainerStyle, tvShowsData}) {
             style={styles.poster}
             source={item.poster_path ?
               {uri: ApiService.fetchFullImagePath(item.poster_path)}
-              : ImagePlaceholder.POSTER
+              : posterPlaceholder
             }
           />
         </TouchableOpacity>

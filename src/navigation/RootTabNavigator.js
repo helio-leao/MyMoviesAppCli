@@ -7,6 +7,8 @@ import SearchTab from './SearchTab';
 import FollowingTab from './FollowingTab';
 import { SignedUserContext } from '../App';
 import UserTab from './UserTab';
+import { Image } from 'react-native';
+import ApiService from '../services/ApiService';
 
 
 const Tab = createBottomTabNavigator();
@@ -74,12 +76,25 @@ export default function RootTabNavigator() {
         component={UserTab}
         options={{
           tabBarTestID: 'tab-user',
-          tabBarIcon: ({color, size}) => {
-            if(signedUser) {
-              return <FontAwesome name="sign-out" size={size} color={color} />
-            } else {
+          tabBarIcon: ({color, size, focused}) => {
+            // no user logged
+            if(!signedUser) {
               return <FontAwesome name="sign-in" size={size} color={color} />
             }
+
+            // NOTE: could be the gravatar, add it later???
+            // user logged has no avatar
+            if(!signedUser.avatar.tmdb.avatar_path) {
+              return <FontAwesome name={focused ? "user-circle" : "user-circle-o"} size={size} color={color} />
+            }
+
+            // user avatar
+            return (
+              <Image
+                style={{height: size, width: size}}
+                source={{uri: ApiService.fetchFullImagePath(signedUser.avatar.tmdb.avatar_path)}}
+              />
+            )
           },
           tabBarLabel: 'Perfil',
         }}

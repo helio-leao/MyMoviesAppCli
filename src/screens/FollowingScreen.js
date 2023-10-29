@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, Image, ToastAndroid } from 'react-native';
 import MoviesGrid from '../components/GridMovieList';
-import { ImagePlaceholder } from '../utils/constants';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ApiService from '../services/ApiService';
 import StorageService from '../services/StorageService';
+import posterPlaceholder from '../assets/images/posterPlaceholder.png';
 
 
 // TODO: roll to top of flatlist on unfollow
@@ -123,7 +123,7 @@ export default function SearchScreen() {
                 style={styles.personCardImage}
                 source={item.profile_path ?
                   {uri: ApiService.fetchFullImagePath(item.profile_path)}
-                  : ImagePlaceholder.PROFILE
+                  : posterPlaceholder
                 }
               />
               <TouchableOpacity style={styles.unfollowButtonContainer} onPress={() => handleUnfollow(item.id)}>

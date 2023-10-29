@@ -1,9 +1,9 @@
 import { StyleSheet, TouchableOpacity, View, Text, Image, ToastAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { ImagePlaceholder } from '../utils/constants';
 import ApiService from '../services/ApiService';
 import StorageService from '../services/StorageService';
+import posterPlaceholder from '../assets/images/posterPlaceholder.png';
 
 
 function TVCard({item}) {
@@ -24,7 +24,7 @@ function TVCard({item}) {
         style={styles.resultCardImage}
         source={item.poster_path ?
           {uri: ApiService.fetchFullImagePath(item.poster_path)}
-          : ImagePlaceholder.POSTER
+          : posterPlaceholder
         }
       />
 
@@ -73,7 +73,7 @@ function PersonCard({item}) {
         style={styles.resultCardImage}
         source={item.profile_path ?
           {uri: ApiService.fetchFullImagePath(item.profile_path)}
-          : ImagePlaceholder.PROFILE
+          : posterPlaceholder
         }
       />
 
@@ -110,7 +110,7 @@ function MovieCard({item}) {
         style={styles.resultCardImage}
         source={item.poster_path ?
           {uri: ApiService.fetchFullImagePath(item.poster_path)}
-          : ImagePlaceholder.POSTER
+          : posterPlaceholder
         }
       />
 

@@ -3,10 +3,10 @@ import { useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import { ImagePlaceholder } from '../utils/constants';
 import LinearGradient from 'react-native-linear-gradient';
 import RowTvShowList from '../components/RowTvShowList';
 import ApiService from '../services/ApiService';
+import posterPlaceholder from '../assets/images/posterPlaceholder.png';
 
 
 function formatTvShowStatus(status) {
@@ -61,7 +61,7 @@ export default function TvShowDetailsScreen() {
         style={styles.backdropImage}
         source={tvShowData?.backdrop_path ?
           {uri: ApiService.fetchFullImagePath(tvShowData.backdrop_path)}
-          : ImagePlaceholder.BACKDROP
+          : posterPlaceholder
         }
       />
       
