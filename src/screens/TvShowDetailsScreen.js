@@ -6,7 +6,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import LinearGradient from 'react-native-linear-gradient';
 import RowTvShowList from '../components/RowTvShowList';
 import ApiService from '../services/ApiService';
-import posterPlaceholder from '../assets/images/posterPlaceholder.png';
+import placeholder_poster from '../assets/images/placeholder_poster.png';
 
 
 function formatTvShowStatus(status) {
@@ -61,7 +61,7 @@ export default function TvShowDetailsScreen() {
         style={styles.backdropImage}
         source={tvShowData?.backdrop_path ?
           {uri: ApiService.fetchFullImagePath(tvShowData.backdrop_path)}
-          : posterPlaceholder
+          : placeholder_poster
         }
       />
       

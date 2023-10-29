@@ -4,7 +4,7 @@ import MoviesGrid from '../components/GridMovieList';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ApiService from '../services/ApiService';
 import StorageService from '../services/StorageService';
-import posterPlaceholder from '../assets/images/posterPlaceholder.png';
+import placeholder_poster from '../assets/images/placeholder_poster.png';
 
 
 // TODO: roll to top of flatlist on unfollow
@@ -123,7 +123,7 @@ export default function SearchScreen() {
                 style={styles.personCardImage}
                 source={item.profile_path ?
                   {uri: ApiService.fetchFullImagePath(item.profile_path)}
-                  : posterPlaceholder
+                  : placeholder_poster
                 }
               />
               <TouchableOpacity style={styles.unfollowButtonContainer} onPress={() => handleUnfollow(item.id)}>

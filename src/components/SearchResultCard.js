@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ApiService from '../services/ApiService';
 import StorageService from '../services/StorageService';
-import posterPlaceholder from '../assets/images/posterPlaceholder.png';
+import placeholder_poster from '../assets/images/placeholder_poster.png';
 
 
 function TVCard({item}) {
@@ -24,7 +24,7 @@ function TVCard({item}) {
         style={styles.resultCardImage}
         source={item.poster_path ?
           {uri: ApiService.fetchFullImagePath(item.poster_path)}
-          : posterPlaceholder
+          : placeholder_poster
         }
       />
 
@@ -73,7 +73,7 @@ function PersonCard({item}) {
         style={styles.resultCardImage}
         source={item.profile_path ?
           {uri: ApiService.fetchFullImagePath(item.profile_path)}
-          : posterPlaceholder
+          : placeholder_poster
         }
       />
 
@@ -110,7 +110,7 @@ function MovieCard({item}) {
         style={styles.resultCardImage}
         source={item.poster_path ?
           {uri: ApiService.fetchFullImagePath(item.poster_path)}
-          : posterPlaceholder
+          : placeholder_poster
         }
       />
 

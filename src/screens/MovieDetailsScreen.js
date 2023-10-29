@@ -8,7 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import ApiService from '../services/ApiService';
 import { SignedUserContext } from '../App';
 import SessionStorageService from '../services/SessionStorageService';
-import posterPlaceholder from '../assets/images/posterPlaceholder.png';
+import placeholder_poster from '../assets/images/placeholder_poster.png';
 
 
 export default function MovieDetailsScreen() {
@@ -59,7 +59,7 @@ export default function MovieDetailsScreen() {
         style={styles.backdropImage}
         source={movieData?.backdrop_path ?
           {uri: ApiService.fetchFullImagePath(movieData.backdrop_path)}
-          : posterPlaceholder
+          : placeholder_poster
         }
       />
       
