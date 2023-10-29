@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet, StatusBar, ActivityIndicator } from 'react-na
 import { NavigationContainer } from '@react-navigation/native';
 import RootTabNavigator from './navigation/RootTabNavigator';
 import { createContext, useEffect, useState } from 'react';
-import AuthStorageService from './services/AuthStorageService';
+import SessionStorageService from './services/SessionStorageService';
 import ApiService from './services/ApiService';
 
 
@@ -12,7 +12,7 @@ export const SignedUserContext = createContext();
 export default function App() {
 
   // NOTE: add sessionId and change context name for SessionDataContext???
-  const [signedUser, setSignedUser] = useState();
+  const [signedUser, setSignedUser] = useState(null);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -20,7 +20,7 @@ export default function App() {
   useEffect(() => {
     async function loadSignedUser() {
       try {
-        const sessionId = await AuthStorageService.getSessionId();
+        const sessionId = await SessionStorageService.getSessionId();
   
         if(sessionId) {
           // NOTE: can this return something that not user data???

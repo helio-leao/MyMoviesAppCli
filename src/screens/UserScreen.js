@@ -1,7 +1,7 @@
 import { StyleSheet, View, ToastAndroid, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import ApiService from '../services/ApiService';
 import { useContext, useEffect, useState } from 'react';
-import AuthStorageService from '../services/AuthStorageService';
+import SessionStorageService from '../services/SessionStorageService';
 import { SignedUserContext } from '../App';
 import WebView from 'react-native-webview';
 import { useNavigation } from '@react-navigation/native';
@@ -39,11 +39,11 @@ export default function UserScreen() {
 
   async function handleLogout() {
     try {
-      const sessionId = await AuthStorageService.getSessionId();
+      const sessionId = await SessionStorageService.getSessionId();
       const response = await ApiService.deleteSession(sessionId);
 
       if(response.success) {
-        await AuthStorageService.deleteSessionId();
+        await SessionStorageService.deleteSessionId();
         setSignedUser(null);
         ToastAndroid.show('Logged out.', ToastAndroid.SHORT);
         // NOTE: create another request token for another login???
@@ -75,7 +75,7 @@ export default function UserScreen() {
     const response = await ApiService.createSession(requestToken);
 
     if(response.success) {
-      await AuthStorageService.setSessionId(response.session_id);
+      await SessionStorageService.setSessionId(response.session_id);
       const userData = await ApiService.fetchAccountDetailsBySessionId(response.session_id);
       setSignedUser(userData);
     }

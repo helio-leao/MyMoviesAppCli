@@ -8,7 +8,7 @@ import { ImagePlaceholder } from '../utils/constants';
 import LinearGradient from 'react-native-linear-gradient';
 import ApiService from '../services/ApiService';
 import { SignedUserContext } from '../App';
-import AuthStorageService from '../services/AuthStorageService';
+import SessionStorageService from '../services/SessionStorageService';
 
 
 export default function MovieDetailsScreen() {
@@ -35,7 +35,7 @@ export default function MovieDetailsScreen() {
   // NOTE: verify if error response comes in the same object if outside try/catch block
   async function onFavoritePress() {
     try {
-      const sessionId = await AuthStorageService.getSessionId();
+      const sessionId = await SessionStorageService.getSessionId();
       const response = await ApiService.addFavorite(
         signedUser.id,
         sessionId,
