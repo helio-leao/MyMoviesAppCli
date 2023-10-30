@@ -17,7 +17,7 @@ export default function CreateUserScreen() {
     try {
       const user = createUserObject();
 
-      // TODO: do something with user
+      console.log('TODO: do something with user: ', user);
 
       setFeedback('Verificado com sucesso');
     } catch (error) {
@@ -44,7 +44,9 @@ export default function CreateUserScreen() {
 
     if(password !== confirmPassword) {
       throw new Error('O password de confirmação não confere');
-    }    
+    }
+
+    return {name, phone, email, password};
   }
 
   function handlePhone(input) {
