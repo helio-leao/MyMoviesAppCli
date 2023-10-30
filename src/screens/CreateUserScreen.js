@@ -1,44 +1,50 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 
 
 export default function CreateUserScreen() {
 
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [feedback, setFeedback] = useState('');
 
 
   function handleSave() {
-    let incorrectDataFields = [];
+    try {
+      const user = createUserObject();
 
-    if(name.trim().length < 2) {
-      incorrectDataFields.push('nome');
+      // TODO: do something with user
+
+      setFeedback('Verificado com sucesso');
+    } catch (error) {
+      setFeedback(error.message);
     }
+  }
 
-    if(!(email.includes('@') && email.includes('.'))) {
-      incorrectDataFields.push('email');
+  function createUserObject() {
+    if(name.trim().length < 6) {
+      throw new Error('Nome inválido');
     }
 
     if(phone.length !== 15) {
-      incorrectDataFields.push('telefone');
+      throw new Error('Telefone inválido');
     }
 
-
-    if(incorrectDataFields.length !== 0) {
-      const lastError = incorrectDataFields.pop();
-
-      if(incorrectDataFields.length > 0) {
-        setErrorMessage(`${incorrectDataFields.join(', ')} e ${lastError} inválidos`);
-      } else {
-        setErrorMessage(`${lastError} inválido`);
-      }
-    } else {
-      setErrorMessage('');
-      Alert.alert('Verificado com sucesso')
+    if(!(email.includes('@') && email.includes('.'))) {
+      throw new Error('Email inválido');
     }
+
+    if(password.trim().length < 8) {
+      throw new Error('O password deve ter pelo menos 8 caracteres');
+    }
+
+    if(password !== confirmPassword) {
+      throw new Error('O password de confirmação não confere');
+    }    
   }
 
   function handlePhone(input) {
@@ -53,42 +59,68 @@ export default function CreateUserScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Nome *</Text>
-      <TextInput
-        testID='name-input'
-        style={styles.input}
-        placeholder='Pelo menos 2 caracteres'
-        value={name}
-        onChangeText={setName}
-      />
+      <ScrollView>
 
-      <Text style={styles.label}>Email *</Text>
-      <TextInput
-        testID='email-input'
-        style={styles.input}
-        placeholder='exemplo@email.com'
-        value={email}
-        onChangeText={setEmail}
-      />
+        <Text style={styles.label}>Nome *</Text>
+        <TextInput
+          testID='name-input'
+          style={styles.input}
+          placeholder='Seu nome completo'
+          value={name}
+          onChangeText={setName}
+        />
 
-      <Text style={styles.label}>Telefone *</Text>
-      <TextInput
-        testID='phone-input'
-        keyboardType='numeric'
-        style={styles.input}
-        placeholder='(99) 99999-9999'
-        maxLength={15}
-        value={phone}
-        onChangeText={handlePhone}
-      />
+        <Text style={styles.label}>Telefone *</Text>
+        <TextInput
+          testID='phone-input'
+          keyboardType='numeric'
+          style={styles.input}
+          placeholder='(99) 99999-9999'
+          maxLength={15}
+          value={phone}
+          onChangeText={handlePhone}
+        />
 
-      <View style={styles.errorMessageContainer}>
-        <Text style={styles.errorMessageText}>{errorMessage}</Text>
-      </View>
+        <Text style={styles.label}>Email *</Text>
+        <TextInput
+          testID='email-input'
+          style={styles.input}
+          placeholder='exemplo@email.com'
+          value={email}
+          onChangeText={setEmail}
+        />
 
-      <TouchableOpacity style={styles.button} onPress={handleSave}>
-        <Text style={styles.buttonText}>SALVAR</Text>
-      </TouchableOpacity>
+        <Text style={styles.label}>Senha *</Text>
+        <TextInput
+          testID='pass-input'
+          style={styles.input}
+          placeholder='Pelo menos 8 caracteres'
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+
+        <Text style={styles.label}>Confirmar Senha *</Text>
+        <TextInput
+          testID='confirm-pass-input'
+          style={styles.input}
+          placeholder='Pelo menos 8 caracteres'
+          secureTextEntry
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+        />
+
+        <View style={styles.feedbackContainer}>
+          <Text testID='feedback-message' style={{color: feedback.includes('sucesso') ? '#0f0' : '#f00'}}>
+            {feedback}
+          </Text>
+        </View>
+
+        <TouchableOpacity testID='save-button' style={styles.button} onPress={handleSave}>
+          <Text style={styles.buttonText}>SALVAR</Text>
+        </TouchableOpacity>
+
+      </ScrollView>
     </View>
   );
 }
@@ -113,15 +145,12 @@ const styles = StyleSheet.create({
     paddingRight: 60,
     fontSize: 16,
   },
-  errorMessageContainer: {
+  feedbackContainer: {
     color: '#fff',
     marginHorizontal: 20,
     marginTop: 20,
     height: 20,
     justifyContent: 'center',
-  },
-  errorMessageText: {
-    color: '#f55',
   },
   button: {
     backgroundColor: '#444',
@@ -132,6 +161,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     fontSize: 16,
     alignSelf: 'flex-start',
+    marginBottom: 20,
   },
   buttonText: {
     color: '#fff'

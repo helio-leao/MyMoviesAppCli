@@ -49,7 +49,7 @@ export default function TabNavigator() {
       screenOptions={{
         headerShown: false,
         unmountOnBlur: true,
-        tabBarHideOnKeyboard: true,
+        // tabBarHideOnKeyboard: true,
         tabBarActiveTintColor: '#fff',
         tabBarInactiveTintColor: '#888',
         tabBarShowLabel: false,
