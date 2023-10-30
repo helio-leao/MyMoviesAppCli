@@ -22,7 +22,6 @@ describe('Verify User Data', () => {
     await element(by.id('confirm-pass-input')).replaceText('12345678');
 
     // verify if the data passes the verifications
-    await waitFor(element(by.id('feedback-message'))).toBeVisible().withTimeout(5000);
     await expect(element(by.id('feedback-message'))).toBeVisible();
   });
 });
