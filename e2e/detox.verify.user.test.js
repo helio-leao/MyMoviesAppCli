@@ -20,8 +20,9 @@ describe('Verify User Data', () => {
     await element(by.id('email-input')).replaceText('johndoe@email.com');
     await element(by.id('pass-input')).replaceText('12345678');
     await element(by.id('confirm-pass-input')).replaceText('12345678');
+    await element(by.id('save-button')).tap();
 
     // verify if the data passes the verifications
-    await expect(element(by.id('feedback-message'))).toBeVisible();
+    await expect(element(by.text('Verificado com sucesso'))).toBeVisible();
   });
 });

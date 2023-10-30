@@ -1,0 +1,29 @@
+appId: com.mymoviesappcli
+---
+- launchApp
+- tapOn:
+    id: tab-create-user
+- tapOn:
+    id: name-input
+- inputText: John Doe
+- pressKey: enter
+- tapOn:
+    id: phone-input
+- inputText: 88888888888
+- pressKey: enter
+- tapOn:
+    id: email-input
+- inputText: johndoe@email.com
+- pressKey: enter
+- tapOn:
+    id: pass-input
+- inputText: 12345678
+- pressKey: enter
+- tapOn:
+    id: confirm-pass-input
+- inputText: 12345678
+- pressKey: enter
+- tapOn:
+    id: save-button
+- assertVisible:
+    text: Verificado com sucesso
