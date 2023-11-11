@@ -9,27 +9,35 @@ const Stack = createNativeStackNavigator();
 
 
 export default function UserTab() {
-
   const {signedUser} = useContext(SignedUserContext);
+  return signedUser ? <LoggedInStackNavigator /> : <LoggedOutStackNavigator />
+}
 
 
+function LoggedInStackNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}
     >
-      {signedUser ? (
-        <Stack.Screen
-          name={'UserScreen'}
-          component={UserScreen}
-          options={{title: 'Perfil'}}
-        />
-      ) : (
-        <Stack.Screen
-          name={'LoginScreen'}
-          component={LoginScreen}
-          options={{title: 'Login'}}
-        />
-      )}
+      <Stack.Screen
+        name={'UserScreen'}
+        component={UserScreen}
+        options={{title: 'Perfil'}}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function LoggedOutStackNavigator() {
+  return (
+    <Stack.Navigator
+      screenOptions={{headerStyle: {backgroundColor: '#333'}, headerTintColor: '#fff'}}
+    >
+      <Stack.Screen
+        name={'LoginScreen'}
+        component={LoginScreen}
+        options={{title: 'Login'}}
+      />
     </Stack.Navigator>
   );
 }

@@ -30,7 +30,7 @@ export default function UserScreen() {
 
       if(response.success) {
         navigation.navigate('HomeTab');
-        setSignedUser(null);  // NOTE: done after navigate so it doesn't mount LoginScreen
+        setSignedUser(null);  // NOTE: after navigate so it doesn't mount LoginScreen
         await SessionStorageService.deleteSessionId();
         ToastAndroid.show('Logged out.', ToastAndroid.SHORT);
       }
