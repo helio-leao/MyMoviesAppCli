@@ -10,6 +10,7 @@ const Stack = createNativeStackNavigator();
 
 export default function UserTab() {
   const {signedUser} = useContext(SignedUserContext);
+  
   return signedUser ? <LoggedInStackNavigator /> : <LoggedOutStackNavigator />
 }
 

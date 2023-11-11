@@ -8,14 +8,14 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function UserScreen() {
 
-  const {setSignedUser} = useContext(SignedUserContext);
+  const {signedUser, setSignedUser} = useContext(SignedUserContext);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
 
 
   useEffect(() => {
     async function loadUserData() {
-      // TODO
+      // TODO: load user data??
     }
     loadUserData();
 
@@ -40,6 +40,14 @@ export default function UserScreen() {
     }
   }
 
+  function handleFavoritesPress() {
+    console.log('todo: favorites pressed');
+  }
+
+  function handleFollowedPeoplePress() {
+    console.log('todo: followed people pressed');
+  }
+
 
   if(isLoading) {
     return (
@@ -51,10 +59,26 @@ export default function UserScreen() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={handleLogout}>
-        <Text style={styles.buttonText}>Logout</Text>
-      </TouchableOpacity>
-    </View>      
+
+      <View style={{marginBottom: 20}}>
+        <Text style={{color: '#fff'}}>{JSON.stringify(signedUser, null, 2)}</Text>
+      </View>
+
+      <View style={{gap: 10}}>
+        <TouchableOpacity style={styles.button} onPress={handleLogout}>
+          <Text style={styles.buttonText}>Logout</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={handleFavoritesPress}>
+          <Text style={styles.buttonText}>Favoritos</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={handleFollowedPeoplePress}>
+          <Text style={styles.buttonText}>Pessoas seguidas</Text>
+        </TouchableOpacity>
+      </View>
+
+    </View>
   );
 }
 
