@@ -6,6 +6,20 @@ import StorageService from '../services/StorageService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 
 
+export default function SearchResultCard({item}) {
+  switch(item.media_type) {
+    case ApiService.MediaType.MOVIE:
+      return <MovieCard item={item} />
+    case ApiService.MediaType.TV:
+      return <TVCard item={item} />
+    case ApiService.MediaType.PERSON:
+      return <PersonCard item={item} />
+    default:
+      return null;
+  }
+}
+
+
 function TVCard({item}) {
   const navigation = useNavigation();
 
@@ -129,18 +143,6 @@ function MovieCard({item}) {
   )
 }
 
-export default function SearchResultCard({item}) {
-  switch(item.media_type) {
-    case ApiService.MediaType.MOVIE:
-      return <MovieCard item={item} />
-    case ApiService.MediaType.TV:
-      return <TVCard item={item} />
-    case ApiService.MediaType.PERSON:
-      return <PersonCard item={item} />
-    default:
-      return null
-  }
-}
 
 const styles = StyleSheet.create({
   resultCardContainer: {

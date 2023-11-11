@@ -3,39 +3,25 @@ import ApiService from '../services/ApiService';
 import { useContext, useEffect, useState } from 'react';
 import SessionStorageService from '../services/SessionStorageService';
 import { SignedUserContext } from '../App';
-import WebView from 'react-native-webview';
 import { useNavigation } from '@react-navigation/native';
 
 
 export default function UserScreen() {
 
-  const {signedUser, setSignedUser} = useContext(SignedUserContext);
-  const [requestToken, setRequestToken] = useState('');
+  const {setSignedUser} = useContext(SignedUserContext);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
 
 
   useEffect(() => {
-    async function createRequestToken() {
-      try {
-        const response = await ApiService.createRequestToken();
-  
-        if(response.success) {
-          setRequestToken(response.request_token);
-        }
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-        ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
-      }
+    async function loadUserData() {
+      // TODO
     }
+    loadUserData();
 
-    if(!signedUser) {
-      createRequestToken();
-    } else {
-      setIsLoading(false);
-    }
+    setIsLoading(false);
   }, []);
+
 
   async function handleLogout() {
     try {
@@ -43,47 +29,15 @@ export default function UserScreen() {
       const response = await ApiService.deleteSession(sessionId);
 
       if(response.success) {
-        await SessionStorageService.deleteSessionId();
-        setSignedUser(null);
-        ToastAndroid.show('Logged out.', ToastAndroid.SHORT);
-        // NOTE: create another request token for another login???
         navigation.navigate('HomeTab');
+        setSignedUser(null);  // NOTE: done after navigate so it doesn't mount LoginScreen
+        await SessionStorageService.deleteSessionId();
+        ToastAndroid.show('Logged out.', ToastAndroid.SHORT);
       }
     } catch (error) {
       console.log(error);
       ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     }
-  }
-
-  async function checkLoginConfirmation(navState) {    
-    if(!isLoginConfirmed(navState.url)) {
-      return;
-    }
-
-    try {
-      await handleConfirmLogin();    
-      ToastAndroid.show('Logged in.', ToastAndroid.SHORT);
-    } catch (error) {
-      console.log('error response: ', error.response.data);
-      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
-    } finally {
-      setRequestToken('');
-    }
-  }
-
-  async function handleConfirmLogin() {
-    const response = await ApiService.createSession(requestToken);
-
-    if(response.success) {
-      await SessionStorageService.setSessionId(response.session_id);
-      const userData = await ApiService.fetchAccountDetailsBySessionId(response.session_id);
-      setSignedUser(userData);
-    }
-  }
-
-  function isLoginConfirmed(url) {
-    const allowUrl = ApiService.fetchRequestUserPermissionUrl(requestToken) + '/allow';
-    return allowUrl === url;
   }
 
 
@@ -97,18 +51,9 @@ export default function UserScreen() {
 
   return (
     <View style={styles.container}>
-
-      {requestToken ? (
-        <WebView
-          source={{ uri: ApiService.fetchRequestUserPermissionUrl(requestToken) }}
-          onNavigationStateChange={checkLoginConfirmation}
-        />        
-      ) : (
-        <TouchableOpacity style={styles.button} onPress={handleLogout}>
-          <Text style={styles.buttonText}>Logout</Text>
-        </TouchableOpacity>
-      )}
-
+      <TouchableOpacity style={styles.button} onPress={handleLogout}>
+        <Text style={styles.buttonText}>Logout</Text>
+      </TouchableOpacity>
     </View>      
   );
 }

@@ -8,7 +8,7 @@ import placeholder_poster from '../assets/images/placeholder_poster.png';
 
 
 // TODO: roll to top of flatlist on unfollow
-// TODO: simplify the logic for pageData and moviesData
+// TODO: simplify the logic for pageData and moviesData states
 
 
 export default function SearchScreen() {
