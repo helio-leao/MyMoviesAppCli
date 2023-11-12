@@ -26,6 +26,28 @@ export default function PersonDetailsScreen() {
   }, []);
 
 
+  function toMoviesArrayWithoutDuplicates(moviesData) {
+    const sortedItems = [];
+
+    moviesData?.forEach(movieData => {
+      let isUnique = true;
+
+      for(let item of sortedItems) {
+        if(item.id === movieData.id) {
+          isUnique = false;
+          break;
+        }
+      }
+
+      if(isUnique) {
+        sortedItems.push(movieData);
+      }
+    });
+
+    return sortedItems;
+  }
+
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -50,8 +72,6 @@ export default function PersonDetailsScreen() {
           <Text style={styles.text}>{personData?.biography}</Text>
         </View>
 
-        {/* NOTE: the crew array comes with movie repetition for each of the */}
-        {/* person's department in the movie. e.g. writing, camera, directing */}
         {personData?.known_for_department === 'Acting' ? (
           <View style={{marginBottom: 20}}>
             <Text style={[styles.subtitle, {marginLeft: 10}]}>
@@ -63,15 +83,17 @@ export default function PersonDetailsScreen() {
             />
           </View>
         ) : (
-          // ISSUE: still bringing duplicates
+          // NOTE: the crew array comes with repeated movies for each of the person's department
+          // in the it. e.g. writing, camera, directing
+          // NOTE: brings only movies in which the department the person worked on is the one
+          // that the person is known for
           <View style={{marginBottom: 20}}>
             <Text style={[styles.subtitle, {marginLeft: 10}]}>
               {personData?.known_for_department}
             </Text>
             <RowMovieList
-              moviesData={personData?.movie_credits.crew
-                .filter(movie => movie.department === personData.known_for_department)}
-              contentContainerStyle={{paddingHorizontal: 10}}
+              moviesData={toMoviesArrayWithoutDuplicates(personData?.movie_credits.crew
+                .filter(movieData => movieData.department === personData.known_for_department))}
             />
           </View>
         )}

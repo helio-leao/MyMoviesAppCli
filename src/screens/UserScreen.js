@@ -86,15 +86,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#111',
+    padding: 20,
   },
   button: {
     paddingHorizontal: 20,
     paddingVertical: 10,
     backgroundColor: '#fff',
     borderRadius: 4,
-    alignSelf: 'flex-start',
   },
   buttonText: {
     color: '#000',
+    alignSelf: 'center',
   },
 });
