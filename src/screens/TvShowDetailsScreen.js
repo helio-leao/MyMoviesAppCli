@@ -36,7 +36,7 @@ export default function TvShowDetailsScreen() {
 
 
   useEffect(() => {
-    async function getTvShowDetails() {
+    async function loadTvShowData() {
       try {
         const tvShowDetails = await ApiService.fetchTvShowDetails(route.params.id);
         setTvShowData(tvShowDetails);
@@ -45,7 +45,7 @@ export default function TvShowDetailsScreen() {
         ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
       }
     }
-    getTvShowDetails();
+    loadTvShowData();
   }, []);
 
 

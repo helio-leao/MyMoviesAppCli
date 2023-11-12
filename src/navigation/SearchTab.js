@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SearchScreen from '../screens/SearchScreen';
 import MovieDetailsScreen from '../screens/MovieDetailsScreen';
 import TvShowDetailsScreen from '../screens/TvShowDetailsScreen';
+import PersonDetailsScreen from '../screens/PersonDetailsScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -27,6 +28,11 @@ export default function SearchTab() {
         name={'TvShowDetailsScreen'}
         component={TvShowDetailsScreen}
         options={{title: 'Detalhes da série'}}
+      />
+      <Stack.Screen
+        name={'PersonDetailsScreen'}
+        component={PersonDetailsScreen}
+        options={{title: 'Perfil'}}
       />
     </Stack.Navigator>
   );

@@ -69,6 +69,13 @@ async function fetchTvShowDetails(tvShowId) {
     `append_to_response=recommendations,credits` + GENERAL_QUERY);
 }
 
+async function fetchPersonDetails(personId) {
+  return await fetchData(`/person/${personId}`,
+    `append_to_response=movie_credits` + GENERAL_QUERY);
+    // TODO: use combined_credits for movies and tv shows
+    // `append_to_response=combined_credits` + GENERAL_QUERY);
+}
+
 async function fetchMulti(name = '', page = 1) {
   return await fetchData(`/search/multi`, `query=${name}&page=${page}` + GENERAL_QUERY);
 }
@@ -185,6 +192,7 @@ export default {
   fetchTrendingTvShows,
   fetchMovieDetails,
   fetchTvShowDetails,
+  fetchPersonDetails,
   fetchMulti,
   fetchMoviesWithPeople,
   fetchFullImagePath,

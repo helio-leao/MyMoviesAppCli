@@ -19,7 +19,7 @@ export default function MovieDetailsScreen() {
 
 
   useEffect(() => {
-    async function getMovieDetails() {
+    async function loadMovieData() {
       try {
         const movieDetails = await ApiService.fetchMovieDetails(route.params.id);
         setMovieData(movieDetails);
@@ -28,7 +28,7 @@ export default function MovieDetailsScreen() {
         ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
       }
     }
-    getMovieDetails();
+    loadMovieData();
   }, []);
 
 

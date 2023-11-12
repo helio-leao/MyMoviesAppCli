@@ -58,9 +58,10 @@ function TVCard({item}) {
 }
 
 function PersonCard({item}) {
+  const navigation = useNavigation();
 
   function handleCardPress() {    
-    console.log('TODO: card press, person id:', item.id)
+    navigation.push('PersonDetailsScreen', {id: item.id});
   }
 
   async function handleFollowPress() {
