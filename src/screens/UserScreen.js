@@ -65,16 +65,16 @@ export default function UserScreen() {
       </View>
 
       <View style={{gap: 10}}>
-        <TouchableOpacity style={styles.button} onPress={handleLogout}>
-          <Text style={styles.buttonText}>Logout</Text>
-        </TouchableOpacity>
-
         <TouchableOpacity style={styles.button} onPress={handleFavoritesPress}>
           <Text style={styles.buttonText}>Favoritos</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={handleFollowedPeoplePress}>
           <Text style={styles.buttonText}>Pessoas seguidas (armazenamento local)</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={handleLogout}>
+          <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
       </View>
 

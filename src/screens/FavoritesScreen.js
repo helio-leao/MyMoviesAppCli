@@ -11,8 +11,8 @@ import SwitchButtons from "../components/SwitchButtons";
 // when a show is selected
 
 const mediaOptions = [
-  { label: 'Filmes', value: ApiService.MediaType.MOVIE },
-  { label: 'Séries', value: ApiService.MediaType.TV },
+  { label: 'Filmes', value: ApiService.FavoriteType.MOVIE },
+  { label: 'Séries', value: ApiService.FavoriteType.TV },
 ]
 
 
@@ -20,7 +20,7 @@ export default function FavoritesScreen() {
 
   const {signedUser} = useContext(SignedUserContext);
   const [favorites, setFavorites] = useState(null);
-  const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE); // movies or tv
+  const [mediaType, setMediaType] = useState(ApiService.FavoriteType.MOVIE);
 
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function FavoritesScreen() {
   return(
     <View style={styles.screenContainer}>
       <SwitchButtons
-        style={{padding: 20, alignSelf: 'flex-end'}}
+        style={{padding: 14, alignSelf: 'flex-end'}}
         options={mediaOptions}
         value={mediaType}
         onChangeSelection={setMediaType}

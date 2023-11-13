@@ -40,6 +40,11 @@ const TvShowStatus = {
   PILOT: 'Pilot',
 }
 
+const FavoriteType = {
+  MOVIE: 'movies',
+  TV: 'tv',
+}
+
 
 // MEDIA FETCH FUNCTIONS
 
@@ -163,10 +168,8 @@ async function fetchAccountDetailsBySessionId(sessionId) {
 // AUTHENTICATED USER FUNCTIONS
 
 async function fetchFavorites(accountId, sessionId, mediaType) {
-  const formattedMediaType = mediaType === MediaType.TV ? mediaType : `${mediaType}s`;
-
   const url = API_BASE_URL +
-    `/account/${accountId}/favorite/${formattedMediaType}?session_id=${sessionId}&sort_by=created_at.desc` +
+    `/account/${accountId}/favorite/${mediaType}?session_id=${sessionId}&sort_by=created_at.desc` +
     GENERAL_QUERY;
 
   const headers = {
@@ -203,6 +206,7 @@ export default {
   MediaType,
   CrewJob,
   TvShowStatus,
+  FavoriteType,
   fetchPopularMovies,
   fetchPopularTvShows,
   fetchTrendingMovies,
