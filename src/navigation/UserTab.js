@@ -5,6 +5,7 @@ import LoginScreen from '../screens/LoginScreen';
 import { SignedUserContext } from '../App';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import FollowingScreen from '../screens/FollowingScreen';
+import MovieDetailsScreen from '../screens/MovieDetailsScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -36,6 +37,11 @@ function LoggedInStackNavigator() {
         name={'FollowingScreen'}
         component={FollowingScreen}
         options={{title: 'Seguindo'}}
+      />
+      <Stack.Screen
+        name={'MovieDetailsScreen'}
+        component={MovieDetailsScreen}
+        options={{title: 'Detalhes do filme'}}
       />
     </Stack.Navigator>
   );

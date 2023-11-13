@@ -6,7 +6,7 @@ import placeholder_poster from '../assets/images/placeholder_poster.png';
 
 export default function GridMovieList({
   moviesData,
-  onEndReached,
+  onEndReached = () => {},
   showLoadingMoreIndicator = false,
   numColumns = 3,
 }) {
