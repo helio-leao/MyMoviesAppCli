@@ -80,8 +80,8 @@ async function fetchMulti(name = '', page = 1) {
   return await fetchData(`/search/multi`, `query=${name}&page=${page}` + GENERAL_QUERY);
 }
 
-// NOTE: removed genre is documentary (id 99)
 async function fetchMoviesWithPeople(peopleIds = [], page = 1) {
+  // NOTE: removed genre is documentary (id 99)
   return await fetchData(
     `/discover/movie`,
     `include_video=false&page=${page}&sort_by=primary_release_date.desc&with_people=${
@@ -114,8 +114,8 @@ async function fetchData(endpoint, query) {
 
 // AUTHENTICATION FUNCTIONS
 
-function fetchRequestUserPermissionUrl(token) {
-  return `https://www.themoviedb.org/authenticate/${token}`;
+function fetchRequestUserPermissionUrl(requestToken) {
+  return `https://www.themoviedb.org/authenticate/${requestToken}`;
 }
 
 async function createRequestToken() {
@@ -123,26 +123,26 @@ async function createRequestToken() {
 }
 
 // TODO: helper function postData
-async function createSession(token) {
+async function createSession(requestToken) {
   const url = API_BASE_URL + '/authentication/session/new';
 
-  const body = {
-    request_token: token
+  const data = {
+    request_token: requestToken,
   };
   const headers = {
-    Authorization: `Bearer ${API_TOKEN}`
+    Authorization: `Bearer ${API_TOKEN}`,
   };
 
   console.log(url);
 
-  const response = await axios.post(url, body, {headers});
+  const response = await axios.post(url, data, {headers});
   return response.data;
 }
 
 async function deleteSession(sessionId) {
   const url = API_BASE_URL + '/authentication/session';
 
-  const body = {
+  const data = {
     session_id: sessionId,
   };
   const headers = {
@@ -151,7 +151,7 @@ async function deleteSession(sessionId) {
 
   console.log(url);
 
-  const response = await axios.delete(url, {data: body, headers: headers});
+  const response = await axios.delete(url, {data, headers});
   return response.data;
 }
 
@@ -162,10 +162,23 @@ async function fetchAccountDetailsBySessionId(sessionId) {
 
 // AUTHENTICATED USER FUNCTIONS
 
+async function fetchFavoriteMovies(accountId, sessionId) {
+  const url = API_BASE_URL + `/account/${accountId}/favorite/movies?session_id=${sessionId}` + GENERAL_QUERY;
+
+  const headers = {
+    Authorization: `Bearer ${API_TOKEN}`,
+  };
+
+  console.log(url);
+
+  const response = await axios(url, {headers});
+  return response.data;
+}
+
 async function addFavorite(accountId, sessionId, mediaData) {
   const url = API_BASE_URL + `/account/${accountId}/favorite?session_id=${sessionId}`;
 
-  const body = {
+  const data = {
     media_type: mediaData.media_type,
     media_id: mediaData.id,
     favorite: true,
@@ -176,7 +189,7 @@ async function addFavorite(accountId, sessionId, mediaData) {
 
   console.log(url);
 
-  const response = await axios.post(url, body, {headers});
+  const response = await axios.post(url, data, {headers});
   return response.data;
 }
 
@@ -201,5 +214,6 @@ export default {
   createSession,
   deleteSession,
   fetchAccountDetailsBySessionId,
+  fetchFavoriteMovies,
   addFavorite,
 }
