@@ -90,8 +90,8 @@ export default function MovieDetailsScreen() {
         <ScrollView>
           <View style={styles.contentScrollContainer}>
 
-            {/* ratings and watch later button */}
-            <View style={styles.ratingsAndWatchLaterContainer}>
+            {/* ratings and favorite button */}
+            <View style={styles.ratingsAndFavoriteContainer}>
               <View style={styles.ratingsContainer}>
                 <Fontisto name="star" size={30} color="yellow" />
                 <View>
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#000'
   },
-  ratingsAndWatchLaterContainer: {
+  ratingsAndFavoriteContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

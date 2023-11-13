@@ -98,10 +98,10 @@ function PersonCard({item}) {
         {/* <Text style={styles.resultCardText}>{item.media_type}</Text> */}
 
         {/* button */}
-        <TouchableOpacity testID={`follow-${item.id}`} style={styles.cardButton} onPress={handleFollowPress}>
+        {/* <TouchableOpacity testID={`follow-${item.id}`} style={styles.cardButton} onPress={handleFollowPress}>
           <FontAwesome name="user-plus" size={16} color="white" />
           <Text style={styles.resultCardTextSmall}>Seguir</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>      
     </TouchableOpacity>
   )

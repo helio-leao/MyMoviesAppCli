@@ -1,12 +1,14 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, ToastAndroid } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import LinearGradient from 'react-native-linear-gradient';
 import RowTvShowList from '../components/RowTvShowList';
 import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
+import { SignedUserContext } from '../App';
+import SessionStorageService from '../services/SessionStorageService';
 
 
 function formatTvShowStatus(status) {
@@ -31,6 +33,7 @@ function formatTvShowStatus(status) {
 
 export default function TvShowDetailsScreen() {
 
+  const {signedUser} = useContext(SignedUserContext);
   const [tvShowData, setTvShowData] = useState(null);
   const route = useRoute();
 
@@ -49,8 +52,23 @@ export default function TvShowDetailsScreen() {
   }, []);
 
 
-  function onWatchLaterPress() {
-    console.log('TODO: watch later press, id', tvShowData.id);
+  // NOTE: verify if error response comes in the same object if outside try/catch block
+  async function onFavoritePress() {
+    try {
+      const sessionId = await SessionStorageService.getSessionId();
+      const response = await ApiService.addFavorite(
+        signedUser.id,
+        sessionId,
+        {...tvShowData, media_type: ApiService.MediaType.TV}
+      );
+
+      if(response.success) {
+        ToastAndroid.show('Série favoritada.', ToastAndroid.SHORT);
+      }
+    } catch (error) {
+      console.log('error response: ', error.response.data);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+    }
   }
 
 
@@ -92,8 +110,8 @@ export default function TvShowDetailsScreen() {
         <ScrollView>
           <View style={styles.contentScrollContainer}>
 
-            {/* ratings and watch later button */}
-            <View style={styles.ratingsAndWatchLaterContainer}>
+            {/* ratings and favorite button */}
+            <View style={styles.ratingsAndFavoriteContainer}>
               <View style={styles.ratingsContainer}>
                 <Fontisto name="star" size={30} color="yellow" />
                 <View>
@@ -107,10 +125,12 @@ export default function TvShowDetailsScreen() {
                 </View>
               </View>
 
-              {/* <TouchableOpacity style={styles.watchLaterButton} onPress={onWatchLaterPress}>
-                <FontAwesome name="clock-o" size={20} color="white" />
-                <Text style={styles.watchLaterButtonText}>Ver Depois</Text>
-              </TouchableOpacity> */}
+              {signedUser && (
+                <TouchableOpacity style={styles.favoriteButton} onPress={onFavoritePress}>
+                  <FontAwesome name="heart" size={20} color="white" />
+                  <Text style={styles.favoriteButtonText}>Favoritar</Text>
+                </TouchableOpacity>
+              )}
             </View>
 
             <View style={{marginHorizontal: 10}}>
@@ -208,7 +228,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#000'
   },
-  ratingsAndWatchLaterContainer: {
+  ratingsAndFavoriteContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -224,14 +244,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '800',
   },
-  watchLaterButton: {
+  favoriteButton: {
     paddingVertical: 10,
     paddingHorizontal: 12,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
   },
-  watchLaterButtonText: {
+  favoriteButtonText: {
     color: '#fff',
   },
   contentScrollContainer: {

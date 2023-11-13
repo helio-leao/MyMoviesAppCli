@@ -162,8 +162,12 @@ async function fetchAccountDetailsBySessionId(sessionId) {
 
 // AUTHENTICATED USER FUNCTIONS
 
-async function fetchFavoriteMovies(accountId, sessionId) {
-  const url = API_BASE_URL + `/account/${accountId}/favorite/movies?session_id=${sessionId}` + GENERAL_QUERY;
+async function fetchFavorites(accountId, sessionId, mediaType) {
+  const formattedMediaType = mediaType === MediaType.TV ? mediaType : `${mediaType}s`;
+
+  const url = API_BASE_URL +
+    `/account/${accountId}/favorite/${formattedMediaType}?session_id=${sessionId}&sort_by=created_at.desc` +
+    GENERAL_QUERY;
 
   const headers = {
     Authorization: `Bearer ${API_TOKEN}`,
@@ -214,6 +218,6 @@ export default {
   createSession,
   deleteSession,
   fetchAccountDetailsBySessionId,
-  fetchFavoriteMovies,
+  fetchFavorites,
   addFavorite,
 }

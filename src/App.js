@@ -5,6 +5,9 @@ import { createContext, useEffect, useState } from 'react';
 import SessionStorageService from './services/SessionStorageService';
 import ApiService from './services/ApiService';
 
+// TODO: remove favorites
+// TODO: add to watchlist functionality???
+
 
 export const SignedUserContext = createContext();
 

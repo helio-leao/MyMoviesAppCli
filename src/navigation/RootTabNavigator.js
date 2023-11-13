@@ -4,7 +4,6 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeTab from './HomeTab';
 import SearchTab from './SearchTab';
-import FollowingTab from './FollowingTab';
 import { SignedUserContext } from '../App';
 import UserTab from './UserTab';
 import { Image } from 'react-native';
@@ -56,18 +55,6 @@ export default function RootTabNavigator() {
             <FontAwesome name="search" size={size} color={color} />
           ),
           tabBarLabel: 'Buscar',
-        }}
-      />
-
-      <Tab.Screen
-        name='FollowingTab'
-        component={FollowingTab}
-        options={{
-          tabBarTestID: 'tab-following',
-          tabBarIcon: ({color, size}) => (
-            <FontAwesome name="users" size={size} color={color} />
-          ),
-          tabBarLabel: 'Seguindo',
         }}
       />
 
