@@ -41,11 +41,11 @@ export default function UserScreen() {
   }
 
   function handleFavoritesPress() {
-    console.log('todo: favorites pressed');
+    navigation.navigate('FavoritesScreen');
   }
 
   function handleFollowedPeoplePress() {
-    console.log('todo: followed people pressed');
+    navigation.navigate('FollowingScreen');
   }
 
 
@@ -74,7 +74,7 @@ export default function UserScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={handleFollowedPeoplePress}>
-          <Text style={styles.buttonText}>Pessoas seguidas</Text>
+          <Text style={styles.buttonText}>Pessoas seguidas (armazenamento local)</Text>
         </TouchableOpacity>
       </View>
 
@@ -85,6 +85,7 @@ export default function UserScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-between',
     backgroundColor: '#111',
     padding: 20,
   },

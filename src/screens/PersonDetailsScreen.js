@@ -108,11 +108,12 @@ export default function PersonDetailsScreen() {
 
         </View>
 
-
-        <View style={styles.body}>
-          <Text style={styles.subtitle}>Biografia</Text>
-          <Text style={styles.text}>{personData?.biography}</Text>
-        </View>
+        {personData?.biography && (
+          <View style={styles.body}>
+            <Text style={styles.subtitle}>Biografia</Text>
+            <Text style={styles.text}>{personData?.biography}</Text>
+          </View>
+        )}
 
         {personData?.known_for_department === 'Acting' ? (
           <View style={{marginBottom: 20}}>

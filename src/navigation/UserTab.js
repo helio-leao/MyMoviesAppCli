@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UserScreen from '../screens/UserScreen';
 import LoginScreen from '../screens/LoginScreen';
 import { SignedUserContext } from '../App';
+import FavoritesScreen from '../screens/FavoritesScreen';
+import FollowingScreen from '../screens/FollowingScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -24,6 +26,16 @@ function LoggedInStackNavigator() {
         name={'UserScreen'}
         component={UserScreen}
         options={{title: 'Perfil'}}
+      />
+      <Stack.Screen
+        name={'FavoritesScreen'}
+        component={FavoritesScreen}
+        options={{title: 'Favoritos'}}
+      />
+      <Stack.Screen
+        name={'FollowingScreen'}
+        component={FollowingScreen}
+        options={{title: 'Seguindo'}}
       />
     </Stack.Navigator>
   );
