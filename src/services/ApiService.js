@@ -163,12 +163,19 @@ async function fetchAccountDetailsBySessionId(sessionId) {
 // AUTHENTICATED USER FUNCTIONS
 
 async function fetchFavorites(accountId, sessionId, mediaType) {
+  let path = `/account/${accountId}/favorite`;
+
   if(mediaType === MediaType.MOVIE) {
-    mediaType = 'movies';
+    path += '/movies';
+  } else if(mediaType === MediaType.TV) {
+    path += '/tv';
+  } else {
+    throw new Error(
+      `Fetch favorites: mediaType has to be "tv" or "movies". Received: "${mediaType}"`
+    );
   }
   
-  return await fetchData(`/account/${accountId}/favorite/${mediaType}`,
-    `session_id=${sessionId}&sort_by=created_at.desc`);
+  return await fetchData(path, `session_id=${sessionId}&sort_by=created_at.desc`);
 }
 
 async function addFavorite(accountId, sessionId, mediaData) {

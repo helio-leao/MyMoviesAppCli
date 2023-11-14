@@ -50,8 +50,7 @@ export default function FavoritesScreen() {
       />
       <MediaGridList
         mediaData={favorites?.results}
-        mediaType={mediaType === 'tv' ?
-          ApiService.MediaType.TV : ApiService.MediaType.MOVIE}
+        mediaType={mediaType}
       />
     </View>
   );

@@ -20,7 +20,7 @@ export default function MediaGridList({
     } else if(mediaType === ApiService.MediaType.TV) {
       navigation.push('TvShowDetailsScreen', {id});
     } else {
-      console.warn('MediaGridList: media type unknown:', mediaType);
+      console.warn('Media type invalid:', mediaType);
     }
   }
 
