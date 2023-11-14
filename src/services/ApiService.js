@@ -40,11 +40,6 @@ const TvShowStatus = {
   PILOT: 'Pilot',
 }
 
-const FavoriteType = {
-  MOVIE: 'movies',
-  TV: 'tv',
-}
-
 
 // MEDIA FETCH FUNCTIONS
 
@@ -168,18 +163,12 @@ async function fetchAccountDetailsBySessionId(sessionId) {
 // AUTHENTICATED USER FUNCTIONS
 
 async function fetchFavorites(accountId, sessionId, mediaType) {
-  const url = API_BASE_URL +
-    `/account/${accountId}/favorite/${mediaType}?session_id=${sessionId}&sort_by=created_at.desc` +
-    GENERAL_QUERY;
-
-  const headers = {
-    Authorization: `Bearer ${API_TOKEN}`,
-  };
-
-  console.log(url);
-
-  const response = await axios(url, {headers});
-  return response.data;
+  if(mediaType === MediaType.MOVIE) {
+    mediaType = 'movies';
+  }
+  
+  return await fetchData(`/account/${accountId}/favorite/${mediaType}`,
+    `session_id=${sessionId}&sort_by=created_at.desc`);
 }
 
 async function addFavorite(accountId, sessionId, mediaData) {
@@ -206,7 +195,6 @@ export default {
   MediaType,
   CrewJob,
   TvShowStatus,
-  FavoriteType,
   fetchPopularMovies,
   fetchPopularTvShows,
   fetchTrendingMovies,

@@ -1,18 +1,19 @@
 import { useContext, useEffect, useState } from "react";
-import { StyleSheet, Text, ToastAndroid, View } from "react-native";
+import { StyleSheet, ToastAndroid, View } from "react-native";
 import ApiService from "../services/ApiService";
 import { SignedUserContext } from "../App";
 import SessionStorageService from "../services/SessionStorageService";
-import GridMovieList from "../components/GridMovieList";
+import MediaGridList from "../components/MediaGridList";
 import SwitchButtons from "../components/SwitchButtons";
 
 // TODO: add tv favorites
+// TODO: infinite scroll
 // ISSUE: gridmovielist needs to be addapted to tv, right now it opens movie details
 // when a show is selected
 
 const mediaOptions = [
-  { label: 'Filmes', value: ApiService.FavoriteType.MOVIE },
-  { label: 'Séries', value: ApiService.FavoriteType.TV },
+  { label: 'Filmes', value: ApiService.MediaType.MOVIE },
+  { label: 'Séries', value: ApiService.MediaType.TV },
 ]
 
 
@@ -20,22 +21,20 @@ export default function FavoritesScreen() {
 
   const {signedUser} = useContext(SignedUserContext);
   const [favorites, setFavorites] = useState(null);
-  const [mediaType, setMediaType] = useState(ApiService.FavoriteType.MOVIE);
+  const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE);
 
 
   useEffect(() => {
-    console.log(mediaType)
     async function loadFavorites() {
       try {
         const sessionId = await SessionStorageService.getSessionId();
-        const data = await ApiService.fetchFavorites(signedUser.id, sessionId, mediaType);
+        const data = await ApiService.fetchFavorites( signedUser.id, sessionId, mediaType);
 
         setFavorites(data);
       } catch (error) {
         console.log(error);
         ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
       }
-
     }
     loadFavorites();
   }, [mediaType]);
@@ -49,8 +48,10 @@ export default function FavoritesScreen() {
         value={mediaType}
         onChangeSelection={setMediaType}
       />
-      <GridMovieList
-        moviesData={favorites?.results}
+      <MediaGridList
+        mediaData={favorites?.results}
+        mediaType={mediaType === 'tv' ?
+          ApiService.MediaType.TV : ApiService.MediaType.MOVIE}
       />
     </View>
   );

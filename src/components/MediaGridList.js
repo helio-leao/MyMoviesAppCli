@@ -4,23 +4,30 @@ import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 
 
-export default function GridMovieList({
-  moviesData,
+export default function MediaGridList({
+  mediaData,
   onEndReached = () => {},
   showLoadingMoreIndicator = false,
   numColumns = 3,
+  mediaType,
 }) {
   const navigation = useNavigation();
 
 
   function onCardPress(id) {
-    navigation.push('MovieDetailsScreen', {id});
+    if(mediaType === ApiService.MediaType.MOVIE) {
+      navigation.push('MovieDetailsScreen', {id});
+    } else if(mediaType === ApiService.MediaType.TV) {
+      navigation.push('TvShowDetailsScreen', {id});
+    } else {
+      console.warn('MediaGridList: media type unknown:', mediaType);
+    }
   }
 
 
   return (
     <FlatList
-      data={moviesData}
+      data={mediaData}
       keyExtractor={item => String(item.id)}
       renderItem={({item}) => (
         <TouchableOpacity

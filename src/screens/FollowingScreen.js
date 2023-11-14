@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, Image, ToastAndroid } from 'react-native';
-import MoviesGrid from '../components/GridMovieList';
+import MediaGridList from '../components/MediaGridList';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ApiService from '../services/ApiService';
 import StorageService from '../services/StorageService';
@@ -138,10 +138,11 @@ export default function SearchScreen() {
       {/* media */}
       <View style={styles.moviesGridContainer}>
         <Text style={styles.moviesGridTitle}>Filmes</Text>
-        <MoviesGrid
-          moviesData={moviesData}
+        <MediaGridList
+          mediaData={moviesData}
           onEndReached={onEndReached}
           showLoadingMoreIndicator={!isLastPage()}
+          mediaType={ApiService.MediaType.MOVIE}
         />
       </View>
 
