@@ -4,11 +4,11 @@ import { useContext, useEffect, useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import LinearGradient from 'react-native-linear-gradient';
-import RowTvShowList from '../components/RowTvShowList';
 import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 import { SignedUserContext } from '../App';
 import SessionStorageService from '../services/SessionStorageService';
+import MediaRowList from '../components/MediaRowList';
 
 
 function formatTvShowStatus(status) {
@@ -175,9 +175,10 @@ export default function TvShowDetailsScreen() {
                 <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
                   Recomendações
                 </Text>
-                <RowTvShowList
-                  tvShowsData={tvShowData.recommendations.results}
+                <MediaRowList
+                  mediaData={tvShowData.recommendations.results}
                   contentContainerStyle={{paddingHorizontal: 10}}
+                  mediaType={ApiService.MediaType.TV}
                 />
               </View>
             )}

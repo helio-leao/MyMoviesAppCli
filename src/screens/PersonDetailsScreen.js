@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
-import RowMovieList from '../components/RowMovieList';
 import StorageService from '../services/StorageService';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MediaRowList from '../components/MediaRowList';
 
 
 export default function PersonDetailsScreen() {
@@ -120,9 +120,10 @@ export default function PersonDetailsScreen() {
             <Text style={[styles.subtitle, {marginLeft: 10}]}>
               Acting
             </Text>
-            <RowMovieList
-              moviesData={personData?.movie_credits.cast}
+            <MediaRowList
+              mediaData={personData?.movie_credits.cast}
               contentContainerStyle={{paddingHorizontal: 10}}
+              mediaType={ApiService.MediaType.MOVIE}
             />
           </View>
         ) : (
@@ -134,9 +135,11 @@ export default function PersonDetailsScreen() {
             <Text style={[styles.subtitle, {marginLeft: 10}]}>
               {personData?.known_for_department}
             </Text>
-            <RowMovieList
-              moviesData={toMoviesArrayWithoutDuplicates(personData?.movie_credits.crew
+            <MediaRowList
+              mediaData={toMoviesArrayWithoutDuplicates(personData?.movie_credits.crew
                 .filter(movieData => movieData.department === personData.known_for_department))}
+              contentContainerStyle={{paddingHorizontal: 10}}
+              mediaType={ApiService.MediaType.MOVIE}
             />
           </View>
         )}

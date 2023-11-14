@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, Text, ActivityIndicator, ToastAndroid } from 'react-native';
-import RowMovieList from '../components/RowMovieList';
-import RowTvShowList from '../components/RowTvShowList';
 import ApiService from '../services/ApiService';
+import MediaRowList from '../components/MediaRowList';
 
 
 export default function HomeScreen() {
@@ -59,33 +58,37 @@ export default function HomeScreen() {
         <View style={styles.moviesRowsContainer}>
           <View>
             <Text style={styles.moviesRowTitle}>Filmes populares</Text>
-            <RowMovieList
-              moviesData={popularMovies}
+            <MediaRowList
+              mediaData={popularMovies}
               contentContainerStyle={styles.moviesRowContentContainer}
+              mediaType={ApiService.MediaType.MOVIE}
             />
           </View>
 
           <View>
             <Text style={styles.moviesRowTitle}>Filmes em alta</Text>
-            <RowMovieList
-              moviesData={trendingMovies}
+            <MediaRowList
+              mediaData={trendingMovies}
               contentContainerStyle={styles.moviesRowContentContainer}
+              mediaType={ApiService.MediaType.MOVIE}
             />
           </View>
 
           <View>
             <Text style={styles.moviesRowTitle}>Séries populares</Text>
-            <RowTvShowList
-              tvShowsData={popularTvShows}
+            <MediaRowList
+              mediaData={popularTvShows}
               contentContainerStyle={styles.moviesRowContentContainer}
+              mediaType={ApiService.MediaType.TV}
             />
           </View>
 
           <View>
             <Text style={styles.moviesRowTitle}>Séries em alta</Text>
-            <RowTvShowList
-              tvShowsData={trendingTvShows}
+            <MediaRowList
+              mediaData={trendingTvShows}
               contentContainerStyle={styles.moviesRowContentContainer}
+              mediaType={ApiService.MediaType.TV}
             />
           </View>
         </View>

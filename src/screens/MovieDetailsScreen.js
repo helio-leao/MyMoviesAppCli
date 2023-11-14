@@ -3,12 +3,12 @@ import { useRoute } from '@react-navigation/native';
 import { useContext, useEffect, useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import RowMovieList from '../components/RowMovieList';
 import LinearGradient from 'react-native-linear-gradient';
 import ApiService from '../services/ApiService';
 import { SignedUserContext } from '../App';
 import SessionStorageService from '../services/SessionStorageService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
+import MediaRowList from '../components/MediaRowList';
 
 
 export default function MovieDetailsScreen() {
@@ -154,9 +154,10 @@ export default function MovieDetailsScreen() {
                 <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
                   Recomendações
                 </Text>
-                <RowMovieList
-                  moviesData={movieData.recommendations.results}
+                <MediaRowList
+                  mediaData={movieData.recommendations.results}
                   contentContainerStyle={{paddingHorizontal: 10}}
+                  mediaType={ApiService.MediaType.MOVIE}
                 />
               </View>
             )}

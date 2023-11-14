@@ -4,13 +4,19 @@ import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 
 
-export default function RowMovieList({contentContainerStyle, moviesData}) {
+export default function MediaRowList({contentContainerStyle, mediaData, mediaType}) {
 
   const navigation = useNavigation();
 
 
   function handleCardPress(item) {
-    navigation.push('MovieDetailsScreen', {id: item.id});
+    if(mediaType === ApiService.MediaType.MOVIE) {
+      navigation.push('MovieDetailsScreen', {id: item.id});
+    } else if(mediaType === ApiService.MediaType.TV) {
+      navigation.push('TvShowDetailsScreen', {id: item.id});
+    } else {
+      console.warn('Media type invalid:', mediaType);
+    }
   }
 
 
@@ -19,7 +25,7 @@ export default function RowMovieList({contentContainerStyle, moviesData}) {
       horizontal
       keyExtractor={item => String(item.id)}
       contentContainerStyle={contentContainerStyle}
-      data={moviesData}
+      data={mediaData}
       renderItem={({item}) => (
         <TouchableOpacity
           style={styles.cardContainer}
