@@ -48,16 +48,16 @@ export default function SearchResultCard({item}) {
       )}
 
       {/* data container */}
-      {item.media_type === ApiService.MediaType.PERSON ? (
-        <View style={styles.resultCardDataContainer}>
-          <Text style={styles.resultCardTitle} numberOfLines={2}>{item.name}</Text>
-          {/* <Text style={styles.resultCardText}>{item.media_type}</Text> */}
-        </View> 
-      ) : (
+      {item.media_type === ApiService.MediaType.MOVIE ? (
         <View style={styles.resultCardDataContainer}>
           <Text style={styles.resultCardTitle} numberOfLines={2}>{item.title}</Text>
           {/* <Text style={styles.resultCardText}>{item.media_type}</Text> */}
         </View>
+      ) : (
+        <View style={styles.resultCardDataContainer}>
+          <Text style={styles.resultCardTitle} numberOfLines={2}>{item.name}</Text>
+          {/* <Text style={styles.resultCardText}>{item.media_type}</Text> */}
+        </View> 
       )}
     </TouchableOpacity>
   );
