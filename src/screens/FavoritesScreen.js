@@ -8,10 +8,11 @@ import SwitchButtons from "../components/SwitchButtons";
 
 // TODO: add tv favorites
 // TODO: infinite scroll
+// TODO: it's bringing favorites in english, change do portuguese
 // ISSUE: gridmovielist needs to be addapted to tv, right now it opens movie details
 // when a show is selected
 
-const mediaOptions = [
+const switchOptions = [
   { label: 'Filmes', value: ApiService.MediaType.MOVIE },
   { label: 'Séries', value: ApiService.MediaType.TV },
 ]
@@ -44,7 +45,7 @@ export default function FavoritesScreen() {
     <View style={styles.screenContainer}>
       <SwitchButtons
         style={{padding: 14, alignSelf: 'flex-end'}}
-        options={mediaOptions}
+        options={switchOptions}
         value={mediaType}
         onChangeSelection={setMediaType}
       />

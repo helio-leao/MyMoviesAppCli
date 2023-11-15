@@ -10,13 +10,7 @@ export default function MediaRowList({contentContainerStyle, mediaData, mediaTyp
 
 
   function handleCardPress(item) {
-    if(mediaType === ApiService.MediaType.MOVIE) {
-      navigation.push('MovieDetailsScreen', {id: item.id});
-    } else if(mediaType === ApiService.MediaType.TV) {
-      navigation.push('TvShowDetailsScreen', {id: item.id});
-    } else {
-      console.warn('Media type invalid:', mediaType);
-    }
+    navigation.push('MediaDetailsScreen', {id: item.id, mediaType});
   }
 
 

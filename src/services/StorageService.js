@@ -5,7 +5,8 @@ const FOLLOWED_PEOPLE_STORAGE_KEY = '@user:followed_people';
 
 
 // NOTE: alternative to the result object return strategy could be the try/catch here sending one
-// generic error up like "Ocorreu um erro." and logging the error with console.log or .warn or .error
+// generic error up like "Ocorreu um erro." and logging the error on the highest level with
+// console.log or .warn or .error
 // NOTE: it's common to use ok too instead of success
 async function addFollowedPerson(newPerson) {
   const followedPeople = await getFollowedPeople();

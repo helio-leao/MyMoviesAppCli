@@ -10,18 +10,18 @@ export default function SearchResultCard({item}) {
 
 
   function handleCardPress() {
-    switch(item.media_type) {
+    const {id, media_type: mediaType} = item;
+
+    switch(mediaType) {
       case ApiService.MediaType.MOVIE:
-        navigation.push('MovieDetailsScreen', {id: item.id});
-        break;
       case ApiService.MediaType.TV:
-        navigation.push('TvShowDetailsScreen', {id: item.id});          
+        navigation.push('MediaDetailsScreen', {id, mediaType});
         break;
       case ApiService.MediaType.PERSON:
-        navigation.push('PersonDetailsScreen', {id: item.id});    
+        navigation.push('PersonDetailsScreen', {id});    
         break;
       default:
-        console.warn('Media type not recognized:', item.media_type);
+        console.warn('Media type not recognized:', mediaType);
     }
   }
 
@@ -50,13 +50,15 @@ export default function SearchResultCard({item}) {
       {/* data container */}
       {item.media_type === ApiService.MediaType.MOVIE ? (
         <View style={styles.resultCardDataContainer}>
-          <Text style={styles.resultCardTitle} numberOfLines={2}>{item.title}</Text>
-          {/* <Text style={styles.resultCardText}>{item.media_type}</Text> */}
+          <Text style={styles.resultCardTitle} numberOfLines={2}>
+            {item.title}
+          </Text>
         </View>
       ) : (
         <View style={styles.resultCardDataContainer}>
-          <Text style={styles.resultCardTitle} numberOfLines={2}>{item.name}</Text>
-          {/* <Text style={styles.resultCardText}>{item.media_type}</Text> */}
+          <Text style={styles.resultCardTitle} numberOfLines={2}>
+            {item.name}
+          </Text>
         </View> 
       )}
     </TouchableOpacity>

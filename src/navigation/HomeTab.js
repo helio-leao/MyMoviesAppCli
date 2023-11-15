@@ -1,8 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
-import MovieDetailsScreen from '../screens/MovieDetailsScreen';
-import TvShowDetailsScreen from '../screens/TvShowDetailsScreen';
+import MediaDetailsScreen from '../screens/MediaDetailsScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -19,14 +18,9 @@ export default function HomeTab() {
         options={{title: 'Início'}}
       />
       <Stack.Screen
-        name={'MovieDetailsScreen'}
-        component={MovieDetailsScreen}
-        options={{title: 'Detalhes do filme'}}
-      />
-      <Stack.Screen
-        name={'TvShowDetailsScreen'}
-        component={TvShowDetailsScreen}
-        options={{title: 'Detalhes da série'}}
+        name={'MediaDetailsScreen'}
+        component={MediaDetailsScreen}
+        options={{title: 'Detalhes'}}
       />
     </Stack.Navigator>
   );

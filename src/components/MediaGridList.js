@@ -15,13 +15,7 @@ export default function MediaGridList({
 
 
   function onCardPress(id) {
-    if(mediaType === ApiService.MediaType.MOVIE) {
-      navigation.push('MovieDetailsScreen', {id});
-    } else if(mediaType === ApiService.MediaType.TV) {
-      navigation.push('TvShowDetailsScreen', {id});
-    } else {
-      console.warn('Media type invalid:', mediaType);
-    }
+    navigation.push('MediaDetailsScreen', {id, mediaType});
   }
 
 
