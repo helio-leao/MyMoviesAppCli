@@ -15,7 +15,7 @@ export default function UserScreen() {
 
   useEffect(() => {
     async function loadUserData() {
-      // TODO: load user data??
+      // TODO: set user data on screen states
     }
     loadUserData();
 
@@ -44,7 +44,7 @@ export default function UserScreen() {
     navigation.navigate('FavoritesScreen');
   }
 
-  function handleFollowedPeoplePress() {
+  function handleFollowingPress() {
     navigation.navigate('FollowingScreen');
   }
 
@@ -69,8 +69,8 @@ export default function UserScreen() {
           <Text style={styles.buttonText}>Favoritos</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={handleFollowedPeoplePress}>
-          <Text style={styles.buttonText}>Pessoas seguidas (armazenamento local)</Text>
+        <TouchableOpacity style={styles.button} onPress={handleFollowingPress}>
+          <Text style={styles.buttonText}>Seguindo</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={handleLogout}>

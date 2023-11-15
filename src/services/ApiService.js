@@ -8,7 +8,7 @@ const { API_TOKEN } = process.env;
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original';
 
-const GENERAL_QUERY = `&include_adult=false&language=pt-BR`;
+const COMMON_QUERY = `&include_adult=false&language=pt-BR`;
 
 
 // ENUMS
@@ -44,40 +44,40 @@ const TvShowStatus = {
 // MEDIA FETCH FUNCTIONS
 
 async function fetchPopularMovies(page = 1) {
-  return await fetchData(`/movie/popular`, `page=${page}` + GENERAL_QUERY);
+  return await fetchData(`/movie/popular`, `page=${page}` + COMMON_QUERY);
 }
 
 async function fetchPopularTvShows(page = 1) {
-  return await fetchData(`/tv/popular`, `page=${page}` + GENERAL_QUERY);
+  return await fetchData(`/tv/popular`, `page=${page}` + COMMON_QUERY);
 }
 
 async function fetchTrendingMovies(timeWindow = TrendingTimeWindow.DAY) {
-  return await fetchData(`/trending/movie/${timeWindow}`, GENERAL_QUERY);
+  return await fetchData(`/trending/movie/${timeWindow}`, COMMON_QUERY);
 }
 
 async function fetchTrendingTvShows(timeWindow = TrendingTimeWindow.DAY) {
-  return await fetchData(`/trending/tv/${timeWindow}`, GENERAL_QUERY);
+  return await fetchData(`/trending/tv/${timeWindow}`, COMMON_QUERY);
 }
 
 async function fetchMovieDetails(movieId) {
   return await fetchData(`/movie/${movieId}`,
-    `append_to_response=recommendations,credits` + GENERAL_QUERY);
+    `append_to_response=recommendations,credits` + COMMON_QUERY);
 }
 
 async function fetchTvShowDetails(tvShowId) {
   return await fetchData(`/tv/${tvShowId}`,
-    `append_to_response=recommendations,credits` + GENERAL_QUERY);
+    `append_to_response=recommendations,credits` + COMMON_QUERY);
 }
 
 async function fetchPersonDetails(personId) {
   return await fetchData(`/person/${personId}`,
-    `append_to_response=movie_credits` + GENERAL_QUERY);
+    `append_to_response=movie_credits` + COMMON_QUERY);
     // TODO: use combined_credits for movies and tv shows
     // `append_to_response=combined_credits` + GENERAL_QUERY);
 }
 
 async function fetchMulti(name = '', page = 1) {
-  return await fetchData(`/search/multi`, `query=${name}&page=${page}` + GENERAL_QUERY);
+  return await fetchData(`/search/multi`, `query=${name}&page=${page}` + COMMON_QUERY);
 }
 
 async function fetchMoviesWithPeople(peopleIds = [], page = 1) {
@@ -85,7 +85,7 @@ async function fetchMoviesWithPeople(peopleIds = [], page = 1) {
   return await fetchData(
     `/discover/movie`,
     `include_video=false&page=${page}&sort_by=primary_release_date.desc&with_people=${
-      peopleIds.join('|')}&without_genres=99` + GENERAL_QUERY,
+      peopleIds.join('|')}&without_genres=99` + COMMON_QUERY,
   );
 }
 
@@ -175,7 +175,7 @@ async function fetchFavorites(accountId, sessionId, mediaType) {
     );
   }
   
-  return await fetchData(path, `session_id=${sessionId}&sort_by=created_at.desc`);
+  return await fetchData(path, `session_id=${sessionId}&sort_by=created_at.desc` + COMMON_QUERY);
 }
 
 async function addFavorite(accountId, sessionId, mediaData) {

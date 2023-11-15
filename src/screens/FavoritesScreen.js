@@ -8,7 +8,6 @@ import SwitchButtons from "../components/SwitchButtons";
 
 // TODO: add tv favorites
 // TODO: infinite scroll
-// TODO: it's bringing favorites in english, change do portuguese
 // ISSUE: gridmovielist needs to be addapted to tv, right now it opens movie details
 // when a show is selected
 
