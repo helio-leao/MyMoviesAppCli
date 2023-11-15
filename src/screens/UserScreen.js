@@ -1,6 +1,6 @@
-import { StyleSheet, View, ToastAndroid, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, ToastAndroid, TouchableOpacity, Text } from 'react-native';
 import ApiService from '../services/ApiService';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import SessionStorageService from '../services/SessionStorageService';
 import { SignedUserContext } from '../App';
 import { useNavigation } from '@react-navigation/native';
@@ -9,18 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 export default function UserScreen() {
 
   const {signedUser, setSignedUser} = useContext(SignedUserContext);
-  const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
-
-
-  useEffect(() => {
-    async function loadUserData() {
-      // TODO: set user data on screen states
-    }
-    loadUserData();
-
-    setIsLoading(false);
-  }, []);
 
 
   async function handleLogout() {
@@ -48,14 +37,6 @@ export default function UserScreen() {
     navigation.navigate('FollowingScreen');
   }
 
-
-  if(isLoading) {
-    return (
-      <View style={[styles.container, {justifyContent: 'center'}]}>
-        <ActivityIndicator size={'large'} color={'#fff'} />
-      </View> 
-    );
-  }
 
   return (
     <View style={styles.container}>
