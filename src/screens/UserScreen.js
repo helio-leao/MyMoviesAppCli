@@ -12,7 +12,7 @@ export default function UserScreen() {
   const navigation = useNavigation();
 
 
-  async function handleLogout() {
+  async function handleLogoutPress() {
     try {
       const sessionId = await SessionStorageService.getSessionId();
       const response = await ApiService.deleteSession(sessionId);
@@ -54,7 +54,7 @@ export default function UserScreen() {
           <Text style={styles.buttonText}>Seguindo</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={handleLogout}>
+        <TouchableOpacity style={styles.button} onPress={handleLogoutPress}>
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
       </View>

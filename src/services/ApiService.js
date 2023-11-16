@@ -171,18 +171,18 @@ async function fetchFavorites(accountId, sessionId, mediaType) {
     path += '/tv';
   } else {
     throw new Error(
-      `Fetch favorites: mediaType has to be "tv" or "movies". Received: "${mediaType}"`
+      `MediaType has to be "tv" or "movies". Received: "${mediaType}"`
     );
   }
   
   return await fetchData(path, `session_id=${sessionId}&sort_by=created_at.desc` + COMMON_QUERY);
 }
 
-async function addFavorite(accountId, sessionId, mediaData) {
+async function addFavorite(accountId, sessionId, mediaData, mediaType) {
   const url = API_BASE_URL + `/account/${accountId}/favorite?session_id=${sessionId}`;
 
   const data = {
-    media_type: mediaData.media_type,
+    media_type: mediaType,
     media_id: mediaData.id,
     favorite: true,
   };

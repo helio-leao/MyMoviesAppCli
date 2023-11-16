@@ -28,39 +28,21 @@ export default function SearchResultCard({item}) {
   
   return (
     <TouchableOpacity style={styles.resultCardContainer} onPress={handleCardPress}>
-      {/* image */}
-      {item.media_type === ApiService.MediaType.PERSON ? (
-        <Image
-          style={styles.resultCardImage}
-          source={item.profile_path ?
-            {uri: ApiService.fetchFullImagePath(item.profile_path)}
-            : placeholder_poster
-          }
-        />
-      ) : (
-        <Image
-          style={styles.resultCardImage}
-          source={item.poster_path ?
-            {uri: ApiService.fetchFullImagePath(item.poster_path)}
-            : placeholder_poster
-          }
-        />
-      )}
+      {/* NOTE: poster_path for movies and tv; profile_path for person */}
+      <Image
+        style={styles.resultCardImage}
+        source={(item.poster_path || item.profile_path) ?
+          {uri: ApiService.fetchFullImagePath(item.poster_path || item.profile_path)}
+          : placeholder_poster
+        }
+      />
 
-      {/* data container */}
-      {item.media_type === ApiService.MediaType.MOVIE ? (
-        <View style={styles.resultCardDataContainer}>
-          <Text style={styles.resultCardTitle} numberOfLines={2}>
-            {item.title}
-          </Text>
-        </View>
-      ) : (
-        <View style={styles.resultCardDataContainer}>
-          <Text style={styles.resultCardTitle} numberOfLines={2}>
-            {item.name}
-          </Text>
-        </View> 
-      )}
+      {/* NOTE: title for movies; name for tv and person */}
+      <View style={styles.resultCardDataContainer}>
+        <Text style={styles.resultCardTitle} numberOfLines={2}>
+          {item.title || item.name}
+        </Text>
+      </View> 
     </TouchableOpacity>
   );
 }

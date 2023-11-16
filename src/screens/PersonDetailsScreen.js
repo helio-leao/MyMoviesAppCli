@@ -49,7 +49,6 @@ export default function PersonDetailsScreen() {
     return sortedItems;
   }
 
-  // NOTE: this repeats on search result card. separate???
   async function handleFollowPress() {
     const {id, name, profile_path} = personData;
 

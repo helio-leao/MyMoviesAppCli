@@ -22,12 +22,17 @@ export default function MediaDetailsScreen() {
   useEffect(() => {
     async function loadMediaData() {
       try {
-        if(mediaType === ApiService.MediaType.MOVIE) {
-          const movieDetails = await ApiService.fetchMovieDetails(route.params.id);
-          setMediaData(movieDetails);
-        } else if(mediaType === ApiService.MediaType.TV) {
-          const tvShowDetails = await ApiService.fetchTvShowDetails(route.params.id);
-          setMediaData(tvShowDetails);
+        switch(mediaType) {
+          case ApiService.MediaType.MOVIE:
+            const movieDetails = await ApiService.fetchMovieDetails(route.params.id);
+            setMediaData(movieDetails);
+            break;
+          case ApiService.MediaType.TV:
+            const tvShowDetails = await ApiService.fetchTvShowDetails(route.params.id);
+            setMediaData(tvShowDetails);
+            break;
+          default:
+            console.warn('Media type invalid:', mediaType);
         }
       } catch (error) {
         console.error(error);
@@ -45,7 +50,8 @@ export default function MediaDetailsScreen() {
       const response = await ApiService.addFavorite(
         signedUser.id,
         sessionId,
-        {...mediaData, media_type: mediaType}
+        mediaData,
+        mediaType,
       );
 
       if(response.success) {
@@ -150,7 +156,8 @@ function MediaContent({mediaData, mediaType}) {
     case ApiService.MediaType.TV:
       return <TvShowContent mediaData={mediaData} />
     default:
-      console.warn('MediaContent. Media type invalid:', mediaType);
+      console.warn('Media type invalid:', mediaType);
+      return null;
   }
 }
 
