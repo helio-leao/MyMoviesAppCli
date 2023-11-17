@@ -140,6 +140,33 @@ export default function MediaDetailsScreen() {
               </View>
             )}
 
+            {mediaData?.credits.cast.length > 0 && (
+              <View style={{marginTop: 30}}>
+                <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
+                  Elenco
+                </Text>
+                <MediaRowList
+                  mediaData={mediaData.credits.cast}
+                  contentContainerStyle={{paddingHorizontal: 10}}
+                  mediaType={ApiService.MediaType.PERSON}
+                />
+              </View>
+            )}
+
+            {/* ISSUE: there's duplicates on the api return. one instance for each job */}
+            {/* {mediaData?.credits.crew.length > 0 && (
+              <View style={{marginTop: 30}}>
+                <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
+                  Produção
+                </Text>
+                <MediaRowList
+                  mediaData={mediaData.credits.crew}
+                  contentContainerStyle={{paddingHorizontal: 10}}
+                  mediaType={ApiService.MediaType.PERSON}
+                />
+              </View>
+            )} */}
+
           </View>
         </ScrollView>
         

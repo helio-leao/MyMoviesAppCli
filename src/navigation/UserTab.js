@@ -6,6 +6,7 @@ import { SignedUserContext } from '../App';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import FollowingScreen from '../screens/FollowingScreen';
 import MediaDetailsScreen from '../screens/MediaDetailsScreen';
+import PersonDetailsScreen from '../screens/PersonDetailsScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -42,6 +43,11 @@ function LoggedInStackNavigator() {
         name={'MediaDetailsScreen'}
         component={MediaDetailsScreen}
         options={{title: 'Detalhes'}}
+      />
+      <Stack.Screen
+        name={'PersonDetailsScreen'}
+        component={PersonDetailsScreen}
+        options={{title: 'Perfil'}}
       />
     </Stack.Navigator>
   );

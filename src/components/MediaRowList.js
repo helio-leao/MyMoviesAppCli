@@ -10,7 +10,11 @@ export default function MediaRowList({contentContainerStyle, mediaData, mediaTyp
 
 
   function handleCardPress(item) {
-    navigation.push('MediaDetailsScreen', {id: item.id, mediaType});
+    if(mediaType === ApiService.MediaType.PERSON) {
+      navigation.push('PersonDetailsScreen', {id: item.id});
+    } else {
+      navigation.push('MediaDetailsScreen', {id: item.id, mediaType});
+    }
   }
 
 
@@ -27,8 +31,8 @@ export default function MediaRowList({contentContainerStyle, mediaData, mediaTyp
         >
           <Image
             style={styles.poster}
-            source={item.poster_path ?
-              {uri: ApiService.fetchFullImagePath(item.poster_path)}
+            source={(item.poster_path || item.profile_path) ?
+              {uri: ApiService.fetchFullImagePath(item.poster_path || item.profile_path)}
               : placeholder_poster
             }
           />

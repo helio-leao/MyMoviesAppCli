@@ -7,6 +7,7 @@ import ApiService from './services/ApiService';
 
 // TODO: remove favorites functionality
 // TODO: add to watchlist functionality???
+// TODO: make person details screen a component for media details screen
 
 
 export const SignedUserContext = createContext();
