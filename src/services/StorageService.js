@@ -7,12 +7,12 @@ const FOLLOWED_PEOPLE_STORAGE_KEY = '@user:followed_people';
 // NOTE: alternative to the result object return strategy could be the try/catch here sending one
 // generic error up like "Ocorreu um erro." and logging the error on the highest level with
 // console.log or .warn or .error
-// NOTE: it's common to use ok too instead of success
 async function addFollowedPerson(newPerson) {
   const followedPeople = await getFollowedPeople();
-
+  
   if(followedPeople.find(person => newPerson.id === person.id)) {
-    return {success: false, message: `Você já segue ${newPerson.name}.`};
+    // NOTE: it's common to use ok too instead of success
+    return {success: false, message: `Você já segue ${newPerson.name}.`}; 
   }
   
   await AsyncStorage.setItem(FOLLOWED_PEOPLE_STORAGE_KEY, JSON.stringify([...followedPeople, newPerson]));
@@ -27,6 +27,11 @@ async function getFollowedPeople() {
 async function removeFollowedPerson(id) {
   const followedPeople = await getFollowedPeople();
   const updatedFollowedPeople = followedPeople.filter(person => person.id !== id);
+
+  if(updatedFollowedPeople.length === 0) {
+    await AsyncStorage.removeItem(FOLLOWED_PEOPLE_STORAGE_KEY);
+    return;
+  }
   await AsyncStorage.setItem(FOLLOWED_PEOPLE_STORAGE_KEY, JSON.stringify(updatedFollowedPeople));
 }
 

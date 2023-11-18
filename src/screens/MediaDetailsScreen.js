@@ -251,12 +251,14 @@ function TvShowContent({mediaData}) {
 
   return(
     <View style={styles.contentContainer}>
-      <Text style={styles.contentText}>
-        Criado por: {mediaData?.created_by
-          .map(creator => creator.name)
-          .slice(0, 3)
-          .join(', ')}
-      </Text>
+      {mediaData?.created_by.length > 0 && (
+        <Text style={styles.contentText}>
+          Criado por: {mediaData.created_by
+            .map(creator => creator.name)
+            .slice(0, 3)
+            .join(', ')}
+        </Text>
+      )}
       <Text style={[styles.contentText, {marginBottom: 20}]}>
         Elenco: {mediaData?.credits.cast
           .map(actor => actor.name)
