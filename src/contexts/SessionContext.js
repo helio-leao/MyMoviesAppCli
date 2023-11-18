@@ -27,24 +27,14 @@ export function SessionProvider ({children}) {
   }, []);
 
 
-  async function handleLogin(sessionId, signedUser) {
-    try {
-      await SessionStorageService.setSessionId(sessionId);
-      setSession({id: sessionId, user: signedUser});
-    } catch (error) {
-      console.log('error: ', error);
-      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
-    }
+  async function createSession(sessionId, signedUser) {
+    await SessionStorageService.setSessionId(sessionId);
+    setSession({id: sessionId, user: signedUser});
   }
 
-  async function handleLogout() {
-    try {
-      await SessionStorageService.deleteSessionId();
-      setSession(null);
-    } catch (error) {
-      console.log('error: ', error);
-      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
-    }
+  async function deleteSession() {
+    await SessionStorageService.deleteSessionId();
+    setSession(null);
   }
 
 
@@ -52,8 +42,8 @@ export function SessionProvider ({children}) {
     <SessionContext.Provider
       value={{
         session,
-        handleLogin,
-        handleLogout,
+        createSession,
+        deleteSession,
       }}
     >
       {children}

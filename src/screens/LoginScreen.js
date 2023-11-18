@@ -7,7 +7,7 @@ import { SessionContext } from '../contexts/SessionContext';
 
 export default function LoginScreen() {
 
-  const {handleLogin} = useContext(SessionContext);
+  const {createSession} = useContext(SessionContext);
   const [requestToken, setRequestToken] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -54,7 +54,7 @@ export default function LoginScreen() {
       const {session_id} = response;
 
       const userData = await ApiService.fetchAccountDetailsBySessionId(session_id);
-      await handleLogin(session_id, userData);
+      await createSession(session_id, userData);
     }
   }
 

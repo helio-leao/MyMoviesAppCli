@@ -7,7 +7,7 @@ import { SessionContext } from '../contexts/SessionContext';
 
 export default function UserScreen() {
 
-  const {session, handleLogout} = useContext(SessionContext);
+  const {session, deleteSession} = useContext(SessionContext);
   const navigation = useNavigation();
 
 
@@ -17,7 +17,7 @@ export default function UserScreen() {
 
       if(response.success) {
         navigation.navigate('HomeTab');
-        await handleLogout();
+        await deleteSession();
         ToastAndroid.show('Logged out.', ToastAndroid.SHORT);
       }
     } catch (error) {
