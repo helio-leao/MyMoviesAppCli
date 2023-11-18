@@ -10,10 +10,12 @@ export default function MediaRowList({contentContainerStyle, mediaData, mediaTyp
 
 
   function handleCardPress(item) {
+    const {id} = item;
+
     if(mediaType === ApiService.MediaType.PERSON) {
-      navigation.push('PersonDetailsScreen', {id: item.id});
+      navigation.push('PersonDetailsScreen', {id});
     } else {
-      navigation.push('MediaDetailsScreen', {id: item.id, mediaType});
+      navigation.push('MediaDetailsScreen', {id, mediaType});
     }
   }
 

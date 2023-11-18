@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import RootTabNavigator from './navigation/RootTabNavigator';
 import { SessionProvider } from './contexts/SessionContext';
 
-// TODO: remove favorites functionality
-// TODO: add watchlist functionality???
+// TODO: "remove favorites" functionality
+// TODO: add "watchlist" functionality???
 // TODO: make person details screen a component for media details screen
 
 

@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import SessionStorageService from "../services/SessionStorageService";
 import ApiService from "../services/ApiService";
-import { ToastAndroid } from "react-native";
 
 
 export const SessionContext = createContext();
