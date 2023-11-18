@@ -13,9 +13,9 @@ const Stack = createNativeStackNavigator();
 
 
 export default function UserTab() {
-  const {signedUser} = useContext(SessionContext);
+  const {session} = useContext(SessionContext);
   
-  return signedUser ? <LoggedInStackNavigator /> : <LoggedOutStackNavigator />
+  return session ? <LoggedInStackNavigator /> : <LoggedOutStackNavigator />
 }
 
 

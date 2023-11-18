@@ -15,7 +15,7 @@ const Tab = createBottomTabNavigator();
 
 export default function RootTabNavigator() {
 
-  const {signedUser} = useContext(SessionContext);
+  const {session} = useContext(SessionContext);
 
 
   return (
@@ -65,13 +65,13 @@ export default function RootTabNavigator() {
           tabBarTestID: 'tab-user',
           tabBarIcon: ({color, size, focused}) => {
             // no user logged
-            if(!signedUser) {
+            if(!session?.user) {
               return <FontAwesome name="sign-in" size={size} color={color} />
             }
 
             // NOTE: could be the gravatar, add it later???
             // user logged has no avatar
-            if(!signedUser.avatar.tmdb.avatar_path) {
+            if(!session?.user.avatar.tmdb.avatar_path) {
               return <FontAwesome name={focused ? "user-circle" : "user-circle-o"} size={size} color={color} />
             }
 
@@ -79,7 +79,7 @@ export default function RootTabNavigator() {
             return (
               <Image
                 style={{height: size, width: size}}
-                source={{uri: ApiService.fetchFullImagePath(signedUser.avatar.tmdb.avatar_path)}}
+                source={{uri: ApiService.fetchFullImagePath(session?.user.avatar.tmdb.avatar_path)}}
               />
             )
           },

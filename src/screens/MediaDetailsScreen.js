@@ -12,7 +12,7 @@ import { SessionContext } from '../contexts/SessionContext';
 
 export default function MediaDetailsScreen() {
 
-  const {signedUser, sessionId} = useContext(SessionContext);
+  const {session} = useContext(SessionContext);
   const [mediaData, setMediaData] = useState(null);
   const route = useRoute();
   const {mediaType} = route.params;
@@ -46,8 +46,8 @@ export default function MediaDetailsScreen() {
   async function onFavoritePress() {
     try {
       const response = await ApiService.addFavorite(
-        signedUser.id,
-        sessionId,
+        session.user.id,
+        session.id,
         mediaData,
         mediaType,
       );
@@ -115,7 +115,7 @@ export default function MediaDetailsScreen() {
                 </View>
               </View>
 
-              {signedUser && (
+              {session?.user && (
                 <TouchableOpacity style={styles.favoriteButton} onPress={onFavoritePress}>
                   <FontAwesome name="heart" size={20} color="white" />
                   <Text style={styles.favoriteButtonText}>Favoritar</Text>

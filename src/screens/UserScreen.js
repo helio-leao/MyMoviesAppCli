@@ -1,31 +1,23 @@
 import { StyleSheet, View, ToastAndroid, TouchableOpacity, Text } from 'react-native';
 import ApiService from '../services/ApiService';
 import { useContext } from 'react';
-import SessionStorageService from '../services/SessionStorageService';
 import { useNavigation } from '@react-navigation/native';
 import { SessionContext } from '../contexts/SessionContext';
 
 
 export default function UserScreen() {
 
-  const {signedUser,
-    setSignedUser,
-    sessionId,
-    setSessionId
-  } = useContext(SessionContext);
-
+  const {session, handleLogout} = useContext(SessionContext);
   const navigation = useNavigation();
 
 
   async function handleLogoutPress() {
     try {
-      const response = await ApiService.deleteSession(sessionId);
+      const response = await ApiService.deleteSession(session.id);
 
       if(response.success) {
         navigation.navigate('HomeTab');
-        await SessionStorageService.deleteSessionId();
-        setSignedUser(null);  // NOTE: after navigate so it doesn't mount LoginScreen
-        setSessionId('');
+        await handleLogout();
         ToastAndroid.show('Logged out.', ToastAndroid.SHORT);
       }
     } catch (error) {
@@ -47,7 +39,7 @@ export default function UserScreen() {
     <View style={styles.container}>
 
       <View style={{marginBottom: 20}}>
-        <Text style={{color: '#fff'}}>{JSON.stringify(signedUser, null, 2)}</Text>
+        <Text style={{color: '#fff'}}>{JSON.stringify(session.user, null, 2)}</Text>
       </View>
 
       <View style={{gap: 10}}>

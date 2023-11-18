@@ -16,7 +16,7 @@ const switchOptions = [
 
 export default function FavoritesScreen() {
 
-  const {signedUser, sessionId} = useContext(SessionContext);
+  const {session} = useContext(SessionContext);
   const [favorites, setFavorites] = useState(null);
   const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE);
 
@@ -24,7 +24,8 @@ export default function FavoritesScreen() {
   useEffect(() => {
     async function loadFavorites() {
       try {
-        const data = await ApiService.fetchFavorites( signedUser.id, sessionId, mediaType);
+        const data = await ApiService.fetchFavorites(
+          session.user.id, session.id, mediaType);
 
         setFavorites(data);
       } catch (error) {

@@ -7,6 +7,8 @@ import StorageService from '../services/StorageService';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MediaRowList from '../components/MediaRowList';
 
+// TODO: follow always visible. save to logged user or common like it is???
+
 
 export default function PersonDetailsScreen() {
 

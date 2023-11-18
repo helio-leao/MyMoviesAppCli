@@ -1,14 +1,13 @@
 import { StyleSheet, View, ToastAndroid, ActivityIndicator } from 'react-native';
 import ApiService from '../services/ApiService';
 import { useContext, useEffect, useState } from 'react';
-import SessionStorageService from '../services/SessionStorageService';
 import WebView from 'react-native-webview';
 import { SessionContext } from '../contexts/SessionContext';
 
 
 export default function LoginScreen() {
 
-  const {setSignedUser, setSessionId} = useContext(SessionContext);
+  const {handleLogin} = useContext(SessionContext);
   const [requestToken, setRequestToken] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -54,10 +53,8 @@ export default function LoginScreen() {
     if(response.success) {
       const {session_id} = response;
 
-      await SessionStorageService.setSessionId(session_id);
       const userData = await ApiService.fetchAccountDetailsBySessionId(session_id);
-      setSignedUser(userData);
-      setSessionId(session_id);
+      await handleLogin(session_id, userData);
     }
   }
 
