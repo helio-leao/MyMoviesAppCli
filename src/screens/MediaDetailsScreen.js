@@ -5,15 +5,14 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import LinearGradient from 'react-native-linear-gradient';
 import ApiService from '../services/ApiService';
-import { SignedUserContext } from '../App';
-import SessionStorageService from '../services/SessionStorageService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 import MediaRowList from '../components/MediaRowList';
+import { SessionContext } from '../contexts/SessionContext';
 
 
 export default function MediaDetailsScreen() {
 
-  const {signedUser} = useContext(SignedUserContext);
+  const {signedUser, sessionId} = useContext(SessionContext);
   const [mediaData, setMediaData] = useState(null);
   const route = useRoute();
   const {mediaType} = route.params;
@@ -46,7 +45,6 @@ export default function MediaDetailsScreen() {
   // NOTE: verify if error response comes in the same object if outside try/catch block
   async function onFavoritePress() {
     try {
-      const sessionId = await SessionStorageService.getSessionId();
       const response = await ApiService.addFavorite(
         signedUser.id,
         sessionId,

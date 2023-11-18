@@ -2,18 +2,18 @@ import React, { useContext } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UserScreen from '../screens/UserScreen';
 import LoginScreen from '../screens/LoginScreen';
-import { SignedUserContext } from '../App';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import FollowingScreen from '../screens/FollowingScreen';
 import MediaDetailsScreen from '../screens/MediaDetailsScreen';
 import PersonDetailsScreen from '../screens/PersonDetailsScreen';
+import { SessionContext } from '../contexts/SessionContext';
 
 
 const Stack = createNativeStackNavigator();
 
 
 export default function UserTab() {
-  const {signedUser} = useContext(SignedUserContext);
+  const {signedUser} = useContext(SessionContext);
   
   return signedUser ? <LoggedInStackNavigator /> : <LoggedOutStackNavigator />
 }

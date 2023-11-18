@@ -1,15 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { StyleSheet, ToastAndroid, View } from "react-native";
 import ApiService from "../services/ApiService";
-import { SignedUserContext } from "../App";
-import SessionStorageService from "../services/SessionStorageService";
 import MediaGridList from "../components/MediaGridList";
 import SwitchButtons from "../components/SwitchButtons";
+import { SessionContext } from "../contexts/SessionContext";
 
-// TODO: add tv favorites
 // TODO: infinite scroll
-// ISSUE: gridmovielist needs to be addapted to tv, right now it opens movie details
-// when a show is selected
+
 
 const switchOptions = [
   { label: 'Filmes', value: ApiService.MediaType.MOVIE },
@@ -19,7 +16,7 @@ const switchOptions = [
 
 export default function FavoritesScreen() {
 
-  const {signedUser} = useContext(SignedUserContext);
+  const {signedUser, sessionId} = useContext(SessionContext);
   const [favorites, setFavorites] = useState(null);
   const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE);
 
@@ -27,7 +24,6 @@ export default function FavoritesScreen() {
   useEffect(() => {
     async function loadFavorites() {
       try {
-        const sessionId = await SessionStorageService.getSessionId();
         const data = await ApiService.fetchFavorites( signedUser.id, sessionId, mediaType);
 
         setFavorites(data);

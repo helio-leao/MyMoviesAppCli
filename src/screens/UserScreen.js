@@ -2,25 +2,30 @@ import { StyleSheet, View, ToastAndroid, TouchableOpacity, Text } from 'react-na
 import ApiService from '../services/ApiService';
 import { useContext } from 'react';
 import SessionStorageService from '../services/SessionStorageService';
-import { SignedUserContext } from '../App';
 import { useNavigation } from '@react-navigation/native';
+import { SessionContext } from '../contexts/SessionContext';
 
 
 export default function UserScreen() {
 
-  const {signedUser, setSignedUser} = useContext(SignedUserContext);
+  const {signedUser,
+    setSignedUser,
+    sessionId,
+    setSessionId
+  } = useContext(SessionContext);
+
   const navigation = useNavigation();
 
 
   async function handleLogoutPress() {
     try {
-      const sessionId = await SessionStorageService.getSessionId();
       const response = await ApiService.deleteSession(sessionId);
 
       if(response.success) {
         navigation.navigate('HomeTab');
-        setSignedUser(null);  // NOTE: after navigate so it doesn't mount LoginScreen
         await SessionStorageService.deleteSessionId();
+        setSignedUser(null);  // NOTE: after navigate so it doesn't mount LoginScreen
+        setSessionId('');
         ToastAndroid.show('Logged out.', ToastAndroid.SHORT);
       }
     } catch (error) {

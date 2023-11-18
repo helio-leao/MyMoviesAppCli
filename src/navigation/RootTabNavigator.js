@@ -4,10 +4,10 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeTab from './HomeTab';
 import SearchTab from './SearchTab';
-import { SignedUserContext } from '../App';
 import UserTab from './UserTab';
 import { Image } from 'react-native';
 import ApiService from '../services/ApiService';
+import { SessionContext } from '../contexts/SessionContext';
 
 
 const Tab = createBottomTabNavigator();
@@ -15,7 +15,7 @@ const Tab = createBottomTabNavigator();
 
 export default function RootTabNavigator() {
 
-  const {signedUser} = useContext(SignedUserContext);
+  const {signedUser} = useContext(SessionContext);
 
 
   return (

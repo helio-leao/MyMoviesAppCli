@@ -2,13 +2,13 @@ import { StyleSheet, View, ToastAndroid, ActivityIndicator } from 'react-native'
 import ApiService from '../services/ApiService';
 import { useContext, useEffect, useState } from 'react';
 import SessionStorageService from '../services/SessionStorageService';
-import { SignedUserContext } from '../App';
 import WebView from 'react-native-webview';
+import { SessionContext } from '../contexts/SessionContext';
 
 
 export default function LoginScreen() {
 
-  const {setSignedUser} = useContext(SignedUserContext);
+  const {setSignedUser, setSessionId} = useContext(SessionContext);
   const [requestToken, setRequestToken] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -38,7 +38,7 @@ export default function LoginScreen() {
 
     try {
       // NOTE: UserTab navigator will be replaced and the user screen will mount
-      await handleConfirmedLogin();    
+      await handleLoginConfirmed();    
       ToastAndroid.show('Logged in.', ToastAndroid.SHORT);
     } catch (error) {
       console.log('error response: ', error.response.data);
@@ -48,13 +48,16 @@ export default function LoginScreen() {
     }
   }
 
-  async function handleConfirmedLogin() {
+  async function handleLoginConfirmed() {
     const response = await ApiService.createSession(requestToken);
 
     if(response.success) {
-      await SessionStorageService.setSessionId(response.session_id);
-      const userData = await ApiService.fetchAccountDetailsBySessionId(response.session_id);
+      const {session_id} = response;
+
+      await SessionStorageService.setSessionId(session_id);
+      const userData = await ApiService.fetchAccountDetailsBySessionId(session_id);
       setSignedUser(userData);
+      setSessionId(session_id);
     }
   }
 
