@@ -11,7 +11,7 @@ async function addFollowedPerson(newPerson) {
   const followedPeople = await getFollowedPeople();
   
   if(followedPeople.find(person => newPerson.id === person.id)) {
-    // NOTE: it's common to use ok too instead of success
+    // NOTE: it's common to use "ok" too instead of "success"
     return {success: false, message: `Você já segue ${newPerson.name}.`}; 
   }
   

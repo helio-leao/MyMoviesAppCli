@@ -151,7 +151,7 @@ export default function MediaDetailsScreen() {
               </View>
             )}
 
-            {/* ISSUE: there's duplicates on the api return. one instance for each job */}
+            {/* ISSUE: there's duplicates on the api return. one instance of media for each job */}
             {/* {mediaData?.credits.crew.length > 0 && (
               <View style={{marginTop: 30}}>
                 <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>

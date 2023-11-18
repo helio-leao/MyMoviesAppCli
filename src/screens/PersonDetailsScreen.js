@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
-import StorageService from '../services/StorageService';
+import StorageService from '../services/FollowedPeopleStorageService';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MediaRowList from '../components/MediaRowList';
 
@@ -118,20 +118,34 @@ export default function PersonDetailsScreen() {
 
         {personData?.known_for_department === 'Acting' ? (
           <View style={{marginBottom: 20}}>
-            <Text style={[styles.subtitle, {marginLeft: 10}]}>
-              Acting
-            </Text>
-            <MediaRowList
-              mediaData={personData?.movie_credits.cast}
-              contentContainerStyle={{paddingHorizontal: 10}}
-              mediaType={ApiService.MediaType.MOVIE}
-            />
+            <View style={{marginBottom: 20}}>
+              <Text style={[styles.subtitle, {marginLeft: 10}]}>
+                Filmes
+              </Text>
+              <MediaRowList
+                mediaData={personData?.movie_credits.cast}
+                contentContainerStyle={{paddingHorizontal: 10}}
+                mediaType={ApiService.MediaType.MOVIE}
+              />
+            </View>
+            {/* NOTE: the cast and crew arrays come with repeated movies or tv for each
+            department the person was involved with. e.g. writing, camera, directing */}
+            {/* <View>
+              <Text style={[styles.subtitle, {marginLeft: 10}]}>
+                Séries
+              </Text>
+              <MediaRowList
+                mediaData={personData?.tv_credits.cast}
+                contentContainerStyle={{paddingHorizontal: 10}}
+                mediaType={ApiService.MediaType.MOVIE}
+              />
+            </View> */}
           </View>
         ) : (
-          // NOTE: the crew array comes with repeated movies for each of department the person
-          // was involved with. e.g. writing, camera, directing
-          // NOTE: brings only movies in which the department the person worked on is the one
-          // that the person is known for
+          // NOTE: the cast and crew arrays come with repeated movies or tv for each
+          // department the person was involved with. e.g. writing, camera, directing
+          // NOTE: brings only movies in which the department the person worked on
+          // is the one that the person is known for
           <View style={{marginBottom: 20}}>
             <Text style={[styles.subtitle, {marginLeft: 10}]}>
               {personData?.known_for_department}
