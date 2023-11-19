@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const FOLLOWED_PEOPLE_STORAGE_KEY = (userId) => `@user:${userId}:followed_people`;
+const getFollowedPeopleStorageKey = (userId) => `@user:${userId}:followed_people`;
 
 
 // NOTE: alternative to the result object return strategy could be the try/catch here sending one
@@ -15,14 +15,14 @@ async function addFollowedPerson(userId, newPerson) {
     return {success: false, message: `Você já segue ${newPerson.name}.`}; 
   }
   
-  await AsyncStorage.setItem(FOLLOWED_PEOPLE_STORAGE_KEY(userId),
+  await AsyncStorage.setItem(getFollowedPeopleStorageKey(userId),
     JSON.stringify([...followedPeople, newPerson]));
 
   return {success: true};
 }
 
 async function getFollowedPeople(userId) {
-  const followedPeople = await AsyncStorage.getItem(FOLLOWED_PEOPLE_STORAGE_KEY(userId));
+  const followedPeople = await AsyncStorage.getItem(getFollowedPeopleStorageKey(userId));
   return followedPeople ? JSON.parse(followedPeople) : [];
 }
 
@@ -31,10 +31,10 @@ async function removeFollowedPerson(userId, followedPersonId) {
   const updatedFollowedPeople = followedPeople.filter(person => person.id !== followedPersonId);
 
   if(updatedFollowedPeople.length === 0) {
-    await AsyncStorage.removeItem(FOLLOWED_PEOPLE_STORAGE_KEY(userId));
+    await AsyncStorage.removeItem(getFollowedPeopleStorageKey(userId));
     return;
   }
-  await AsyncStorage.setItem(FOLLOWED_PEOPLE_STORAGE_KEY(userId),
+  await AsyncStorage.setItem(getFollowedPeopleStorageKey(userId),
     JSON.stringify(updatedFollowedPeople));
 }
 
