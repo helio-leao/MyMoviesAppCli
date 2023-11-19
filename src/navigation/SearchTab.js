@@ -26,7 +26,7 @@ export default function SearchTab() {
       <Stack.Screen
         name={'PersonDetailsScreen'}
         component={PersonDetailsScreen}
-        options={{title: 'Perfil'}}
+        options={{title: 'Detalhes'}}
       />
     </Stack.Navigator>
   );
