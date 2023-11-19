@@ -9,6 +9,9 @@ import placeholder_poster from '../assets/images/placeholder_poster.png';
 import MediaRowList from '../components/MediaRowList';
 import { SessionContext } from '../contexts/SessionContext';
 
+// TODO: filter crew by most relevant(artistic) jobs like directing, writing...?
+// TODO: change some margins, use views with gaps. i.e. creditsContainer
+
 
 export default function MediaDetailsScreen() {
 
@@ -59,6 +62,27 @@ export default function MediaDetailsScreen() {
       console.log('error response: ', error.response.data);
       ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     }
+  }
+
+  function toMediaArrayWithoutDuplicates(mediaListData) {
+    const sortedMedia = [];
+
+    mediaListData?.forEach(mediaData => {
+      let isUnique = true;
+
+      for(let item of sortedMedia) {
+        if(item.id === mediaData.id) {
+          isUnique = false;
+          break;
+        }
+      }
+
+      if(isUnique) {
+        sortedMedia.push(mediaData);
+      }
+    });
+
+    return sortedMedia;
   }
 
 
@@ -151,19 +175,18 @@ export default function MediaDetailsScreen() {
               </View>
             )}
 
-            {/* ISSUE: there's duplicates on the api return. one instance of media for each job */}
-            {/* {mediaData?.credits.crew.length > 0 && (
+            {mediaData?.credits.crew.length > 0 && (
               <View style={{marginTop: 30}}>
                 <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
                   Produção
                 </Text>
                 <MediaRowList
-                  mediaData={mediaData.credits.crew}
+                  mediaData={toMediaArrayWithoutDuplicates(mediaData.credits.crew)}
                   contentContainerStyle={{paddingHorizontal: 10}}
                   mediaType={ApiService.MediaType.PERSON}
                 />
               </View>
-            )} */}
+            )}
 
           </View>
         </ScrollView>
@@ -277,14 +300,18 @@ function TvShowContent({mediaData}) {
       <Text style={styles.contentText}>
         Temporadas: {mediaData?.seasons.filter(tvShow => tvShow.name !== 'Especiais').length}
       </Text>
-      <Text style={styles.contentText}>
-        Primeira Transmissão: {mediaData?.first_air_date &&
-          new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.first_air_date))}
-      </Text>
-      <Text style={styles.contentText}>
-        Última Transmissão: {mediaData?.last_air_date &&
-          new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.last_air_date))}
-      </Text>
+      {mediaData?.first_air_date && (
+        <Text style={styles.contentText}>
+          Primeira Transmissão: {mediaData.first_air_date &&
+            new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.first_air_date))}
+        </Text>
+      )}
+      {mediaData?.last_air_date && (
+        <Text style={styles.contentText}>
+          Última Transmissão: {mediaData.last_air_date &&
+            new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.last_air_date))}
+        </Text>
+      )}
     </View>
   );
 }

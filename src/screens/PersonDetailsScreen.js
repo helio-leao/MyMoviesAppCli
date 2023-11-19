@@ -11,11 +11,11 @@ import MediaRowList from '../components/MediaRowList';
 // for each department the person was involved with. e.g. writing, camera, directing
 // right now it's bringing all media that the person worked on without duplicates.
 // this some might not be relevant to the app. maybe filter for known department or a
-// set of departments and/or jobs. i.e:
+// set of departments and/or jobs. probably better by job i.e:
 // mediaData={toMediaArrayWithoutDuplicates(personData?.movie_credits.crew
 //   .filter(movieData => movieData.department === personData.known_for_department))}
 
-// TODO: follow always visible. save to logged user or common like it is???
+// TODO: follow button always visible. save to logged user or common like it is now???
 
 
 export default function PersonDetailsScreen() {
@@ -95,7 +95,7 @@ export default function PersonDetailsScreen() {
             <Text style={styles.title}>{personData?.name}</Text>
             <Text style={styles.subtitle}>{personData?.known_for_department}</Text>
 
-            {/* TODO: make this into a component */}
+            {/* TODO: make this button a component to be used at searchcards too */}
             <TouchableOpacity
               style={{flexDirection: 'row',
                 gap: 6,
@@ -124,55 +124,59 @@ export default function PersonDetailsScreen() {
           </View>
         )}
 
-        {personData?.known_for_department === 'Acting' ? (
-          <View style={{marginBottom: 20, gap: 20}}>
+        <View style={styles.creditsContainer}>
+          {personData?.movie_credits.cast.length > 0 && (
             <View>
               <Text style={[styles.subtitle, {marginLeft: 10}]}>
-                Filmes
+                Filmes (cast)
               </Text>
               <MediaRowList
-                mediaData={personData?.movie_credits.cast}
+                mediaData={personData.movie_credits.cast}
                 contentContainerStyle={{paddingHorizontal: 10}}
                 mediaType={ApiService.MediaType.MOVIE}
               />
-            </View>
+            </View>  
+          )}
 
+          {personData?.tv_credits.cast.length > 0 && (
             <View>
               <Text style={[styles.subtitle, {marginLeft: 10}]}>
-                Séries
+                Séries (cast)
               </Text>
               <MediaRowList
-                mediaData={toMediaArrayWithoutDuplicates(personData?.tv_credits.cast)}
-                contentContainerStyle={{paddingHorizontal: 10}}
-                mediaType={ApiService.MediaType.MOVIE}
-              />
-            </View>
-          </View>
-        ) : (
-          <View style={{marginBottom: 20, gap: 20}}>
-            <View>
-              <Text style={[styles.subtitle, {marginLeft: 10}]}>
-                Filmes
-              </Text>
-              <MediaRowList
-                mediaData={toMediaArrayWithoutDuplicates(personData?.movie_credits.crew)}
-                contentContainerStyle={{paddingHorizontal: 10}}
-                mediaType={ApiService.MediaType.MOVIE}
-              />
-            </View>
-
-            <View>
-              <Text style={[styles.subtitle, {marginLeft: 10}]}>
-                Séries
-              </Text>
-              <MediaRowList
-                mediaData={toMediaArrayWithoutDuplicates(personData?.tv_credits.crew)}
+                mediaData={toMediaArrayWithoutDuplicates(personData.tv_credits.cast)}
                 contentContainerStyle={{paddingHorizontal: 10}}
                 mediaType={ApiService.MediaType.TV}
               />
             </View>
-          </View>
-        )}
+          )}
+
+          {personData?.movie_credits.crew.length > 0 && (
+            <View>
+              <Text style={[styles.subtitle, {marginLeft: 10}]}>
+                Filmes (crew)
+              </Text>
+              <MediaRowList
+                mediaData={toMediaArrayWithoutDuplicates(personData.movie_credits.crew)}
+                contentContainerStyle={{paddingHorizontal: 10}}
+                mediaType={ApiService.MediaType.MOVIE}
+              />
+            </View>  
+          )}
+
+          {personData?.tv_credits.crew.length > 0 && (
+            <View>
+              <Text style={[styles.subtitle, {marginLeft: 10}]}>
+                Séries (crew)
+              </Text>
+              <MediaRowList
+                mediaData={toMediaArrayWithoutDuplicates(personData.tv_credits.crew)}
+                contentContainerStyle={{paddingHorizontal: 10}}
+                mediaType={ApiService.MediaType.TV}
+              />
+            </View>            
+          )}
+        </View>
 
       </ScrollView>
     </View>
@@ -217,4 +221,8 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     paddingHorizontal: 10,
   },
+  creditsContainer: {
+    marginBottom: 20,
+    gap: 20,
+  }
 });
