@@ -9,8 +9,6 @@ import { SessionProvider } from './contexts/SessionContext';
 
 // TODO: add media names below the cards. might solve cases where media has no image
 
-// TODO: flesh out the UserScreen
-
 // NOTE: change the way the components identify media type? add it to each element
 // "movie", "tv" and "person" api returns that do not have it by default like
 // "multi"? or keep sending a string "mediaType" that's used for this (current).

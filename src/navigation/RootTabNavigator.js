@@ -78,7 +78,7 @@ export default function RootTabNavigator() {
             // user avatar
             return (
               <Image
-                style={{height: size, width: size}}
+                style={{height: size, width: size, borderRadius: size / 2}}
                 source={{uri: ApiService.fetchFullImagePath(session?.user.avatar.tmdb.avatar_path)}}
               />
             )

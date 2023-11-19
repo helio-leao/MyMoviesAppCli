@@ -117,8 +117,8 @@ export default function PersonDetailsScreen() {
         )}
 
         {personData?.known_for_department === 'Acting' ? (
-          <View style={{marginBottom: 20}}>
-            <View style={{marginBottom: 20}}>
+          <View style={{marginBottom: 20, gap: 20}}>
+            <View>
               <Text style={[styles.subtitle, {marginLeft: 10}]}>
                 Filmes
               </Text>
