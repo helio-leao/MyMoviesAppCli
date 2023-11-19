@@ -18,7 +18,8 @@ import { SessionProvider } from './contexts/SessionContext';
 // TODO: review "person following" business rule. will the user need to be logged in? if not,
 // will it be universal (not good). if not, will it stay there in case of inactivity?
 
-// ISSUE: api may return many items with same id on cast and crew (PersonDetailsScreen)
+// TODO: use "multi" instead of "movies credits" and "tv credits" on person details screen???
+// start by changing the code on api service. 
 
 
 export default function App() {

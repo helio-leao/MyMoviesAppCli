@@ -38,7 +38,6 @@ export default function RootTabNavigator() {
         name='HomeTab'
         component={HomeTab}
         options={{
-          tabBarTestID: 'tab-home',
           tabBarIcon: ({color, size, focused}) => (            
             <Ionicons name={focused ? "home" : "home-outline"} size={size} color={color} />
           ),
@@ -50,7 +49,6 @@ export default function RootTabNavigator() {
         name='SearchTab'
         component={SearchTab}
         options={{
-          tabBarTestID: 'tab-search',
           tabBarIcon: ({color, size}) => (
             <FontAwesome name="search" size={size} color={color} />
           ),
@@ -62,7 +60,6 @@ export default function RootTabNavigator() {
         name='UserTab'
         component={UserTab}
         options={{
-          tabBarTestID: 'tab-user',
           tabBarIcon: ({color, size, focused}) => {
             // no user logged
             if(!session?.user) {

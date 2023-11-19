@@ -7,6 +7,14 @@ import StorageService from '../services/FollowedPeopleStorageService';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MediaRowList from '../components/MediaRowList';
 
+// NOTE: the cast and crew arrays comes from the api with repeated movies or tv
+// for each department the person was involved with. e.g. writing, camera, directing
+// right now it's bringing all media that the person worked on without duplicates.
+// this some might not be relevant to the app. maybe filter for known department or a
+// set of departments and/or jobs. i.e:
+// mediaData={toMediaArrayWithoutDuplicates(personData?.movie_credits.crew
+//   .filter(movieData => movieData.department === personData.known_for_department))}
+
 // TODO: follow always visible. save to logged user or common like it is???
 
 
@@ -30,25 +38,25 @@ export default function PersonDetailsScreen() {
   }, []);
 
 
-  function toMoviesArrayWithoutDuplicates(moviesData) {
-    const sortedItems = [];
+  function toMediaArrayWithoutDuplicates(mediaListData) {
+    const sortedMedia = [];
 
-    moviesData?.forEach(movieData => {
+    mediaListData?.forEach(mediaData => {
       let isUnique = true;
 
-      for(let item of sortedItems) {
-        if(item.id === movieData.id) {
+      for(let item of sortedMedia) {
+        if(item.id === mediaData.id) {
           isUnique = false;
           break;
         }
       }
 
       if(isUnique) {
-        sortedItems.push(movieData);
+        sortedMedia.push(mediaData);
       }
     });
 
-    return sortedItems;
+    return sortedMedia;
   }
 
   async function handleFollowPress() {
@@ -88,7 +96,7 @@ export default function PersonDetailsScreen() {
             <Text style={styles.subtitle}>{personData?.known_for_department}</Text>
 
             {/* TODO: make this into a component */}
-            <TouchableOpacity testID={`follow-${personData?.id}`}
+            <TouchableOpacity
               style={{flexDirection: 'row',
                 gap: 6,
                 paddingVertical: 8,
@@ -128,34 +136,41 @@ export default function PersonDetailsScreen() {
                 mediaType={ApiService.MediaType.MOVIE}
               />
             </View>
-            {/* NOTE: the cast and crew arrays come with repeated movies or tv for each
-            department the person was involved with. e.g. writing, camera, directing */}
-            {/* <View>
+
+            <View>
               <Text style={[styles.subtitle, {marginLeft: 10}]}>
                 Séries
               </Text>
               <MediaRowList
-                mediaData={personData?.tv_credits.cast}
+                mediaData={toMediaArrayWithoutDuplicates(personData?.tv_credits.cast)}
                 contentContainerStyle={{paddingHorizontal: 10}}
                 mediaType={ApiService.MediaType.MOVIE}
               />
-            </View> */}
+            </View>
           </View>
         ) : (
-          // NOTE: the cast and crew arrays come with repeated movies or tv for each
-          // department the person was involved with. e.g. writing, camera, directing
-          // NOTE: brings only movies in which the department the person worked on
-          // is the one that the person is known for
-          <View style={{marginBottom: 20}}>
-            <Text style={[styles.subtitle, {marginLeft: 10}]}>
-              {personData?.known_for_department}
-            </Text>
-            <MediaRowList
-              mediaData={toMoviesArrayWithoutDuplicates(personData?.movie_credits.crew
-                .filter(movieData => movieData.department === personData.known_for_department))}
-              contentContainerStyle={{paddingHorizontal: 10}}
-              mediaType={ApiService.MediaType.MOVIE}
-            />
+          <View style={{marginBottom: 20, gap: 20}}>
+            <View>
+              <Text style={[styles.subtitle, {marginLeft: 10}]}>
+                Filmes
+              </Text>
+              <MediaRowList
+                mediaData={toMediaArrayWithoutDuplicates(personData?.movie_credits.crew)}
+                contentContainerStyle={{paddingHorizontal: 10}}
+                mediaType={ApiService.MediaType.MOVIE}
+              />
+            </View>
+
+            <View>
+              <Text style={[styles.subtitle, {marginLeft: 10}]}>
+                Séries
+              </Text>
+              <MediaRowList
+                mediaData={toMediaArrayWithoutDuplicates(personData?.tv_credits.crew)}
+                contentContainerStyle={{paddingHorizontal: 10}}
+                mediaType={ApiService.MediaType.TV}
+              />
+            </View>
           </View>
         )}
 
