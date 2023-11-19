@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, Image, ToastAndroid } from 'react-native';
 import MediaGridList from '../components/MediaGridList';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ApiService from '../services/ApiService';
 import StorageService from '../services/FollowedPeopleStorageService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
-
+import { SessionContext } from '../contexts/SessionContext';
 
 // TODO: roll to top of flatlist on unfollow
+// TODO: filter crew by most relevant(artistic) jobs like directing, writing...?
 
 
-export default function SearchScreen() {
+export default function FollowingScreen() {
 
+  const {session} = useContext(SessionContext);
   const [followedPeople, setFollowedPeople] = useState([]);
   const [isLoadingPeople, setIsLoadingPeople] = useState(true);
   const [pageData, setPageData] = useState(null);
@@ -21,7 +23,7 @@ export default function SearchScreen() {
   useEffect(() => {
     async function loadFollowedPeople() {
       try {
-        const followedPeople = await StorageService.getFollowedPeople();
+        const followedPeople = await StorageService.getFollowedPeople(session.user.id);
         setFollowedPeople(followedPeople);
         setIsLoadingPeople(false);
       } catch (error) {
@@ -66,10 +68,10 @@ export default function SearchScreen() {
     }
   }
 
-  async function handleUnfollow(id) {
+  async function handleUnfollow(personId) {
     try {
-      await StorageService.removeFollowedPerson(id);
-      const updatedFollowedPeople = await StorageService.getFollowedPeople();
+      await StorageService.removeFollowedPerson(session.user.id, personId);
+      const updatedFollowedPeople = await StorageService.getFollowedPeople(session.user.id);
       setFollowedPeople(updatedFollowedPeople);
     } catch (error) {
       console.log(error);

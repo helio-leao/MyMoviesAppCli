@@ -17,9 +17,6 @@ import { SessionProvider } from './contexts/SessionContext';
 // both have problems, mediaType for all doesn't allow for mixed and adding media type
 // to all objects require aditional code and processing.
 
-// TODO: review "person following" business rule. will the user need to be logged in? if not,
-// will it be universal (not good). if not, will it stay there in case of inactivity?
-
 // TODO: use "multi" instead of "movies credits" and "tv credits" on person details screen???
 // start by changing the code on api service. 
 

@@ -1,11 +1,12 @@
 import { Image, ScrollView, StyleSheet, Text, View, TouchableOpacity, ToastAndroid } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 import StorageService from '../services/FollowedPeopleStorageService';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MediaRowList from '../components/MediaRowList';
+import { SessionContext } from '../contexts/SessionContext';
 
 // NOTE: the cast and crew arrays comes from the api with repeated movies or tv
 // for each department the person was involved with. e.g. writing, camera, directing
@@ -20,6 +21,7 @@ import MediaRowList from '../components/MediaRowList';
 
 export default function PersonDetailsScreen() {
 
+  const {session} = useContext(SessionContext);
   const [personData, setPersonData] = useState(null);
   const route = useRoute();
 
@@ -63,7 +65,8 @@ export default function PersonDetailsScreen() {
     const {id, name, profile_path} = personData;
 
     try {
-      const result = await StorageService.addFollowedPerson({ id, name, profile_path });
+      const result = await StorageService.addFollowedPerson(session.user.id,
+         { id, name, profile_path });
 
       if(result.success) {
         ToastAndroid.show(`Você seguiu ${name}.`, ToastAndroid.SHORT);
@@ -95,24 +98,26 @@ export default function PersonDetailsScreen() {
             <Text style={styles.title}>{personData?.name}</Text>
             <Text style={styles.subtitle}>{personData?.known_for_department}</Text>
 
-            {/* TODO: make this button a component to be used at searchcards too */}
-            <TouchableOpacity
-              style={{flexDirection: 'row',
-                gap: 6,
-                paddingVertical: 8,
-                paddingHorizontal: 10,
-                backgroundColor: '#333',
-                justifyContent: 'center',
-                alignItems: 'center',
-                alignSelf: 'flex-start',
-                borderRadius: 4,
-                marginTop: 10,
-              }}
-              onPress={handleFollowPress}
-            >
-              <FontAwesome name="user-plus" size={16} color="white" />
-              <Text style={{color: '#fff'}}>Seguir</Text>
-            </TouchableOpacity>
+            {session && (
+              // TODO: make this button a component to be used at searchcards too
+              <TouchableOpacity
+                style={{flexDirection: 'row',
+                  gap: 6,
+                  paddingVertical: 8,
+                  paddingHorizontal: 10,
+                  backgroundColor: '#333',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  alignSelf: 'flex-start',
+                  borderRadius: 4,
+                  marginTop: 10,
+                }}
+                onPress={handleFollowPress}
+              >
+                <FontAwesome name="user-plus" size={16} color="white" />
+                <Text style={{color: '#fff'}}>Seguir</Text>
+              </TouchableOpacity>
+            )}
           </View>
 
         </View>
