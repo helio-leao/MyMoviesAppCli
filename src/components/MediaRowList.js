@@ -27,10 +27,7 @@ export default function MediaRowList({contentContainerStyle, mediaData, mediaTyp
       contentContainerStyle={contentContainerStyle}
       data={mediaData}
       renderItem={({item}) => (
-        <TouchableOpacity
-          style={styles.cardContainer}
-          onPress={() => handleCardPress(item)}
-        >
+        <TouchableOpacity onPress={() => handleCardPress(item)}>
           <Image
             style={styles.poster}
             source={(item.poster_path || item.profile_path) ?
@@ -46,12 +43,9 @@ export default function MediaRowList({contentContainerStyle, mediaData, mediaTyp
 }
 
 const styles = StyleSheet.create({
-  cardContainer: {
-    width: 120,
-  },
   poster: {
     aspectRatio: 2/3,
-    width: '100%',
+    width: 120,
     height: undefined,
   },
 });
