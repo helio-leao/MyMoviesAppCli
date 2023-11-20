@@ -5,6 +5,8 @@ import { SessionProvider } from './contexts/SessionContext';
 
 // TODO: "remove favorite" functionality
 
+// TODO: add activity indicators for loading grids and maybe rows
+
 // TODO: selection of people for media filtering (FollowingScreen)
 
 // TODO: add media names below the cards. might solve cases where media has no image

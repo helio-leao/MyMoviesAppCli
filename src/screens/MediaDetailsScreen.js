@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, ToastAndroid } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, ToastAndroid, ActivityIndicator } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useContext, useEffect, useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -18,6 +18,7 @@ import CustomImage from '../components/CustomImage';
 export default function MediaDetailsScreen() {
 
   const {session} = useContext(SessionContext);
+  const [isLoading, setIsLoading] = useState(true);
   const [mediaData, setMediaData] = useState(null);
   const route = useRoute();
   const {mediaType} = route.params;
@@ -38,6 +39,7 @@ export default function MediaDetailsScreen() {
           default:
             console.warn('Media type invalid:', mediaType);
         }
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
         ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
@@ -87,6 +89,14 @@ export default function MediaDetailsScreen() {
     return sortedMedia;
   }
 
+
+  if(isLoading) {
+    return (
+      <View style={[styles.container, {justifyContent: 'center'}]}>
+        <ActivityIndicator color={'white'} size={'large'} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

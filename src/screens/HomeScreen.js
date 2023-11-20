@@ -44,9 +44,9 @@ export default function HomeScreen() {
 
 
   if(isLoading) {
-    return (
+    return(
       <View style={[styles.container, {justifyContent: 'center', alignItems: 'center'}]}>
-        <ActivityIndicator color={'white'} size={'large'} />
+        <ActivityIndicator size={'large'} color={'#fff'} />
       </View>
     );
   }

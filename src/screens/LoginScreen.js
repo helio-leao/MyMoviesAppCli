@@ -64,16 +64,20 @@ export default function LoginScreen() {
   }
 
 
+  if(isLoading) {
+    return(
+      <View style={[styles.container, {justifyContent: 'center', alignItems: 'center'}]}>
+        <ActivityIndicator size={'large'} color={'#fff'} />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-      {isLoading ? (
-        <ActivityIndicator size={'large'} color={'#fff'} />
-      ) : (
-        <WebView
-          source={{ uri: ApiService.fetchRequestUserPermissionUrl(requestToken) }}
-          onNavigationStateChange={checkLoginConfirmation}
-        />
-      )}
+      <WebView
+        source={{ uri: ApiService.fetchRequestUserPermissionUrl(requestToken) }}
+        onNavigationStateChange={checkLoginConfirmation}
+      />
     </View>      
   );
 }

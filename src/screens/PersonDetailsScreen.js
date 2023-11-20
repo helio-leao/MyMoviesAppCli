@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity, ToastAndroid } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import ApiService from '../services/ApiService';
@@ -25,6 +25,7 @@ export default function PersonDetailsScreen() {
 
   const {session} = useContext(SessionContext);
   const [personData, setPersonData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const route = useRoute();
 
 
@@ -33,6 +34,7 @@ export default function PersonDetailsScreen() {
       try {
         const personDetails = await ApiService.fetchPersonDetails(route.params.id);
         setPersonData(personDetails);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
         ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
@@ -81,6 +83,14 @@ export default function PersonDetailsScreen() {
     }
   }
 
+
+  if(isLoading) {
+    return(
+      <View style={[styles.container, {justifyContent: 'center', alignItems: 'center'}]}>
+        <ActivityIndicator size={'large'} color={'#fff'} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
