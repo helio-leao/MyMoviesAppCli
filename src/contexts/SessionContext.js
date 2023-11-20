@@ -19,7 +19,7 @@ export function SessionProvider ({children}) {
           setSession({id: sessionId, user: signedUser});
         }
       } catch (error) {
-        console.log(error);
+        console.log(error.response.data);
       }
     }
     loadSessionData();
