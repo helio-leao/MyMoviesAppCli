@@ -5,6 +5,11 @@ import { SessionProvider } from './contexts/SessionContext';
 
 // TODO: "remove favorite" functionality
 
+// TODO: necessary to validate key for logged in operations with
+// https://api.themoviedb.org/3/authentication . delete session on tmdb webpage
+// for testing. one is for starting up the up (context), others will be any
+// logged in operation 
+
 // TODO: add activity indicators for loading grids and maybe rows
 
 // TODO: it's necessary to verify session key for each operation where the user needs
