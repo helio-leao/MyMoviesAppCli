@@ -1,4 +1,4 @@
-import { Image, ScrollView, StyleSheet, Text, View, TouchableOpacity, ToastAndroid } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity, ToastAndroid } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import ApiService from '../services/ApiService';
@@ -8,6 +8,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MediaRowList from '../components/MediaRowList';
 import { SessionContext } from '../contexts/SessionContext';
 import CollapsibleText from '../components/CollapsibleText';
+import CustomImage from '../components/CustomImage';
 
 // NOTE: the cast and crew arrays comes from the api with repeated movies or tv
 // for each department the person was involved with. e.g. writing, camera, directing
@@ -87,12 +88,10 @@ export default function PersonDetailsScreen() {
 
         <View style={styles.header}>
 
-          <Image
+          <CustomImage
             style={styles.personImage}
-            source={personData?.profile_path ?
-              {uri: ApiService.fetchFullImagePath(personData.profile_path)}
-              : placeholder_poster
-            }
+            source={{uri: ApiService.fetchFullImagePath(personData?.profile_path)}}
+            placeholder={placeholder_poster}
           />
 
           <View style={styles.headerCardData}>

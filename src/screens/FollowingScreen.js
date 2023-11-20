@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, Image, ToastAndroid } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, ToastAndroid } from 'react-native';
 import MediaGridList from '../components/MediaGridList';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ApiService from '../services/ApiService';
 import StorageService from '../services/FollowedPeopleStorageService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 import { SessionContext } from '../contexts/SessionContext';
+import CustomImage from '../components/CustomImage';
 
 // TODO: roll to top of flatlist on unfollow
 // TODO: filter crew by most relevant(artistic) jobs like directing, writing...?
@@ -120,12 +121,10 @@ export default function FollowingScreen() {
           keyExtractor={item => String(item.id)}
           renderItem={({item}) => (
             <View>
-              <Image
+              <CustomImage
                 style={styles.personCardImage}
-                source={item.profile_path ?
-                  {uri: ApiService.fetchFullImagePath(item.profile_path)}
-                  : placeholder_poster
-                }
+                source={{uri: ApiService.fetchFullImagePath(item.profile_path)}}
+                placeholder={placeholder_poster}
               />
               <TouchableOpacity style={styles.unfollowButtonContainer} onPress={() => handleUnfollow(item.id)}>
                 <FontAwesome name="user-times" size={18} color="white" />

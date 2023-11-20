@@ -1,7 +1,8 @@
-import { StyleSheet, FlatList, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, FlatList, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
+import CustomImage from './CustomImage';
 
 
 export default function MediaRowList({contentContainerStyle, mediaData, mediaType}) {
@@ -28,12 +29,10 @@ export default function MediaRowList({contentContainerStyle, mediaData, mediaTyp
       data={mediaData}
       renderItem={({item}) => (
         <TouchableOpacity onPress={() => handleCardPress(item)}>
-          <Image
+          <CustomImage
             style={styles.poster}
-            source={(item.poster_path || item.profile_path) ?
-              {uri: ApiService.fetchFullImagePath(item.poster_path || item.profile_path)}
-              : placeholder_poster
-            }
+            source={{uri: ApiService.fetchFullImagePath(item.poster_path || item.profile_path)}}
+            placeholder={placeholder_poster}
           />
         </TouchableOpacity>
       )}

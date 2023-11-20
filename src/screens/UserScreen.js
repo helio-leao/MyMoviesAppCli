@@ -1,9 +1,10 @@
-import { StyleSheet, View, ToastAndroid, TouchableOpacity, Text, Image } from 'react-native';
+import { StyleSheet, View, ToastAndroid, TouchableOpacity, Text } from 'react-native';
 import ApiService from '../services/ApiService';
 import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { SessionContext } from '../contexts/SessionContext';
 import placeholder_avatar from '../assets/images/placeholder_avatar.jpg';
+import CustomImage from '../components/CustomImage';
 
 
 export default function UserScreen() {
@@ -41,12 +42,10 @@ export default function UserScreen() {
     <View style={styles.container}>
 
       <View style={styles.userDataContainer}>
-        <Image
+        <CustomImage
           style={styles.avatar}
-          source={user.avatar.tmdb.avatar_path ?
-            {uri: ApiService.fetchFullImagePath(user.avatar.tmdb.avatar_path)}
-            : placeholder_avatar
-          }
+          source={{uri: ApiService.fetchFullImagePath(user.avatar.tmdb.avatar_path)}}
+          placeholder={placeholder_avatar}
         />
 
         <View style={{flex: 1}}>

@@ -1,7 +1,8 @@
-import { StyleSheet, TouchableOpacity, FlatList, View, ActivityIndicator, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, FlatList, View, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
+import CustomImage from './CustomImage';
 
 
 export default function MediaGridList({
@@ -12,7 +13,6 @@ export default function MediaGridList({
   mediaType,
 }) {
   const navigation = useNavigation();
-
 
   function onCardPress(id) {
     navigation.push('MediaDetailsScreen', {id, mediaType});
@@ -28,12 +28,10 @@ export default function MediaGridList({
           style={styles(numColumns).cardContainer}
           onPress={() => onCardPress(item.id)}
         >
-          <Image
+          <CustomImage
             style={styles().cardPoster}
-            source={item.poster_path ?
-              {uri: ApiService.fetchFullImagePath(item.poster_path)}
-              : placeholder_poster
-            }
+            source={{uri: ApiService.fetchFullImagePath(item.poster_path)}}
+            placeholder={placeholder_poster}
           />
         </TouchableOpacity>
       )}

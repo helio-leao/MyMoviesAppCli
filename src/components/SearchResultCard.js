@@ -1,7 +1,8 @@
-import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
+import CustomImage from './CustomImage';
 
 
 export default function SearchResultCard({item}) {
@@ -29,12 +30,10 @@ export default function SearchResultCard({item}) {
   return (
     <TouchableOpacity style={styles.resultCardContainer} onPress={handleCardPress}>
       {/* NOTE: poster_path for movies and tv; profile_path for person */}
-      <Image
+      <CustomImage
         style={styles.resultCardImage}
-        source={(item.poster_path || item.profile_path) ?
-          {uri: ApiService.fetchFullImagePath(item.poster_path || item.profile_path)}
-          : placeholder_poster
-        }
+        source={{uri: ApiService.fetchFullImagePath(item.poster_path || item.profile_path)}}
+        placeholder={placeholder_poster}
       />
 
       {/* NOTE: title for movies; name for tv and person */}
