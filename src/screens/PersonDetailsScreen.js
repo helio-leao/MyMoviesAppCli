@@ -111,7 +111,6 @@ export default function PersonDetailsScreen() {
                   alignItems: 'center',
                   alignSelf: 'flex-start',
                   borderRadius: 4,
-                  marginTop: 10,
                 }}
                 onPress={handleFollowPress}
               >
