@@ -7,7 +7,7 @@ export default function CustomImage({style, source, placeholder}) {
 
 
   function isSourceValid() {
-    if(typeof source.uri === 'string' || typeof source === 'number') {
+    if(typeof source?.uri === 'string' || typeof source === 'number') {
       return true;
     }
     return false;
