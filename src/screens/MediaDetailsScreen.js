@@ -174,6 +174,9 @@ export default function MediaDetailsScreen() {
                   Elenco
                 </Text>
                 <MediaRowList
+                  // ISSUE: rare cast duplicate of "Alexandra Toth" on "Infinity Pool" movie
+                  // ISSUE: same on her details page
+                  // mediaData={toMediaArrayWithoutDuplicates(mediaData.credits.cast)}
                   mediaData={mediaData.credits.cast}
                   contentContainerStyle={{paddingHorizontal: 10}}
                   mediaType={ApiService.MediaType.PERSON}
