@@ -5,7 +5,7 @@ import MediaGridList from "../components/MediaGridList";
 import SwitchButtons from "../components/SwitchButtons";
 import { SessionContext } from "../contexts/SessionContext";
 
-// TODO: infinite scroll
+// TODO: roll to top of flatlist on unfollow
 
 
 const switchOptions = [
@@ -17,24 +17,48 @@ const switchOptions = [
 export default function FavoritesScreen() {
 
   const {session} = useContext(SessionContext);
-  const [favorites, setFavorites] = useState(null);
   const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE);
+  const [data, setData] = useState(null);
+
+  const isLastPage = data?.page == null || data?.page === data?.total_pages;
 
 
   useEffect(() => {
-    async function loadFavorites() {
+    async function loadMedia() {
       try {
         const data = await ApiService.fetchFavorites(
           session.user.id, session.id, mediaType);
 
-        setFavorites(data);
+        setData(data);
       } catch (error) {
         console.log(error);
         ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
       }
     }
-    loadFavorites();
+    loadMedia();
   }, [mediaType]);
+
+
+  async function loadMoreMedia(page) {
+    try {
+      const data = await ApiService.fetchFavorites(
+        session.user.id, session.id, mediaType, page);
+
+      setData(prev => ({
+        ...data,
+        results: [...prev.results, ...data.results],
+      }));
+    } catch (error) {
+      console.error(error);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+    }
+  }
+
+  function onEndReached() {
+    if(!isLastPage) {
+      return loadMoreMedia(data?.page + 1);
+    }
+  }
 
 
   return(
@@ -46,7 +70,9 @@ export default function FavoritesScreen() {
         onChangeSelection={setMediaType}
       />
       <MediaGridList
-        mediaData={favorites?.results}
+        mediaData={data?.results}
+        onEndReached={onEndReached}
+        showLoadingMoreIndicator={!isLastPage}
         mediaType={mediaType}
       />
     </View>

@@ -10,6 +10,8 @@ import CustomImage from '../components/CustomImage';
 
 // TODO: roll to top of flatlist on unfollow
 // TODO: filter crew by most relevant(artistic) jobs like directing, writing...?
+// TODO: simplify pageData logic as in FavoritesScreen
+// TODO: examine useCallback if it is to avoid redeclaring functions
 
 
 export default function FollowingScreen() {
@@ -36,26 +38,26 @@ export default function FollowingScreen() {
   }, []);
 
   useEffect(() => {
+    async function loadMovies() {
+      if(followedPeople.length === 0) {
+        setPageData(null);
+        setMoviesData([]);
+        return;
+      }
+      try {
+        const peopleIds = followedPeople.map(person => person.id);
+        const {results, ...pageData} = await ApiService.fetchMoviesWithPeople(peopleIds);
+        setPageData(pageData);
+        setMoviesData(results);
+      } catch (error) {
+        console.error(error);
+        ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+      }
+    }
+
     loadMovies();
   }, [followedPeople])
-
-
-  async function loadMovies() {
-    if(followedPeople.length === 0) {
-      setPageData(null);
-      setMoviesData([]);
-      return;
-    }
-    try {
-      const peopleIds = followedPeople.map(person => person.id);
-      const {results, ...pageData} = await ApiService.fetchMoviesWithPeople(peopleIds);
-      setPageData(pageData);
-      setMoviesData(results);
-    } catch (error) {
-      console.error(error);
-      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
-    }
-  }
+  
 
   async function loadMoreMovies(page) {
     try {
@@ -86,6 +88,7 @@ export default function FollowingScreen() {
     }
   }
 
+  // NOTE: change this as in FavoritesScreen
   function isLastPage() {
     return pageData == null || pageData.page === pageData.total_pages;
   }

@@ -161,7 +161,7 @@ async function fetchAccountDetailsBySessionId(sessionId) {
 
 // AUTHENTICATED USER FUNCTIONS
 
-async function fetchFavorites(accountId, sessionId, mediaType) {
+async function fetchFavorites(accountId, sessionId, mediaType, page = 1) {
   let path = `/account/${accountId}/favorite`;
 
   if(mediaType === MediaType.MOVIE) {
@@ -174,7 +174,7 @@ async function fetchFavorites(accountId, sessionId, mediaType) {
     );
   }
   
-  return await fetchData(path, `session_id=${sessionId}&sort_by=created_at.desc` + COMMON_QUERY);
+  return await fetchData(path, `session_id=${sessionId}&sort_by=created_at.desc&page=${page}` + COMMON_QUERY);
 }
 
 async function addFavorite(accountId, sessionId, mediaData, mediaType) {
