@@ -88,6 +88,16 @@ async function fetchMoviesWithPeople(peopleIds = [], page = 1) {
   );
 }
 
+async function fetchTvShowsWithPeople(peopleIds = [], page = 1) {
+  // NOTE: removed genre is documentary (id 99)
+  // ISSUE: there's no "with_people" for tv on the api
+  return await fetchData(
+    `/discover/tv`,
+    `include_video=false&page=${page}&sort_by=primary_release_date.desc&with_people=${
+      peopleIds.join('|')}&without_genres=99` + COMMON_QUERY,
+  );
+}
+
 function fetchFullImagePath(imagePath) {
   return imagePath ? IMAGE_BASE_URL + imagePath : null;
 }
@@ -210,6 +220,7 @@ export default {
   fetchPersonDetails,
   fetchMulti,
   fetchMoviesWithPeople,
+  fetchTvShowsWithPeople,
   fetchFullImagePath,
   createRequestToken,
   fetchRequestUserPermissionUrl,

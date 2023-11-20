@@ -7,22 +7,31 @@ import StorageService from '../services/FollowedPeopleStorageService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 import { SessionContext } from '../contexts/SessionContext';
 import CustomImage from '../components/CustomImage';
+import SwitchButtons from '../components/SwitchButtons';
 
 // TODO: roll to top of flatlist on unfollow
 // TODO: filter crew by most relevant(artistic) jobs like directing, writing...?
 // TODO: examine useCallback if it is to avoid redeclaring functions
 
 
+const switchOptions = [
+  { label: 'Filmes', value: ApiService.MediaType.MOVIE },
+  { label: 'Séries', value: ApiService.MediaType.TV },
+]
+
+
 export default function FollowingScreen() {
 
   const {session} = useContext(SessionContext);
-  const [followedPeople, setFollowedPeople] = useState([]);
   const [isLoadingPeople, setIsLoadingPeople] = useState(true);
+  const [followedPeople, setFollowedPeople] = useState([]);
   const [data, setData] = useState(null);
+  const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE);
 
   const isLastPage = data == null || data.page === data.total_pages;
 
 
+  // loads followed people at screen mount
   useEffect(() => {
     async function loadFollowedPeople() {
       try {
@@ -37,6 +46,7 @@ export default function FollowingScreen() {
     loadFollowedPeople();
   }, []);
 
+  // user deletes a followed person or changes the media type
   useEffect(() => {
     async function loadData() {
       if(followedPeople.length === 0) {
@@ -46,7 +56,14 @@ export default function FollowingScreen() {
 
       try {
         const peopleIds = followedPeople.map(person => person.id);
-        const data = await ApiService.fetchMoviesWithPeople(peopleIds);
+        let data = null;
+
+        if(mediaType === ApiService.MediaType.MOVIE) {
+          data = await ApiService.fetchMoviesWithPeople(peopleIds);
+        } else if (mediaType === ApiService.MediaType.TV) {
+          // ISSUE: there's no with_people for tv on the api
+          // data = await ApiService.fetchTvShowsWithPeople(peopleIds);
+        }
         setData(data);
       } catch (error) {
         console.error(error);
@@ -54,7 +71,7 @@ export default function FollowingScreen() {
       }
     }
     loadData();
-  }, [followedPeople])
+  }, [followedPeople, mediaType])
   
 
   async function loadMoreData(page) {
@@ -136,7 +153,13 @@ export default function FollowingScreen() {
 
       {/* media */}
       <View style={styles.moviesGridContainer}>
-        <Text style={styles.moviesGridTitle}>Filmes</Text>
+        <SwitchButtons
+          style={{padding: 14, alignSelf: 'flex-end'}}
+          options={switchOptions}
+          value={mediaType}
+          onChangeSelection={setMediaType}
+        />
+
         <MediaGridList
           mediaData={data?.results}
           onEndReached={onEndReached}
