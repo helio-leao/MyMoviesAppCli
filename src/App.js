@@ -7,6 +7,10 @@ import { SessionProvider } from './contexts/SessionContext';
 
 // TODO: add activity indicators for loading grids and maybe rows
 
+// TODO: it's necessary to verify session key for each operation where the user needs
+// to be logged in. starting with the initialization of the session context. test it
+// by deleting the session on tmdb website
+
 // TODO: selection of people for media filtering (FollowingScreen)
 
 // TODO: add media names below the cards. might solve cases where media has no image
