@@ -8,13 +8,13 @@ import ApiService from '../services/ApiService';
 export default function SearchScreen() {
 
   const [query, setQuery] = useState('');
-  const [pageData, setPageData] = useState(null);
+  const [data, setData] = useState(null);
 
 
   async function handleSearch() {
     try {
       const data = await ApiService.fetchMulti(query);
-      setPageData(data);
+      setData(data);
     } catch (error) {
       console.error(error);
       ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
@@ -42,7 +42,7 @@ export default function SearchScreen() {
       {/* result list */}
       <FlatList
         contentContainerStyle={styles.resultsContainer}
-        data={pageData?.results}
+        data={data?.results}
         keyExtractor={item => String(item.id)}
         renderItem={({item}) => <SearchResultCard item={item} />}
         ItemSeparatorComponent={<View style={{ height: 10 }} />}

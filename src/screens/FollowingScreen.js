@@ -10,7 +10,6 @@ import CustomImage from '../components/CustomImage';
 
 // TODO: roll to top of flatlist on unfollow
 // TODO: filter crew by most relevant(artistic) jobs like directing, writing...?
-// TODO: simplify pageData logic as in FavoritesScreen
 // TODO: examine useCallback if it is to avoid redeclaring functions
 
 
@@ -19,8 +18,9 @@ export default function FollowingScreen() {
   const {session} = useContext(SessionContext);
   const [followedPeople, setFollowedPeople] = useState([]);
   const [isLoadingPeople, setIsLoadingPeople] = useState(true);
-  const [pageData, setPageData] = useState(null);
-  const [moviesData, setMoviesData] = useState([]);
+  const [data, setData] = useState(null);
+
+  const isLastPage = data == null || data.page === data.total_pages;
 
 
   useEffect(() => {
@@ -38,33 +38,34 @@ export default function FollowingScreen() {
   }, []);
 
   useEffect(() => {
-    async function loadMovies() {
+    async function loadData() {
       if(followedPeople.length === 0) {
-        setPageData(null);
-        setMoviesData([]);
+        setData(null);
         return;
       }
+
       try {
         const peopleIds = followedPeople.map(person => person.id);
-        const {results, ...pageData} = await ApiService.fetchMoviesWithPeople(peopleIds);
-        setPageData(pageData);
-        setMoviesData(results);
+        const data = await ApiService.fetchMoviesWithPeople(peopleIds);
+        setData(data);
       } catch (error) {
         console.error(error);
         ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
       }
     }
-
-    loadMovies();
+    loadData();
   }, [followedPeople])
   
 
-  async function loadMoreMovies(page) {
+  async function loadMoreData(page) {
     try {
       const peopleIds = followedPeople.map(person => person.id);
-      const {results, ...pageData} = await ApiService.fetchMoviesWithPeople(peopleIds, page);
-      setPageData(pageData);
-      setMoviesData(prev => [...prev, ...results]);
+      const data = await ApiService.fetchMoviesWithPeople(peopleIds, page);
+      
+      setData(prev => ({
+        ...data,
+        results: [...prev.results, ...data.results],
+      }));
     } catch (error) {
       console.error(error);
       ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
@@ -83,14 +84,9 @@ export default function FollowingScreen() {
   }
 
   function onEndReached() {
-    if(!isLastPage()) {
-      return loadMoreMovies(pageData.page + 1);
+    if(!isLastPage) {
+      return loadMoreData(data.page + 1);
     }
-  }
-
-  // NOTE: change this as in FavoritesScreen
-  function isLastPage() {
-    return pageData == null || pageData.page === pageData.total_pages;
   }
 
 
@@ -142,9 +138,9 @@ export default function FollowingScreen() {
       <View style={styles.moviesGridContainer}>
         <Text style={styles.moviesGridTitle}>Filmes</Text>
         <MediaGridList
-          mediaData={moviesData}
+          mediaData={data?.results}
           onEndReached={onEndReached}
-          showLoadingMoreIndicator={!isLastPage()}
+          showLoadingMoreIndicator={!isLastPage}
           mediaType={ApiService.MediaType.MOVIE}
         />
       </View>

@@ -20,11 +20,11 @@ export default function FavoritesScreen() {
   const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE);
   const [data, setData] = useState(null);
 
-  const isLastPage = data?.page == null || data?.page === data?.total_pages;
+  const isLastPage = data == null || data.page === data.total_pages;
 
 
   useEffect(() => {
-    async function loadMedia() {
+    async function loadData() {
       try {
         const data = await ApiService.fetchFavorites(
           session.user.id, session.id, mediaType);
@@ -35,11 +35,11 @@ export default function FavoritesScreen() {
         ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
       }
     }
-    loadMedia();
+    loadData();
   }, [mediaType]);
 
 
-  async function loadMoreMedia(page) {
+  async function loadMoreData(page) {
     try {
       const data = await ApiService.fetchFavorites(
         session.user.id, session.id, mediaType, page);
@@ -56,7 +56,7 @@ export default function FavoritesScreen() {
 
   function onEndReached() {
     if(!isLastPage) {
-      return loadMoreMedia(data?.page + 1);
+      return loadMoreData(data?.page + 1);
     }
   }
 
