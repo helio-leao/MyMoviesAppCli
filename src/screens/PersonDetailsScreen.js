@@ -7,6 +7,7 @@ import StorageService from '../services/FollowedPeopleStorageService';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MediaRowList from '../components/MediaRowList';
 import { SessionContext } from '../contexts/SessionContext';
+import CollapsibleText from '../components/CollapsibleText';
 
 // NOTE: the cast and crew arrays comes from the api with repeated movies or tv
 // for each department the person was involved with. e.g. writing, camera, directing
@@ -125,7 +126,13 @@ export default function PersonDetailsScreen() {
         {personData?.biography && (
           <View style={styles.body}>
             <Text style={styles.subtitle}>Biografia</Text>
-            <Text style={styles.text}>{personData?.biography}</Text>
+            <CollapsibleText
+              textStyle={styles.text}
+              numberOfLines={8}
+            >
+              {personData.biography}
+            </CollapsibleText>
+            {/* <Text style={styles.text}>{personData?.biography}</Text> */}
           </View>
         )}
 

@@ -8,6 +8,7 @@ import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 import MediaRowList from '../components/MediaRowList';
 import { SessionContext } from '../contexts/SessionContext';
+import CollapsibleText from '../components/CollapsibleText';
 
 // TODO: filter crew by most relevant(artistic) jobs like directing, writing...?
 // TODO: change some margins, use views with gaps. i.e. creditsContainer
@@ -128,13 +129,18 @@ export default function MediaDetailsScreen() {
             <View style={styles.ratingsAndFavoriteContainer}>
               <View style={styles.ratingsContainer}>
                 <Fontisto name="star" size={30} color="yellow" />
+
                 <View>
-                  <Text style={styles.contentText}>
-                    <Text style={styles.ratingsText}>
+                  {/* NOTE: good way to use text with multiple styles */}
+                  <Text style={{color: '#fff'}}>
+                    <Text style={{fontSize: 20, fontWeight: '800'}}>
                       {mediaData?.vote_average.toFixed(1)}
                     </Text>
-                    {'/10'}
+                    <Text style={{fontSize: 18}}>
+                      /10
+                    </Text>
                   </Text>
+
                   <Text style={styles.contentText}>{mediaData?.vote_count}</Text>
                 </View>
               </View>
@@ -234,9 +240,13 @@ function MovieContent({mediaData}) {
           .join(', ')}
       </Text>
       {mediaData?.overview && (
-        <Text style={[styles.contentText, {marginBottom: 20}]}>
+        <CollapsibleText
+          contentContainerStyle={{marginBottom: 20}}
+          numberOfLines={8}
+          textStyle={styles.contentText}
+        >
           {mediaData.overview}
-        </Text>
+        </CollapsibleText>
       )}
       <Text style={styles.contentText}>
         Título Original: {mediaData?.original_title}
@@ -366,10 +376,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 16,
-  },
-  ratingsText: {
-    fontSize: 20,
-    fontWeight: '800',
   },
   favoriteButton: {
     paddingVertical: 10,
