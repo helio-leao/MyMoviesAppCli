@@ -6,7 +6,7 @@ import axios from "axios";
 const { API_TOKEN } = process.env;
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
-const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original';
+const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
 
 const COMMON_QUERY = `&include_adult=false&language=pt-BR`;
 
@@ -99,8 +99,15 @@ async function fetchMoviesWithPeople(peopleIds = [], page = 1) {
 //   );
 // }
 
-function fetchFullImagePath(imagePath) {
-  return imagePath ? IMAGE_BASE_URL + imagePath : null;
+function fetchFullImagePath(imagePath, size = 'original') {
+  if(!imagePath) {
+    return null;
+  }
+
+  const fullImagePath = `${IMAGE_BASE_URL}/${size}${imagePath}`;
+  // console.log(fullImagePath);
+
+  return fullImagePath;
 }
 
 
