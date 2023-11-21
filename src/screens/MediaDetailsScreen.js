@@ -49,7 +49,6 @@ export default function MediaDetailsScreen() {
   }, []);
 
 
-  // NOTE: verify if error response comes in the same object if outside try/catch block
   async function onFavoritePress() {
     try {
       const response = await ApiService.addFavorite(

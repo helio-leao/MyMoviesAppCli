@@ -5,28 +5,24 @@ import { SessionProvider } from './contexts/SessionContext';
 
 // TODO: "remove favorite" functionality
 
-// TODO: necessary to validate key for logged in operations with
-// https://api.themoviedb.org/3/authentication - delete session on tmdb webpage
-// for testing. one is for starting up the up (context), others will be any
-// logged in operation 
+// TODO: operations that use session id might throw errors if session deleted on tmdb
+// webpage. adjust all operations that use session id, start by session context.
+// reproduced by deleting the session after logged and opening the app again or with
+// the app open delete session on website and try any operation that requires the id
 
 // TODO: add activity indicators for loading grids and maybe rows
-
-// TODO: it's necessary to verify session key for each operation where the user needs
-// to be logged in. starting with the initialization of the session context. test it
-// by deleting the session on tmdb website
 
 // TODO: selection of people for media filtering (FollowingScreen)
 
 // TODO: add media names below the cards. might solve cases where media has no image
 
-// TODO: fetch images correct size for better performance
+// TODO: fetch images with correct size for better performance
 
 // NOTE: change the way the components identify media type? add it to each element
 // "movie", "tv" and "person" api returns that do not have it by default like
-// "multi"? or keep sending a string "mediaType" that's used for this (current).
+// "multi"? or keep sending a string "mediaType" that's used for this (current method).
 // both have problems, mediaType for all doesn't allow for mixed and adding media type
-// to all objects require aditional code and processing.
+// to all objects require aditional code, processing and memory.
 
 // NOTE: rethink the way cast and crew is rendered to avoid duplicates on media and person
 // detail screens

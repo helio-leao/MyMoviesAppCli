@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
-// NOTE: may be possible to remove contentContainerStyle if gaps are added on screens
-
 
 export default function CollapsibleText({
   textStyle,

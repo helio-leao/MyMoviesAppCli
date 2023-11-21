@@ -12,13 +12,11 @@ import CustomImage from '../components/CustomImage';
 
 // NOTE: the cast and crew arrays comes from the api with repeated movies or tv
 // for each department the person was involved with. e.g. writing, camera, directing
-// right now it's bringing all media that the person worked on without duplicates.
-// this some might not be relevant to the app. maybe filter for known department or a
-// set of departments and/or jobs. probably better by job i.e:
+// the current strategy is to bring all media that the person worked on without
+// duplicates. maybe filter by known department or a set of departments and/or jobs.
+// probably better by job i.e:
 // mediaData={toMediaArrayWithoutDuplicates(personData?.movie_credits.crew
 //   .filter(movieData => movieData.department === personData.known_for_department))}
-
-// TODO: follow button always visible. save to logged user or common like it is now???
 
 
 export default function PersonDetailsScreen() {

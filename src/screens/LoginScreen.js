@@ -38,7 +38,6 @@ export default function LoginScreen() {
     try {
       // NOTE: UserTab navigator will be replaced and the user screen will mount
       await handleLoginConfirmed();    
-      ToastAndroid.show('Logged in.', ToastAndroid.SHORT);
     } catch (error) {
       console.log('error response: ', error.response.data);
       ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
