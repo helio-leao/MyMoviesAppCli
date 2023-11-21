@@ -6,7 +6,7 @@ import { SessionProvider } from './contexts/SessionContext';
 // TODO: "remove favorite" functionality
 
 // TODO: necessary to validate key for logged in operations with
-// https://api.themoviedb.org/3/authentication . delete session on tmdb webpage
+// https://api.themoviedb.org/3/authentication - delete session on tmdb webpage
 // for testing. one is for starting up the up (context), others will be any
 // logged in operation 
 
