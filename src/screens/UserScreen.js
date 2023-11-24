@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { SessionContext } from '../contexts/SessionContext';
 import placeholder_avatar from '../assets/images/placeholder_avatar.jpg';
-import CustomImage from '../components/CustomImage';
+import LoadableImage from '../components/LoadableImage';
 
 
 export default function UserScreen() {
@@ -42,7 +42,7 @@ export default function UserScreen() {
     <View style={styles.container}>
 
       <View style={styles.userDataContainer}>
-        <CustomImage
+        <LoadableImage
           style={styles.avatar}
           source={{uri: ApiService.fetchFullImagePath(user.avatar.tmdb.avatar_path)}}
           placeholder={placeholder_avatar}

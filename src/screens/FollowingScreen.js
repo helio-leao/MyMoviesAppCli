@@ -6,7 +6,7 @@ import ApiService from '../services/ApiService';
 import StorageService from '../services/FollowedPeopleStorageService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 import { SessionContext } from '../contexts/SessionContext';
-import CustomImage from '../components/CustomImage';
+import LoadableImage from '../components/LoadableImage';
 import SwitchButtons from '../components/SwitchButtons';
 
 // TODO: roll to top of flatlist on unfollow
@@ -137,7 +137,7 @@ export default function FollowingScreen() {
           keyExtractor={item => String(item.id)}
           renderItem={({item}) => (
             <View>
-              <CustomImage
+              <LoadableImage
                 style={styles.personCardImage}
                 source={{uri: ApiService.fetchFullImagePath(item.profile_path)}}
                 placeholder={placeholder_poster}

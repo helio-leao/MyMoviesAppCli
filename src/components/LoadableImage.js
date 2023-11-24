@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Image, View } from "react-native";
 
-export default function CustomImage({style, source, placeholder}) {
+
+export default function LoadableImage({style, source, placeholder}) {
 
   const [isLoading, setIsLoading] = useState(true);
 

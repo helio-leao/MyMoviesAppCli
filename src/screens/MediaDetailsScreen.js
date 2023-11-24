@@ -9,7 +9,7 @@ import placeholder_poster from '../assets/images/placeholder_poster.png';
 import MediaRowList from '../components/MediaRowList';
 import { SessionContext } from '../contexts/SessionContext';
 import CollapsibleText from '../components/CollapsibleText';
-import CustomImage from '../components/CustomImage';
+import LoadableImage from '../components/LoadableImage';
 
 // TODO: filter crew by most relevant(artistic) jobs like directing, writing...?
 // TODO: change some margins, use views with gaps. i.e. creditsContainer
@@ -100,7 +100,7 @@ export default function MediaDetailsScreen() {
   return (
     <View style={styles.container}>
       {/* image */}
-      <CustomImage
+      <LoadableImage
         style={styles.backdropImage}
         source={{uri: ApiService.fetchFullImagePath(mediaData?.backdrop_path)}}
         placeholder={placeholder_poster}

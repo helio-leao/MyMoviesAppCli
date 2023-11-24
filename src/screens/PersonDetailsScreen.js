@@ -8,7 +8,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MediaRowList from '../components/MediaRowList';
 import { SessionContext } from '../contexts/SessionContext';
 import CollapsibleText from '../components/CollapsibleText';
-import CustomImage from '../components/CustomImage';
+import LoadableImage from '../components/LoadableImage';
 
 // NOTE: the cast and crew arrays comes from the api with repeated movies or tv
 // for each department the person was involved with. e.g. writing, camera, directing
@@ -96,7 +96,7 @@ export default function PersonDetailsScreen() {
 
         <View style={styles.header}>
 
-          <CustomImage
+          <LoadableImage
             style={styles.personImage}
             source={{uri: ApiService.fetchFullImagePath(personData?.profile_path)}}
             placeholder={placeholder_poster}

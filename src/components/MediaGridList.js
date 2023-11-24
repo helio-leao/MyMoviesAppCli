@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity, FlatList, View, ActivityIndicator } from 
 import { useNavigation } from '@react-navigation/native';
 import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
-import CustomImage from './CustomImage';
+import LoadableImage from './LoadableImage';
 
 
 export default function MediaGridList({
@@ -28,7 +28,7 @@ export default function MediaGridList({
           style={styles(numColumns).cardContainer}
           onPress={() => onCardPress(item.id)}
         >
-          <CustomImage
+          <LoadableImage
             style={styles().cardPoster}
             source={{uri: ApiService.fetchFullImagePath(item.poster_path)}}
             placeholder={placeholder_poster}

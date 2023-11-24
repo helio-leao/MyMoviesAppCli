@@ -19,7 +19,7 @@ export function SessionProvider ({children}) {
           setSession({id: sessionId, user: signedUser});
         }
       } catch (error) {
-        console.log('Fetch account details error', error.response.data);
+        console.log('Fetch account details error:', error.response.data);
       }
     }
     loadSessionData();

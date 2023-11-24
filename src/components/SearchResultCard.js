@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
-import CustomImage from './CustomImage';
+import LoadableImage from './LoadableImage';
 
 
 export default function SearchResultCard({item}) {
@@ -30,7 +30,7 @@ export default function SearchResultCard({item}) {
   return (
     <TouchableOpacity style={styles.resultCardContainer} onPress={handleCardPress}>
       {/* NOTE: poster_path for movies and tv; profile_path for person */}
-      <CustomImage
+      <LoadableImage
         style={styles.resultCardImage}
         source={{uri: ApiService.fetchFullImagePath(item.poster_path || item.profile_path)}}
         placeholder={placeholder_poster}
