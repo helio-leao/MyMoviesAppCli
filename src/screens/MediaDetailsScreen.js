@@ -67,27 +67,6 @@ export default function MediaDetailsScreen() {
     }
   }
 
-  function toMediaArrayWithoutDuplicates(mediaListData) {
-    const sortedMedia = [];
-
-    mediaListData?.forEach(mediaData => {
-      let isUnique = true;
-
-      for(let item of sortedMedia) {
-        if(item.id === mediaData.id) {
-          isUnique = false;
-          break;
-        }
-      }
-
-      if(isUnique) {
-        sortedMedia.push(mediaData);
-      }
-    });
-
-    return sortedMedia;
-  }
-
 
   if(isLoading) {
     return (
@@ -182,9 +161,8 @@ export default function MediaDetailsScreen() {
                   Elenco
                 </Text>
                 <MediaRowList
-                  // ISSUE: rare cast duplicate of "Alexandra Toth" on "Infinity Pool" movie
+                  // ISSUE: rare CAST duplicate of "Alexandra Toth" on "Infinity Pool" movie
                   // ISSUE: same on her details page
-                  // mediaData={toMediaArrayWithoutDuplicates(mediaData.credits.cast)}
                   mediaData={mediaData.credits.cast}
                   contentContainerStyle={{paddingHorizontal: 10}}
                   mediaType={ApiService.MediaType.PERSON}
@@ -198,7 +176,7 @@ export default function MediaDetailsScreen() {
                   Produção
                 </Text>
                 <MediaRowList
-                  mediaData={toMediaArrayWithoutDuplicates(mediaData.credits.crew)}
+                  mediaData={mediaData.credits.crew}
                   contentContainerStyle={{paddingHorizontal: 10}}
                   mediaType={ApiService.MediaType.PERSON}
                 />

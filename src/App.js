@@ -14,8 +14,6 @@ import { SessionProvider } from './contexts/SessionContext';
 
 // TODO: selection of people for media filtering (FollowingScreen)
 
-// TODO: add media names below the cards. might solve cases where media has no image
-
 // TODO: fetch images with correct size for better performance
 
 // NOTE: change the way the components identify media type? add it to each element

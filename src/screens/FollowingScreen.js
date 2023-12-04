@@ -137,12 +137,15 @@ export default function FollowingScreen() {
           data={followedPeople}
           keyExtractor={item => String(item.id)}
           renderItem={({item}) => (
-            <View>
+            <View style={styles.personCardContainer}>
               <LoadableImage
                 style={styles.personCardImage}
                 source={{uri: ApiService.fetchFullImagePath(item.profile_path)}}
                 placeholder={placeholder_poster}
               />
+              <Text style={styles.personCardText} numberOfLines={1}>
+                {item.name}
+              </Text>
               <TouchableOpacity style={styles.unfollowButtonContainer} onPress={() => handleUnfollow(item.id)}>
                 <FontAwesome name="user-times" size={18} color="white" />
               </TouchableOpacity>
@@ -180,16 +183,24 @@ const styles = StyleSheet.create({
   },
   peopleFlatlistContentContainer: {
     flexGrow: 1,
-    padding: 20,
+    paddingTop: 20,
+    paddingBottom: 10,
+    paddingHorizontal: 20,
   },
   peopleCardsContainer: {
     backgroundColor: '#222',
   },
-  personCardImage: {
+  personCardContainer: {
     width: 100,
+  },
+  personCardImage: {
+    width: '100%',
     height: undefined,
     aspectRatio: 2/3,
     borderRadius: 4,
+  },
+  personCardText: {
+    color: '#fff',
   },
   unfollowButtonContainer: {
     height: 34,
