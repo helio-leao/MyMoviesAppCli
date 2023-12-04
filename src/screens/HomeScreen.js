@@ -6,9 +6,7 @@ import MediaRowList from '../components/MediaRowList';
 
 export default function HomeScreen() {
 
-  const [popularMovies, setPopularMovies] = useState([]);
   const [trendingMovies, setTrendingMovies] = useState([]);
-  const [popularTvShows, setPopularTvShows] = useState([]);
   const [trendingTvShows, setTrendingTvShows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -17,20 +15,14 @@ export default function HomeScreen() {
     async function loadMoviesData() {
       try {
         const [
-          popularMoviesData,
           trendingMoviesData,
-          popularTvShowsData,
           trendingTvShowsData
         ] = await Promise.all([
-          ApiService.fetchPopularMovies(),
           ApiService.fetchTrendingMovies(),
-          ApiService.fetchPopularTvShows(),
           ApiService.fetchTrendingTvShows()
         ]);
   
-        setPopularMovies(popularMoviesData.results);
         setTrendingMovies(trendingMoviesData.results);
-        setPopularTvShows(popularTvShowsData.results);
         setTrendingTvShows(trendingTvShowsData.results);
 
         setIsLoading(false);
@@ -57,25 +49,9 @@ export default function HomeScreen() {
 
         <View style={styles.moviesRowsContainer}>
           <View>
-            <Text style={styles.moviesRowTitle}>Filmes populares</Text>
-            <MediaRowList
-              mediaData={popularMovies}
-              contentContainerStyle={styles.moviesRowContentContainer}
-            />
-          </View>
-
-          <View>
             <Text style={styles.moviesRowTitle}>Filmes em alta</Text>
             <MediaRowList
               mediaData={trendingMovies}
-              contentContainerStyle={styles.moviesRowContentContainer}
-            />
-          </View>
-
-          <View>
-            <Text style={styles.moviesRowTitle}>Séries populares</Text>
-            <MediaRowList
-              mediaData={popularTvShows}
               contentContainerStyle={styles.moviesRowContentContainer}
             />
           </View>

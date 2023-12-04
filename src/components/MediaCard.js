@@ -8,7 +8,7 @@ export default function MediaCard({mediaData, onPress, style}) {
   
   return(
     <TouchableOpacity
-      style={[style, {backgroundColor: '#333', borderRadius: 4, overflow: 'hidden'}]}
+      style={[style, {backgroundColor: '#333', overflow: 'hidden'}]}
       onPress={onPress}
     >
       <LoadableImage

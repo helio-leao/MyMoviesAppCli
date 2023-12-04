@@ -98,21 +98,22 @@ export default function MediaDetailsScreen() {
           {mediaData?.title || mediaData?.name}
         </Text>
         
-        {/* genres */}
-        <View>
-          <ScrollView showsHorizontalScrollIndicator={false} horizontal>
-            <View style={styles.genresContainer}>
-              {mediaData?.genres.map(genre => (
-                <View key={genre.id} style={styles.genrePill}>
-                  <Text style={styles.genreText}>{genre.name}</Text>
-                </View>
-              ))}
-            </View>
-          </ScrollView>
-        </View>
 
-        <ScrollView>
+        <ScrollView>          
           <View style={styles.contentScrollContainer}>
+
+            {/* genres */}
+            <View>
+              <ScrollView showsHorizontalScrollIndicator={false} horizontal>
+                <View style={styles.genresContainer}>
+                  {mediaData?.genres.map(genre => (
+                    <View key={genre.id} style={styles.genrePill}>
+                      <Text style={styles.genreText}>{genre.name}</Text>
+                    </View>
+                  ))}
+                </View>
+              </ScrollView>
+            </View>
 
             {/* ratings and favorite button */}
             <View style={styles.ratingsAndFavoriteContainer}>
@@ -141,20 +142,9 @@ export default function MediaDetailsScreen() {
                 </TouchableOpacity>
               )}
             </View>
+            {/* end ratings and favorite button */}
 
             <MediaContent mediaData={mediaData} />
-
-            {mediaData?.recommendations.total_results > 0 && (
-              <View style={{marginTop: 30}}>
-                <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
-                  Recomendações
-                </Text>
-                <MediaRowList
-                  mediaData={mediaData.recommendations.results}
-                  contentContainerStyle={{paddingHorizontal: 10}}
-                />
-              </View>
-            )}
 
             {mediaData?.credits.cast.length > 0 && (
               <View style={{marginTop: 30}}>
@@ -175,6 +165,18 @@ export default function MediaDetailsScreen() {
                 </Text>
                 <MediaRowList
                   mediaData={mediaData.credits.crew}
+                  contentContainerStyle={{paddingHorizontal: 10}}
+                />
+              </View>
+            )}
+
+            {mediaData?.recommendations.total_results > 0 && (
+              <View style={{marginTop: 30}}>
+                <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
+                  Recomendações
+                </Text>
+                <MediaRowList
+                  mediaData={mediaData.recommendations.results}
                   contentContainerStyle={{paddingHorizontal: 10}}
                 />
               </View>
@@ -334,12 +336,14 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: '#fff',
     marginHorizontal: 10,
+    marginBottom: 20,
   },
   genresContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
-    paddingVertical: 20,
+    paddingVertical: 10,
+    marginBottom: 10,
     gap: 8,
   },
   genrePill: {

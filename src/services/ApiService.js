@@ -49,14 +49,6 @@ const Genres = {
 
 // MEDIA FETCH FUNCTIONS
 
-async function fetchPopularMovies(page = 1) {
-  return await fetchData(`/movie/popular`, `page=${page}` + COMMON_QUERY);
-}
-
-async function fetchPopularTvShows(page = 1) {
-  return await fetchData(`/tv/popular`, `page=${page}` + COMMON_QUERY);
-}
-
 async function fetchTrendingMovies(timeWindow = TrendingTimeWindow.DAY) {
   return await fetchData(`/trending/movie/${timeWindow}`, COMMON_QUERY);
 }
@@ -241,8 +233,6 @@ export default {
   MediaType,
   CrewJob,
   TvShowStatus,
-  fetchPopularMovies,
-  fetchPopularTvShows,
   fetchTrendingMovies,
   fetchTrendingTvShows,
   fetchMovieDetails,
