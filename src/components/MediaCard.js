@@ -4,7 +4,7 @@ import ApiService from "../services/ApiService";
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 
 
-export default function MediaCard({mediaData, onPress, style}) {
+export default function MediaCard({mediaData, onPress, mediaType, style}) {
   
   return(
     <TouchableOpacity
@@ -26,12 +26,14 @@ export default function MediaCard({mediaData, onPress, style}) {
           {mediaData.title || mediaData.name}
         </Text>
 
-        {mediaData.job && (
+        {/* NOTE: if media is a cast person, shows the name of character */}
+        {/* NOTE: if media is a crew person, shows the job of the person */}
+        {mediaType === ApiService.MediaType.PERSON && (
           <Text
             style={styles.text}
             numberOfLines={1}
           >
-            {mediaData.job}
+            {mediaData.character || mediaData.job || 'N/A'}
           </Text>
         )}
       </View>

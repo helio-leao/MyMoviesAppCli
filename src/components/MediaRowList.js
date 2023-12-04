@@ -17,12 +17,24 @@ export default function MediaRowList({contentContainerStyle, mediaData, mediaTyp
     }
   }
 
+  function keyExtractor(item) {
+    const stringId = String(item.id);
+
+    if(item.character) {
+      return stringId + item.character;
+    } else if(item.job) {
+      return stringId + item.job;
+    } else {
+      return stringId;
+    }
+  }
+
 
   return (
     <FlatList
       horizontal
       showsHorizontalScrollIndicator={false}
-      keyExtractor={item => String(item.id)}
+      keyExtractor={keyExtractor}
       contentContainerStyle={contentContainerStyle}
       data={mediaData}
       renderItem={({item}) => (
@@ -30,6 +42,7 @@ export default function MediaRowList({contentContainerStyle, mediaData, mediaTyp
           style={styles.cardContainer}
           mediaData={item}
           onPress={() => handleCardPress(item.id)}
+          mediaType={mediaType}
         />
       )}
       ItemSeparatorComponent={<View style={{width: 20}} />}
