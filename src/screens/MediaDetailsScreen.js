@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: '#fff',
     marginHorizontal: 10,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   genresContainer: {
     flexDirection: 'row',
