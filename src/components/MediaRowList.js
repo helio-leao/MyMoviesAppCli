@@ -4,12 +4,15 @@ import ApiService from '../services/ApiService';
 import MediaCard from './MediaCard';
 
 
-export default function MediaRowList({contentContainerStyle, mediaData, mediaType}) {
+export default function MediaRowList({contentContainerStyle, mediaData}) {
 
   const navigation = useNavigation();
 
 
-  function handleCardPress(id) {
+  function handleCardPress(item) {
+    const mediaType = ApiService.fetchMediaType(item);
+    const {id} = item;
+
     if(mediaType === ApiService.MediaType.PERSON) {
       navigation.push('PersonDetailsScreen', {id});
     } else {
@@ -41,7 +44,7 @@ export default function MediaRowList({contentContainerStyle, mediaData, mediaTyp
         <MediaCard
           style={styles.cardContainer}
           mediaData={item}
-          onPress={() => handleCardPress(item.id)}
+          onPress={() => handleCardPress(item)}
         />
       )}
       ItemSeparatorComponent={<View style={{width: 20}} />}

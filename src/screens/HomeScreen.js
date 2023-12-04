@@ -61,7 +61,6 @@ export default function HomeScreen() {
             <MediaRowList
               mediaData={popularMovies}
               contentContainerStyle={styles.moviesRowContentContainer}
-              mediaType={ApiService.MediaType.MOVIE}
             />
           </View>
 
@@ -70,7 +69,6 @@ export default function HomeScreen() {
             <MediaRowList
               mediaData={trendingMovies}
               contentContainerStyle={styles.moviesRowContentContainer}
-              mediaType={ApiService.MediaType.MOVIE}
             />
           </View>
 
@@ -79,7 +77,6 @@ export default function HomeScreen() {
             <MediaRowList
               mediaData={popularTvShows}
               contentContainerStyle={styles.moviesRowContentContainer}
-              mediaType={ApiService.MediaType.TV}
             />
           </View>
 
@@ -88,7 +85,6 @@ export default function HomeScreen() {
             <MediaRowList
               mediaData={trendingTvShows}
               contentContainerStyle={styles.moviesRowContentContainer}
-              mediaType={ApiService.MediaType.TV}
             />
           </View>
         </View>

@@ -142,7 +142,6 @@ export default function PersonDetailsScreen() {
               <MediaRowList
                 mediaData={personData.movie_credits.cast}
                 contentContainerStyle={{paddingHorizontal: 10}}
-                mediaType={ApiService.MediaType.MOVIE}
               />
             </View>  
           )}
@@ -155,7 +154,6 @@ export default function PersonDetailsScreen() {
               <MediaRowList
                 mediaData={toMediaArrayWithoutDuplicates(personData.tv_credits.cast)}
                 contentContainerStyle={{paddingHorizontal: 10}}
-                mediaType={ApiService.MediaType.TV}
               />
             </View>
           )}
@@ -168,7 +166,6 @@ export default function PersonDetailsScreen() {
               <MediaRowList
                 mediaData={toMediaArrayWithoutDuplicates(personData.movie_credits.crew)}
                 contentContainerStyle={{paddingHorizontal: 10}}
-                mediaType={ApiService.MediaType.MOVIE}
               />
             </View>  
           )}
@@ -181,7 +178,6 @@ export default function PersonDetailsScreen() {
               <MediaRowList
                 mediaData={toMediaArrayWithoutDuplicates(personData.tv_credits.crew)}
                 contentContainerStyle={{paddingHorizontal: 10}}
-                mediaType={ApiService.MediaType.TV}
               />
             </View>            
           )}

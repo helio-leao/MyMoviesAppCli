@@ -9,11 +9,14 @@ export default function MediaGridList({
   onEndReached = () => {},
   showLoadingMoreIndicator = false,
   numColumns = 3,
-  mediaType,
 }) {
   const navigation = useNavigation();
+  
 
-  function handleCardPress(id) {
+  function handleCardPress(item) {
+    const mediaType = ApiService.fetchMediaType(item);
+    const {id} = item;
+
     if(mediaType === ApiService.MediaType.PERSON) {
       navigation.push('PersonDetailsScreen', {id});
     } else {
@@ -30,7 +33,7 @@ export default function MediaGridList({
         <MediaCard
           style={[styles(numColumns).cardContainer, {margin: 2}]}
           mediaData={item}
-          onPress={() => handleCardPress(item.id)}
+          onPress={() => handleCardPress(item)}
         />
       )}
       numColumns={numColumns}

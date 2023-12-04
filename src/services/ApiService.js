@@ -1,5 +1,7 @@
 import axios from "axios";
 
+// ISSUE: there's no "with_people" for tv on the api
+
 
 // CONSTANTS
 
@@ -38,6 +40,10 @@ const TvShowStatus = {
   ENDED: 'Ended',
   CANCELED: 'Canceled',
   PILOT: 'Pilot',
+}
+
+const Genres = {
+  DOCUMENTARY: 99,
 }
 
 
@@ -80,24 +86,12 @@ async function fetchMulti(name = '', page = 1) {
 }
 
 async function fetchMoviesWithPeople(peopleIds = [], page = 1) {
-  // NOTE: removed genre is documentary (id 99)
   return await fetchData(
     `/discover/movie`,
     `include_video=false&page=${page}&sort_by=primary_release_date.desc&with_people=${
-      peopleIds.join('|')}&without_genres=99` + COMMON_QUERY,
+      peopleIds.join('|')}&without_genres=${Genres.DOCUMENTARY}` + COMMON_QUERY,
   );
 }
-
-// ISSUE: there's no "with_people" for tv on the api
-// ISSUE: when uncommented this function will render the others useless, it will keep
-// giving status 401 api key not authorized
-// async function fetchTvShowsWithPeople(peopleIds = [], page = 1) {
-//   return await fetchData(
-//     `/discover/tv`,
-//     `include_video=false&page=${page}&sort_by=primary_release_date.desc&with_people=${
-//       peopleIds.join('|')}&without_genres=99` + COMMON_QUERY,
-//   );
-// }
 
 function fetchFullImagePath(imagePath, size = 'original') {
   if(!imagePath) {
@@ -108,6 +102,19 @@ function fetchFullImagePath(imagePath, size = 'original') {
   // console.log(fullImagePath);
 
   return fullImagePath;
+}
+
+// NOTE: this is for "media" not fetched with "multi" that already has a media_type property
+function fetchMediaType(mediaData) {
+  if(mediaData.hasOwnProperty('title') && mediaData.hasOwnProperty('poster_path')) {
+    return MediaType.MOVIE;
+  } else if(mediaData.hasOwnProperty('name') && mediaData.hasOwnProperty('poster_path')) {
+    return MediaType.TV;
+  } else if(mediaData.hasOwnProperty('name') && mediaData.hasOwnProperty('profile_path')) {
+    return MediaType.PERSON;
+  } else {
+    return null;
+  }
 }
 
 
@@ -127,6 +134,17 @@ async function fetchData(endpoint, query) {
   const response = await axios.get(url, {headers});
   return response.data;
 }
+
+// ISSUE: there's no "with_people" for tv on the api
+// ISSUE: when uncommented this function will render the others useless, it will keep
+// giving status 401 api key not authorized
+// async function fetchTvShowsWithPeople(peopleIds = [], page = 1) {
+//   return await fetchData(
+//     `/discover/tv`,
+//     `include_video=false&page=${page}&sort_by=primary_release_date.desc&with_people=${
+//       peopleIds.join('|')}&without_genres=99` + COMMON_QUERY,
+//   );
+// }
 
 
 // AUTHENTICATION FUNCTIONS
@@ -228,8 +246,8 @@ export default {
   fetchPersonDetails,
   fetchMulti,
   fetchMoviesWithPeople,
-  // fetchTvShowsWithPeople,
   fetchFullImagePath,
+  fetchMediaType,
   createRequestToken,
   fetchRequestUserPermissionUrl,
   createSession,

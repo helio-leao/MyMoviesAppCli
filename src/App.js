@@ -16,12 +16,6 @@ import { SessionProvider } from './contexts/SessionContext';
 
 // TODO: fetch images with correct size for better performance
 
-// NOTE: change the way the components identify media type? add it to each element
-// "movie", "tv" and "person" api returns that do not have it by default like
-// "multi"? or keep sending a string "mediaType" that's used for this (current method).
-// both have problems, mediaType for all doesn't allow for mixed and adding media type
-// to all objects require aditional code, processing and memory.
-
 // TODO: use "multi" instead of "movies credits" and "tv credits" on person details screen???
 // start by changing the code on api service. 
 

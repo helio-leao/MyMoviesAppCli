@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, ToastAndroid, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useContext, useEffect, useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -26,14 +26,16 @@ export default function MediaDetailsScreen() {
 
   useEffect(() => {
     async function loadMediaData() {
+      const {id} = route.params;
+
       try {
         switch(mediaType) {
           case ApiService.MediaType.MOVIE:
-            const movieDetails = await ApiService.fetchMovieDetails(route.params.id);
+            const movieDetails = await ApiService.fetchMovieDetails(id);
             setMediaData(movieDetails);
             break;
           case ApiService.MediaType.TV:
-            const tvShowDetails = await ApiService.fetchTvShowDetails(route.params.id);
+            const tvShowDetails = await ApiService.fetchTvShowDetails(id);
             setMediaData(tvShowDetails);
             break;
           default:
@@ -98,7 +100,7 @@ export default function MediaDetailsScreen() {
         
         {/* genres */}
         <View>
-          <ScrollView horizontal>
+          <ScrollView showsHorizontalScrollIndicator={false} horizontal>
             <View style={styles.genresContainer}>
               {mediaData?.genres.map(genre => (
                 <View key={genre.id} style={styles.genrePill}>
@@ -140,7 +142,7 @@ export default function MediaDetailsScreen() {
               )}
             </View>
 
-            <MediaContent mediaData={mediaData} mediaType={mediaType} />
+            <MediaContent mediaData={mediaData} />
 
             {mediaData?.recommendations.total_results > 0 && (
               <View style={{marginTop: 30}}>
@@ -150,7 +152,6 @@ export default function MediaDetailsScreen() {
                 <MediaRowList
                   mediaData={mediaData.recommendations.results}
                   contentContainerStyle={{paddingHorizontal: 10}}
-                  mediaType={mediaType}
                 />
               </View>
             )}
@@ -163,7 +164,6 @@ export default function MediaDetailsScreen() {
                 <MediaRowList
                   mediaData={mediaData.credits.cast}
                   contentContainerStyle={{paddingHorizontal: 10}}
-                  mediaType={ApiService.MediaType.PERSON}
                 />
               </View>
             )}
@@ -176,7 +176,6 @@ export default function MediaDetailsScreen() {
                 <MediaRowList
                   mediaData={mediaData.credits.crew}
                   contentContainerStyle={{paddingHorizontal: 10}}
-                  mediaType={ApiService.MediaType.PERSON}
                 />
               </View>
             )}
@@ -190,7 +189,9 @@ export default function MediaDetailsScreen() {
 }
 
 
-function MediaContent({mediaData, mediaType}) {
+function MediaContent({mediaData}) {
+  const mediaType = ApiService.fetchMediaType(mediaData);
+
   switch(mediaType) {
     case ApiService.MediaType.MOVIE:
       return <MovieContent mediaData={mediaData} />

@@ -168,7 +168,6 @@ export default function FollowingScreen() {
           mediaData={data?.results}
           onEndReached={onEndReached}
           showLoadingMoreIndicator={!isLastPage}
-          mediaType={ApiService.MediaType.MOVIE}
         />
       </View>
 

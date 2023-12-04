@@ -73,7 +73,6 @@ export default function FavoritesScreen() {
         mediaData={data?.results}
         onEndReached={onEndReached}
         showLoadingMoreIndicator={!isLastPage}
-        mediaType={mediaType}
       />
     </View>
   );
