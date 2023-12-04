@@ -1,8 +1,7 @@
-import { StyleSheet, TouchableOpacity, FlatList, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, FlatList, View, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import MediaCard from './MediaCard';
 import ApiService from '../services/ApiService';
-import placeholder_poster from '../assets/images/placeholder_poster.png';
-import LoadableImage from './LoadableImage';
 
 
 export default function MediaGridList({
@@ -14,8 +13,12 @@ export default function MediaGridList({
 }) {
   const navigation = useNavigation();
 
-  function onCardPress(id) {
-    navigation.push('MediaDetailsScreen', {id, mediaType});
+  function handleCardPress(id) {
+    if(mediaType === ApiService.MediaType.PERSON) {
+      navigation.push('PersonDetailsScreen', {id});
+    } else {
+      navigation.push('MediaDetailsScreen', {id, mediaType});
+    }
   }
 
 
@@ -24,16 +27,11 @@ export default function MediaGridList({
       data={mediaData}
       keyExtractor={item => String(item.id)}
       renderItem={({item}) => (
-        <TouchableOpacity
-          style={styles(numColumns).cardContainer}
-          onPress={() => onCardPress(item.id)}
-        >
-          <LoadableImage
-            style={styles().cardPoster}
-            source={{uri: ApiService.fetchFullImagePath(item.poster_path)}}
-            placeholder={placeholder_poster}
-          />
-        </TouchableOpacity>
+        <MediaCard
+          contentContainerStyle={styles(numColumns).cardContainer}
+          mediaData={item}
+          onPress={() => handleCardPress(item.id)}
+        />
       )}
       numColumns={numColumns}
       onEndReached={onEndReached}
@@ -50,11 +48,6 @@ export default function MediaGridList({
 const styles = (numColumns) => StyleSheet.create({
   cardContainer: {
     flex: 1/numColumns,
-  },
-  cardPoster: {
-    aspectRatio: 2/3,
-    width: '100%',
-    height: undefined,
   },
   footerIndicatorContainer: {
     justifyContent: 'center',
