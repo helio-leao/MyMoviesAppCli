@@ -22,9 +22,6 @@ import { SessionProvider } from './contexts/SessionContext';
 // both have problems, mediaType for all doesn't allow for mixed and adding media type
 // to all objects require aditional code, processing and memory.
 
-// NOTE: rethink the way cast and crew is rendered to avoid duplicates on media and person
-// detail screens
-
 // TODO: use "multi" instead of "movies credits" and "tv credits" on person details screen???
 // start by changing the code on api service. 
 

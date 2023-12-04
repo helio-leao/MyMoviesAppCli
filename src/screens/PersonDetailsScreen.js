@@ -10,14 +10,6 @@ import { SessionContext } from '../contexts/SessionContext';
 import CollapsibleText from '../components/CollapsibleText';
 import LoadableImage from '../components/LoadableImage';
 
-// NOTE: the cast and crew arrays comes from the api with repeated movies or tv
-// for each department the person was involved with. e.g. writing, camera, directing
-// the current strategy is to bring all media that the person worked on without
-// duplicates. maybe filter by known department or a set of departments and/or jobs.
-// probably better by job i.e:
-// mediaData={toMediaArrayWithoutDuplicates(personData?.movie_credits.crew
-//   .filter(movieData => movieData.department === personData.known_for_department))}
-
 
 export default function PersonDetailsScreen() {
 
@@ -138,7 +130,6 @@ export default function PersonDetailsScreen() {
             >
               {personData.biography}
             </CollapsibleText>
-            {/* <Text style={styles.text}>{personData?.biography}</Text> */}
           </View>
         )}
 
