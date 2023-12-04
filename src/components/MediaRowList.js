@@ -27,7 +27,7 @@ export default function MediaRowList({contentContainerStyle, mediaData, mediaTyp
       data={mediaData}
       renderItem={({item}) => (
         <MediaCard
-          contentContainerStyle={styles.cardContainer}
+          style={styles.cardContainer}
           mediaData={item}
           onPress={() => handleCardPress(item.id)}
         />

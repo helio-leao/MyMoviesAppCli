@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#111',
   },
   moviesRowsContainer: {
-    gap: 40,
+    gap: 30,
     paddingVertical: 20,
   },
   moviesRowTitle: {

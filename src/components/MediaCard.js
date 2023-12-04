@@ -1,14 +1,14 @@
-import { StyleSheet, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import LoadableImage from "./LoadableImage";
 import ApiService from "../services/ApiService";
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 
 
-export default function MediaCard({mediaData, onPress, contentContainerStyle}) {
+export default function MediaCard({mediaData, onPress, style}) {
   
   return(
     <TouchableOpacity
-      style={contentContainerStyle}
+      style={[style, {backgroundColor: '#333', borderRadius: 4, overflow: 'hidden'}]}
       onPress={onPress}
     >
       <LoadableImage
@@ -18,12 +18,24 @@ export default function MediaCard({mediaData, onPress, contentContainerStyle}) {
         placeholder={placeholder_poster}
       />
 
-      <Text
-        style={styles.text}
-        numberOfLines={1}
-      >
-        {mediaData.title || mediaData.name}
-      </Text>
+      <View style={styles.contentContainer}>
+        <Text
+          style={styles.text}
+          numberOfLines={1}
+        >
+          {mediaData.title || mediaData.name}
+        </Text>
+
+        {mediaData.job && (
+          <Text
+            style={styles.text}
+            numberOfLines={1}
+          >
+            {mediaData.job}
+          </Text>
+        )}
+      </View>
+
     </TouchableOpacity>
   );
 }
@@ -33,6 +45,10 @@ const styles = StyleSheet.create({
     aspectRatio: 2/3,
     width: '100%',
     height: undefined,
+  },
+  contentContainer: {
+    paddingVertical: 4,
+    paddingHorizontal: 6,
   },
   text: {
     color: '#fff',

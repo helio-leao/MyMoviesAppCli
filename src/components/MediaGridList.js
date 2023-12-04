@@ -28,7 +28,7 @@ export default function MediaGridList({
       keyExtractor={item => String(item.id)}
       renderItem={({item}) => (
         <MediaCard
-          contentContainerStyle={styles(numColumns).cardContainer}
+          style={[styles(numColumns).cardContainer, {margin: 2}]}
           mediaData={item}
           onPress={() => handleCardPress(item.id)}
         />
