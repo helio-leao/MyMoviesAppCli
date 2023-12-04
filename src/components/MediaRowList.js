@@ -23,11 +23,11 @@ export default function MediaRowList({contentContainerStyle, mediaData}) {
   function keyExtractor(item) {
     const stringId = String(item.id);
 
-    if(item.character) {
-      return stringId + item.character;
-    } else if(item.job) {
-      return stringId + item.job;
-    } else {
+    if(item.character) {  // cast person
+      return stringId + '-' + item.character;
+    } else if(item.job) { // crew person
+      return stringId + '-' + item.job;
+    } else {  // movies, tv, others
       return stringId;
     }
   }

@@ -34,27 +34,6 @@ export default function PersonDetailsScreen() {
   }, []);
 
 
-  function toMediaArrayWithoutDuplicates(mediaListData) {
-    const sortedMedia = [];
-
-    mediaListData?.forEach(mediaData => {
-      let isUnique = true;
-
-      for(let item of sortedMedia) {
-        if(item.id === mediaData.id) {
-          isUnique = false;
-          break;
-        }
-      }
-
-      if(isUnique) {
-        sortedMedia.push(mediaData);
-      }
-    });
-
-    return sortedMedia;
-  }
-
   async function handleFollowPress() {
     const {id, name, profile_path} = personData;
 
@@ -152,7 +131,7 @@ export default function PersonDetailsScreen() {
                 Séries (cast)
               </Text>
               <MediaRowList
-                mediaData={toMediaArrayWithoutDuplicates(personData.tv_credits.cast)}
+                mediaData={personData.tv_credits.cast}
                 contentContainerStyle={{paddingHorizontal: 10}}
               />
             </View>
@@ -164,7 +143,7 @@ export default function PersonDetailsScreen() {
                 Filmes (crew)
               </Text>
               <MediaRowList
-                mediaData={toMediaArrayWithoutDuplicates(personData.movie_credits.crew)}
+                mediaData={personData.movie_credits.crew}
                 contentContainerStyle={{paddingHorizontal: 10}}
               />
             </View>  
@@ -176,7 +155,7 @@ export default function PersonDetailsScreen() {
                 Séries (crew)
               </Text>
               <MediaRowList
-                mediaData={toMediaArrayWithoutDuplicates(personData.tv_credits.crew)}
+                mediaData={personData.tv_credits.crew}
                 contentContainerStyle={{paddingHorizontal: 10}}
               />
             </View>            
