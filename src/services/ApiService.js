@@ -77,8 +77,7 @@ async function fetchTvShowDetails(tvShowId) {
 
 async function fetchPersonDetails(personId) {
   return await fetchData(`/person/${personId}`,
-    `append_to_response=movie_credits,tv_credits` + COMMON_QUERY);
-    // `append_to_response=combined_credits` + COMMON_QUERY);
+  `append_to_response=combined_credits` + COMMON_QUERY);
 }
 
 async function fetchMulti(name = '', page = 1) {
@@ -104,8 +103,13 @@ function fetchFullImagePath(imagePath, size = 'original') {
   return fullImagePath;
 }
 
-// NOTE: this is for "media" not fetched with "multi" that already has a media_type property
 function fetchMediaType(mediaData) {
+  // NOTE: for media that has media_type property (i.e. multi, combined_credits)
+  if(mediaData.hasOwnProperty('media_type')) {
+    return mediaData.media_type;
+  }
+
+  // NOTE: for media that does not have media_type property
   if(mediaData.hasOwnProperty('title') && mediaData.hasOwnProperty('poster_path')) {
     return MediaType.MOVIE;
   } else if(mediaData.hasOwnProperty('name') && mediaData.hasOwnProperty('poster_path')) {

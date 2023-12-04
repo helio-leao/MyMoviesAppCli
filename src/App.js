@@ -16,9 +16,6 @@ import { SessionProvider } from './contexts/SessionContext';
 
 // TODO: fetch images with correct size for better performance
 
-// TODO: use "multi" instead of "movies credits" and "tv credits" on person details screen???
-// start by changing the code on api service. 
-
 
 export default function App() {
 

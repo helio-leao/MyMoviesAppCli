@@ -113,52 +113,28 @@ export default function PersonDetailsScreen() {
         )}
 
         <View style={styles.creditsContainer}>
-          {personData?.movie_credits.cast.length > 0 && (
+          {personData?.combined_credits.cast.length > 0 && (
             <View>
               <Text style={[styles.subtitle, {marginLeft: 10}]}>
-                Filmes (cast)
+                Atuação
               </Text>
               <MediaRowList
-                mediaData={personData.movie_credits.cast}
+                mediaData={personData.combined_credits.cast}
                 contentContainerStyle={{paddingHorizontal: 10}}
               />
             </View>  
           )}
 
-          {personData?.tv_credits.cast.length > 0 && (
+          {personData?.combined_credits.crew.length > 0 && (
             <View>
               <Text style={[styles.subtitle, {marginLeft: 10}]}>
-                Séries (cast)
+                Produção
               </Text>
               <MediaRowList
-                mediaData={personData.tv_credits.cast}
-                contentContainerStyle={{paddingHorizontal: 10}}
-              />
-            </View>
-          )}
-
-          {personData?.movie_credits.crew.length > 0 && (
-            <View>
-              <Text style={[styles.subtitle, {marginLeft: 10}]}>
-                Filmes (crew)
-              </Text>
-              <MediaRowList
-                mediaData={personData.movie_credits.crew}
+                mediaData={personData.combined_credits.crew}
                 contentContainerStyle={{paddingHorizontal: 10}}
               />
             </View>  
-          )}
-
-          {personData?.tv_credits.crew.length > 0 && (
-            <View>
-              <Text style={[styles.subtitle, {marginLeft: 10}]}>
-                Séries (crew)
-              </Text>
-              <MediaRowList
-                mediaData={personData.tv_credits.crew}
-                contentContainerStyle={{paddingHorizontal: 10}}
-              />
-            </View>            
           )}
         </View>
 

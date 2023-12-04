@@ -36,6 +36,15 @@ export default function MediaCard({mediaData, onPress, style}) {
             {mediaData.character || mediaData.job}
           </Text>
         )}
+
+        {mediaData.media_type && (
+          <Text
+            style={styles.text}
+            numberOfLines={1}
+          >
+            {mediaData.media_type}
+          </Text>
+        )}
       </View>
 
     </TouchableOpacity>
