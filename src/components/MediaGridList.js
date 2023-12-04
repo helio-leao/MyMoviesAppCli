@@ -31,7 +31,6 @@ export default function MediaGridList({
           style={[styles(numColumns).cardContainer, {margin: 2}]}
           mediaData={item}
           onPress={() => handleCardPress(item.id)}
-          mediaType={mediaType}
         />
       )}
       numColumns={numColumns}

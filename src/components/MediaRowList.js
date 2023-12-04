@@ -42,7 +42,6 @@ export default function MediaRowList({contentContainerStyle, mediaData, mediaTyp
           style={styles.cardContainer}
           mediaData={item}
           onPress={() => handleCardPress(item.id)}
-          mediaType={mediaType}
         />
       )}
       ItemSeparatorComponent={<View style={{width: 20}} />}
