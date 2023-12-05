@@ -29,7 +29,10 @@ const CrewJob = {
   SCREENPLAY: 'Screenplay',
   WRITER: 'Writer',
   AUTHOR: 'Author',
+  NOVEL: 'Novel',
 }
+
+// NOTE: maybe add CrewDepartment
 
 const TvShowStatus = {
   RETURNING_SERIES: 'Returning Series',

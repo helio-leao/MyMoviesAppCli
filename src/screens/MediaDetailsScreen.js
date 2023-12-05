@@ -211,22 +211,24 @@ function MovieContent({mediaData}) {
       <Text style={styles.contentText}>
         Direção: {mediaData?.credits.crew
           .filter(person => person.job === ApiService.CrewJob.DIRECTOR)
-          .map(director => director.name)
           .slice(0, 3)
+          .map(director => director.name)
           .join(', ')}
       </Text>
       <Text style={styles.contentText}>
         Roteiro: {mediaData?.credits.crew
           .filter(person => person.job === ApiService.CrewJob.SCREENPLAY ||
-            person.job === ApiService.CrewJob.WRITER || person.job === ApiService.CrewJob.AUTHOR)
-          .map(writer => writer.name)
+            person.job === ApiService.CrewJob.WRITER ||
+            person.job === ApiService.CrewJob.AUTHOR ||
+            person.job === ApiService.CrewJob.NOVEL)
           .slice(0, 3)
+          .map(writer => writer.name)
           .join(', ')}
       </Text>
       <Text style={[styles.contentText, {marginBottom: 20}]}>
             Elenco: {mediaData?.credits.cast
-          .map(actor => actor.name)
           .slice(0, 3)
+          .map(actor => actor.name)
           .join(', ')}
       </Text>
       {mediaData?.overview && (
@@ -275,15 +277,15 @@ function TvShowContent({mediaData}) {
       {mediaData?.created_by.length > 0 && (
         <Text style={styles.contentText}>
           Criado por: {mediaData.created_by
-            .map(creator => creator.name)
             .slice(0, 3)
+            .map(creator => creator.name)
             .join(', ')}
         </Text>
       )}
       <Text style={[styles.contentText, {marginBottom: 20}]}>
         Elenco: {mediaData?.credits.cast
-          .map(actor => actor.name)
           .slice(0, 3)
+          .map(actor => actor.name)
           .join(', ')}
       </Text>
       {mediaData?.overview && (
