@@ -4,14 +4,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const getFollowedPeopleStorageKey = (userId) => `@user:${userId}:followed_people`;
 
 
-// NOTE: alternative to the result object return strategy could be the try/catch here sending one
-// generic error up like "Ocorreu um erro." and logging the error on the highest level with
-// console.log or .warn or .error
 async function addFollowedPerson(userId, newPerson) {
   const followedPeople = await getFollowedPeople(userId);
   
   if(followedPeople.find(person => newPerson.id === person.id)) {
-    // NOTE: it's common to use "ok" too instead of "success"
     return {success: false, message: `Você já segue ${newPerson.name}.`}; 
   }
   

@@ -1,7 +1,5 @@
 import axios from "axios";
 
-// ISSUE: there's no "with_people" for tv on the api
-
 
 // CONSTANTS
 
@@ -80,8 +78,7 @@ async function fetchMoviesWithPeople(peopleIds = [], page = 1) {
   return await fetchData(
     `/discover/movie`,
     `include_video=false&page=${page}&sort_by=primary_release_date.desc&with_people=${
-      peopleIds.join('|')}&without_genres=${Genres.DOCUMENTARY}` + COMMON_QUERY,
-  );
+      peopleIds.join('|')}&without_genres=${Genres.DOCUMENTARY}` + COMMON_QUERY);
 }
 
 function fetchFullImagePath(imagePath, size = 'original') {

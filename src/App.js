@@ -21,6 +21,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
+      
       <StatusBar style="light" backgroundColor='#000' />
 
       <NavigationContainer>
@@ -28,6 +29,7 @@ export default function App() {
           <RootTabNavigator />
         </SessionProvider>
       </NavigationContainer>
+
     </SafeAreaView>
   );
 }
