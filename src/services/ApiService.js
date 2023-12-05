@@ -30,9 +30,8 @@ const CrewJob = {
   WRITER: 'Writer',
   AUTHOR: 'Author',
   NOVEL: 'Novel',
+  THEATRE_PLAY: 'Theatre Play',
 }
-
-// NOTE: maybe add CrewDepartment
 
 const TvShowStatus = {
   RETURNING_SERIES: 'Returning Series',

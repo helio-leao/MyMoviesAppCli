@@ -220,6 +220,7 @@ function MovieContent({mediaData}) {
           .filter(person => person.job === ApiService.CrewJob.SCREENPLAY ||
             person.job === ApiService.CrewJob.WRITER ||
             person.job === ApiService.CrewJob.AUTHOR ||
+            person.job === ApiService.CrewJob.THEATRE_PLAY ||
             person.job === ApiService.CrewJob.NOVEL)
           .slice(0, 3)
           .map(writer => writer.name)
