@@ -31,7 +31,6 @@ export default function MediaCard({mediaData, onPress, style}) {
         {(mediaData.character || mediaData.job) && (
           <Text
             style={[styles.text, {fontWeight: 800}]}
-            // style={styles.text}
             numberOfLines={1}
           >
             {mediaData.character || mediaData.job}

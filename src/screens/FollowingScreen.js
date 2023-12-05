@@ -10,8 +10,6 @@ import LoadableImage from '../components/LoadableImage';
 import SwitchButtons from '../components/SwitchButtons';
 
 // TODO: roll to top of flatlist on unfollow
-// TODO: filter crew by most relevant(artistic) jobs like directing, writing, acting...?
-// TODO: examine useCallback if it is to avoid redeclaring functions
 
 
 const switchOptions = [
