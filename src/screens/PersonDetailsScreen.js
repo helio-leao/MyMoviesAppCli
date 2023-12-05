@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: undefined,
     borderRadius: 4,
-    marginRight: 10,
+    marginRight: 20,
   },
   headerCardData: {
     flex: 1,

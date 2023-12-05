@@ -30,7 +30,8 @@ export default function MediaCard({mediaData, onPress, style}) {
         {/* NOTE: if media is a crew person, shows the job of the person */}
         {(mediaData.character || mediaData.job) && (
           <Text
-            style={styles.text}
+            style={[styles.text, {fontWeight: 800}]}
+            // style={styles.text}
             numberOfLines={1}
           >
             {mediaData.character || mediaData.job}
@@ -58,8 +59,8 @@ const styles = StyleSheet.create({
     height: undefined,
   },
   contentContainer: {
-    paddingVertical: 4,
-    paddingHorizontal: 6,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
   },
   text: {
     color: '#fff',
