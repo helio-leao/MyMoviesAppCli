@@ -10,7 +10,7 @@ import LoadableImage from '../components/LoadableImage';
 import SwitchButtons from '../components/SwitchButtons';
 
 // TODO: roll to top of flatlist on unfollow
-// TODO: filter crew by most relevant(artistic) jobs like directing, writing...?
+// TODO: filter crew by most relevant(artistic) jobs like directing, writing, acting...?
 // TODO: examine useCallback if it is to avoid redeclaring functions
 
 
@@ -63,7 +63,7 @@ export default function FollowingScreen() {
         } else if (mediaType === ApiService.MediaType.TV) {
           // ISSUE: there's no with_people for tv on the api
           // data = await ApiService.fetchTvShowsWithPeople(peopleIds);
-          ToastAndroid.show('Funcionalidade disponível em breve.', ToastAndroid.SHORT);
+          ToastAndroid.show('TODO: tv shows with people', ToastAndroid.SHORT);
         }
         setData(data);
       } catch (error) {

@@ -5,7 +5,7 @@ import MediaGridList from "../components/MediaGridList";
 import SwitchButtons from "../components/SwitchButtons";
 import { SessionContext } from "../contexts/SessionContext";
 
-// TODO: roll to top of flatlist on unfollow
+// TODO: roll to top of flatlist on media type change
 
 
 const switchOptions = [

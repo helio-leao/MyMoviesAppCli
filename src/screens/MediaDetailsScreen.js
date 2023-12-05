@@ -11,7 +11,7 @@ import { SessionContext } from '../contexts/SessionContext';
 import CollapsibleText from '../components/CollapsibleText';
 import LoadableImage from '../components/LoadableImage';
 
-// TODO: filter crew by most relevant(artistic) jobs like directing, writing...?
+// TODO: filter crew by most relevant(artistic) jobs like directing, writing, acting...?
 // TODO: change some margins, use views with gaps. i.e. creditsContainer
 
 
