@@ -13,11 +13,7 @@ export default function MediaRowList({contentContainerStyle, mediaData}) {
     const mediaType = ApiService.fetchMediaType(item);
     const {id} = item;
 
-    if(mediaType === ApiService.MediaType.PERSON) {
-      navigation.push('PersonDetailsScreen', {id});
-    } else {
-      navigation.push('MediaDetailsScreen', {id, mediaType});
-    }
+    navigation.push('MediaDetailsScreen', {id, mediaType});
   }
 
   function keyExtractor(item) {

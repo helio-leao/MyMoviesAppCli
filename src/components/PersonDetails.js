@@ -1,28 +1,26 @@
 import { ScrollView, StyleSheet, Text, View, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
-import { useRoute } from '@react-navigation/native';
 import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 import StorageService from '../services/FollowedPeopleStorageService';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import MediaRowList from '../components/MediaRowList';
+import MediaRowList from './MediaRowList';
 import { SessionContext } from '../contexts/SessionContext';
-import CollapsibleText from '../components/CollapsibleText';
-import LoadableImage from '../components/LoadableImage';
+import CollapsibleText from './CollapsibleText';
+import LoadableImage from './LoadableImage';
 
 
-export default function PersonDetailsScreen() {
+export default function PersonDetails({id}) {
 
   const {session} = useContext(SessionContext);
   const [personData, setPersonData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const route = useRoute();
 
 
   useEffect(() => {
     async function loadPersonData() {
       try {
-        const personDetails = await ApiService.fetchPersonDetails(route.params.id);
+        const personDetails = await ApiService.fetchPersonDetails(id);
         setPersonData(personDetails);
         setIsLoading(false);
       } catch (error) {

@@ -5,7 +5,6 @@ import LoginScreen from '../screens/LoginScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import FollowingScreen from '../screens/FollowingScreen';
 import MediaDetailsScreen from '../screens/MediaDetailsScreen';
-import PersonDetailsScreen from '../screens/PersonDetailsScreen';
 import { SessionContext } from '../contexts/SessionContext';
 
 
@@ -42,11 +41,6 @@ function LoggedInStackNavigator() {
       <Stack.Screen
         name={'MediaDetailsScreen'}
         component={MediaDetailsScreen}
-        options={{title: 'Detalhes'}}
-      />
-      <Stack.Screen
-        name={'PersonDetailsScreen'}
-        component={PersonDetailsScreen}
         options={{title: 'Detalhes'}}
       />
     </Stack.Navigator>

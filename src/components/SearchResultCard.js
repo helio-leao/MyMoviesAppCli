@@ -12,18 +12,7 @@ export default function SearchResultCard({item}) {
 
   function handleCardPress() {
     const {id, media_type: mediaType} = item;
-
-    switch(mediaType) {
-      case ApiService.MediaType.MOVIE:
-      case ApiService.MediaType.TV:
-        navigation.push('MediaDetailsScreen', {id, mediaType});
-        break;
-      case ApiService.MediaType.PERSON:
-        navigation.push('PersonDetailsScreen', {id});    
-        break;
-      default:
-        console.warn('Media type not recognized:', mediaType);
-    }
+    navigation.push('MediaDetailsScreen', {id, mediaType});
   }
 
   
