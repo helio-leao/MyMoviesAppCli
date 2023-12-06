@@ -10,13 +10,15 @@ import { SessionContext } from '../contexts/SessionContext';
 import LoadableImage from '../components/LoadableImage';
 
 
-export default function MediaDetails({mediaDetails, mediaContent}) {
+export default function MediaDetails({mediaDetails, mediaContent = null}) {
 
   const {session} = useContext(SessionContext);
   
-  
+
   async function onFavoritePress() {
     try {
+      const mediaType = ApiService.fetchMediaType(mediaDetails);
+
       const response = await ApiService.addFavorite(
         session.user.id,
         session.id,
@@ -77,7 +79,6 @@ export default function MediaDetails({mediaDetails, mediaContent}) {
                 <Fontisto name="star" size={30} color="yellow" />
 
                 <View>
-                  {/* NOTE: good way to use text with multiple styles */}
                   <Text style={{color: '#fff'}}>
                     <Text style={{fontSize: 20, fontWeight: '800'}}>
                       {mediaDetails?.vote_average.toFixed(1)}
@@ -100,7 +101,7 @@ export default function MediaDetails({mediaDetails, mediaContent}) {
             </View>
             {/* end ratings and favorite button */}
 
-            {mediaContent?.()}
+            {mediaContent}
 
             {mediaDetails?.credits.cast.length > 0 && (
               <View style={{marginTop: 30}}>

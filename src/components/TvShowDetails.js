@@ -37,7 +37,7 @@ export default function TvShowDetails({tvShowId}) {
   return (
     <MediaDetails
       mediaDetails={tvShowDetails}
-      mediaContent={() => <MediaContent mediaData={tvShowDetails} />}
+      mediaContent={<MediaContent mediaData={tvShowDetails} />}
     />
   );
 }

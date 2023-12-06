@@ -37,7 +37,7 @@ export default function MovieDetails({movieId}) {
   return (
     <MediaDetails
       mediaDetails={movieDetails}
-      mediaContent={() => <MediaContent mediaData={movieDetails} />}
+      mediaContent={<MediaContent mediaData={movieDetails} />}
     />
   );
 }
