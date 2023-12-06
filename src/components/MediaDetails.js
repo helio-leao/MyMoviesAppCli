@@ -27,6 +27,7 @@ export default function MediaDetails({mediaDetails, mediaContent = null}) {
       );
 
       if(response.success) {
+        // NOTE: response.status_code 1 for inclusion, 12 for update
         ToastAndroid.show('Operação bem sucedida.', ToastAndroid.SHORT);
       }
     } catch (error) {
