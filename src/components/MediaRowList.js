@@ -11,9 +11,7 @@ export default function MediaRowList({contentContainerStyle, mediaData}) {
 
   function handleCardPress(item) {
     const mediaType = ApiService.fetchMediaType(item);
-    const {id} = item;
-
-    navigation.push('MediaDetailsScreen', {id, mediaType});
+    navigation.push('MediaDetailsScreen', {mediaId: item.id, mediaType});
   }
 
   function keyExtractor(item) {

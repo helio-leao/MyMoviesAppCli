@@ -10,7 +10,7 @@ import CollapsibleText from './CollapsibleText';
 import LoadableImage from './LoadableImage';
 
 
-export default function PersonDetails({id}) {
+export default function PersonDetails({personId}) {
 
   const {session} = useContext(SessionContext);
   const [personData, setPersonData] = useState(null);
@@ -20,7 +20,7 @@ export default function PersonDetails({id}) {
   useEffect(() => {
     async function loadPersonData() {
       try {
-        const personDetails = await ApiService.fetchPersonDetails(id);
+        const personDetails = await ApiService.fetchPersonDetails(personId);
         setPersonData(personDetails);
         setIsLoading(false);
       } catch (error) {

@@ -11,7 +11,7 @@ import CollapsibleText from '../components/CollapsibleText';
 import LoadableImage from '../components/LoadableImage';
 
 
-export default function MediaDetails({id, mediaType}) {
+export default function MediaDetails({mediaId, mediaType}) {
 
     const {session} = useContext(SessionContext);
     const [isLoading, setIsLoading] = useState(true);
@@ -24,11 +24,11 @@ export default function MediaDetails({id, mediaType}) {
         try {
           switch(mediaType) {
             case ApiService.MediaType.MOVIE:
-              const movieDetails = await ApiService.fetchMovieDetails(id);
+              const movieDetails = await ApiService.fetchMovieDetails(mediaId);
               setMediaData(movieDetails);
               break;
             case ApiService.MediaType.TV:
-              const tvShowDetails = await ApiService.fetchTvShowDetails(id);
+              const tvShowDetails = await ApiService.fetchTvShowDetails(mediaId);
               setMediaData(tvShowDetails);
               break;
             default:

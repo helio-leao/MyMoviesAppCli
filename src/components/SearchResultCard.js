@@ -11,8 +11,8 @@ export default function SearchResultCard({item}) {
 
 
   function handleCardPress() {
-    const {id, media_type: mediaType} = item;
-    navigation.push('MediaDetailsScreen', {id, mediaType});
+    const {id: mediaId, media_type: mediaType} = item;
+    navigation.push('MediaDetailsScreen', {mediaId, mediaType});
   }
 
   

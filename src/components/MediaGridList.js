@@ -14,10 +14,8 @@ export default function MediaGridList({
   
 
   function handleCardPress(item) {
-    const mediaType = ApiService.fetchMediaType(item);
-    const {id} = item;
-    
-    navigation.push('MediaDetailsScreen', {id, mediaType});
+    const mediaType = ApiService.fetchMediaType(item);    
+    navigation.push('MediaDetailsScreen', {mediaId: item.id, mediaType});
   }
 
 

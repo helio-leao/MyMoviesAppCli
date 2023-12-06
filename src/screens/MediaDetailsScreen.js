@@ -7,15 +7,15 @@ import MediaDetails from '../components/MediaDetails';
 export default function MediaDetailsScreen() {
 
   const route = useRoute();
-  const {id, mediaType} = route.params;
+  const {mediaId, mediaType} = route.params;
 
 
   switch(mediaType) {
     case ApiService.MediaType.MOVIE:
     case ApiService.MediaType.TV:
-      return <MediaDetails id={id} mediaType={mediaType} />
+      return <MediaDetails mediaId={mediaId} mediaType={mediaType} />
     case ApiService.MediaType.PERSON:
-      return <PersonDetails id={id} />
+      return <PersonDetails personId={mediaId} />
     default:
       console.warn('Media type invalid:', mediaType);
       return null;
