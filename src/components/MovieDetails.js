@@ -1,14 +1,7 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native';
-import { useContext, useEffect, useState } from 'react';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Fontisto from 'react-native-vector-icons/Fontisto';
-import LinearGradient from 'react-native-linear-gradient';
+import { StyleSheet, Text, View, ToastAndroid, ActivityIndicator } from 'react-native';
+import { useEffect, useState } from 'react';
 import ApiService from '../services/ApiService';
-import placeholder_poster from '../assets/images/placeholder_poster.png';
-import MediaRowList from '../components/MediaRowList';
-import { SessionContext } from '../contexts/SessionContext';
 import CollapsibleText from '../components/CollapsibleText';
-import LoadableImage from '../components/LoadableImage';
 import MediaDetails from './MediaDetails';
 
 
@@ -42,7 +35,57 @@ export default function MovieDetails({movieId}) {
   }
 
   return (
-    <MediaDetails mediaDetails={movieDetails} />
+    <MediaDetails
+      mediaDetails={movieDetails}
+      mediaContent={() => <MediaContent mediaData={movieDetails} />}
+    />
+  );
+}
+
+function MediaContent({mediaData}) {
+  return(
+    <View style={styles.contentContainer}>
+      <Text style={styles.contentText}>
+        Direção: {mediaData?.credits.crew
+          .filter(person => person.job === ApiService.CrewJob.DIRECTOR)
+          .slice(0, 3)
+          .map(director => director.name)
+          .join(', ')}
+      </Text>
+      <Text style={styles.contentText}>
+        Roteiro: {mediaData?.credits.crew
+          .filter(person => person.job === ApiService.CrewJob.SCREENPLAY ||
+            person.job === ApiService.CrewJob.WRITER ||
+            person.job === ApiService.CrewJob.AUTHOR ||
+            person.job === ApiService.CrewJob.THEATRE_PLAY ||
+            person.job === ApiService.CrewJob.NOVEL)
+          .slice(0, 3)
+          .map(writer => writer.name)
+          .join(', ')}
+      </Text>
+      <Text style={[styles.contentText, {marginBottom: 20}]}>
+            Elenco: {mediaData?.credits.cast
+          .slice(0, 3)
+          .map(actor => actor.name)
+          .join(', ')}
+      </Text>
+      {mediaData?.overview && (
+        <CollapsibleText
+          contentContainerStyle={{marginBottom: 20}}
+          numberOfLines={8}
+          textStyle={styles.contentText}
+        >
+          {mediaData.overview}
+        </CollapsibleText>
+      )}
+      <Text style={styles.contentText}>
+        Título Original: {mediaData?.original_title}
+      </Text>
+      <Text style={styles.contentText}>
+        Lançamento: {mediaData?.release_date &&
+          new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.release_date))}
+      </Text>
+    </View>
   );
 }
 
@@ -52,76 +95,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#111',
   },
-  backdropImage: {
-    aspectRatio: 16/9,
-    width: '100%',
-    height: undefined,
-  },
-  gradientContainer: {
-    flex: 1,
-    marginTop: -100,
-  },
-  title: {
-    marginTop: 40,
-    fontSize: 40,
-    color: '#fff',
-    marginHorizontal: 10,
-    marginBottom: 10,
-  },
-  genresContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    marginBottom: 10,
-    gap: 8,
-  },
-  genrePill: {
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    height: 26,
-    paddingHorizontal: 12,
-    borderRadius: 12,
-  },
-  genreText: { 
-    fontSize: 14,
-    color: '#000'
-  },
-  ratingsAndFavoriteContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginHorizontal: 10,
-    marginBottom: 20,
-  },
-  ratingsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 16,
-  },
-  favoriteButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
   contentContainer: {
     marginHorizontal: 10,
-  },
-  favoriteButtonText: {
-    color: '#fff',
-  },
-  contentScrollContainer: {
-    marginBottom: 20,
   },
   contentText: {
     fontSize: 18,
     color: '#fff',
-  },
-  recommendationsRowTitle: {
-    color: '#fff',
-    fontSize: 20,
-    marginBottom: 10,
   },
 });

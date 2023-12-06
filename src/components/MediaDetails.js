@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native';
-import { useContext, useEffect, useState } from 'react';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ToastAndroid } from 'react-native';
+import { useContext } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import LinearGradient from 'react-native-linear-gradient';
@@ -7,11 +7,10 @@ import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 import MediaRowList from '../components/MediaRowList';
 import { SessionContext } from '../contexts/SessionContext';
-import CollapsibleText from '../components/CollapsibleText';
 import LoadableImage from '../components/LoadableImage';
 
 
-export default function MediaDetails({mediaDetails}) {
+export default function MediaDetails({mediaDetails, mediaContent}) {
 
   const {session} = useContext(SessionContext);
   
@@ -101,7 +100,7 @@ export default function MediaDetails({mediaDetails}) {
             </View>
             {/* end ratings and favorite button */}
 
-            <MediaContent mediaData={mediaDetails} />
+            {mediaContent?.()}
 
             {mediaDetails?.credits.cast.length > 0 && (
               <View style={{marginTop: 30}}>
@@ -146,135 +145,6 @@ export default function MediaDetails({mediaDetails}) {
     </View>
   );
 }
-  
-  
-  function MediaContent({mediaData}) {
-    const mediaType = ApiService.fetchMediaType(mediaData);
-  
-    switch(mediaType) {
-      case ApiService.MediaType.MOVIE:
-        return <MovieContent mediaData={mediaData} />
-      case ApiService.MediaType.TV:
-        return <TvShowContent mediaData={mediaData} />
-      default:
-        console.warn('Media type invalid:', mediaType);
-        return null;
-    }
-  }
-  
-  function MovieContent({mediaData}) {
-    return(
-      <View style={styles.contentContainer}>
-        <Text style={styles.contentText}>
-          Direção: {mediaData?.credits.crew
-            .filter(person => person.job === ApiService.CrewJob.DIRECTOR)
-            .slice(0, 3)
-            .map(director => director.name)
-            .join(', ')}
-        </Text>
-        <Text style={styles.contentText}>
-          Roteiro: {mediaData?.credits.crew
-            .filter(person => person.job === ApiService.CrewJob.SCREENPLAY ||
-              person.job === ApiService.CrewJob.WRITER ||
-              person.job === ApiService.CrewJob.AUTHOR ||
-              person.job === ApiService.CrewJob.THEATRE_PLAY ||
-              person.job === ApiService.CrewJob.NOVEL)
-            .slice(0, 3)
-            .map(writer => writer.name)
-            .join(', ')}
-        </Text>
-        <Text style={[styles.contentText, {marginBottom: 20}]}>
-              Elenco: {mediaData?.credits.cast
-            .slice(0, 3)
-            .map(actor => actor.name)
-            .join(', ')}
-        </Text>
-        {mediaData?.overview && (
-          <CollapsibleText
-            contentContainerStyle={{marginBottom: 20}}
-            numberOfLines={8}
-            textStyle={styles.contentText}
-          >
-            {mediaData.overview}
-          </CollapsibleText>
-        )}
-        <Text style={styles.contentText}>
-          Título Original: {mediaData?.original_title}
-        </Text>
-        <Text style={styles.contentText}>
-          Lançamento: {mediaData?.release_date &&
-            new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.release_date))}
-        </Text>
-      </View>
-    );
-  }
-  
-  function TvShowContent({mediaData}) {
-  
-    function formatTvShowStatus(status) {
-      switch (status) {
-        case ApiService.TvShowStatus.RETURNING_SERIES:
-          return 'Em Andamento';
-        case ApiService.TvShowStatus.PLANNED:
-          return 'Planejado';
-        case ApiService.TvShowStatus.IN_PRODUCTION:
-          return 'Em Produção';
-        case ApiService.TvShowStatus.ENDED:
-          return 'Terminado';
-        case ApiService.TvShowStatus.CANCELED:
-          return 'Cancelado';
-        case ApiService.TvShowStatus.PILOT:
-          return 'Pilot';  
-        default:
-          return status; 
-      }
-    }
-  
-    return(
-      <View style={styles.contentContainer}>
-        {mediaData?.created_by.length > 0 && (
-          <Text style={styles.contentText}>
-            Criado por: {mediaData.created_by
-              .slice(0, 3)
-              .map(creator => creator.name)
-              .join(', ')}
-          </Text>
-        )}
-        <Text style={[styles.contentText, {marginBottom: 20}]}>
-          Elenco: {mediaData?.credits.cast
-            .slice(0, 3)
-            .map(actor => actor.name)
-            .join(', ')}
-        </Text>
-        {mediaData?.overview && (
-          <Text style={[styles.contentText, {marginBottom: 20}]}>
-            {mediaData.overview}
-          </Text>
-        )}
-        <Text style={styles.contentText}>
-          Título Original: {mediaData?.original_name}
-        </Text>
-        <Text style={styles.contentText}>
-          Status: {mediaData?.status && formatTvShowStatus(mediaData.status)}
-        </Text>
-        <Text style={styles.contentText}>
-          Temporadas: {mediaData?.seasons.filter(tvShow => tvShow.name !== 'Especiais').length}
-        </Text>
-        {mediaData?.first_air_date && (
-          <Text style={styles.contentText}>
-            Primeira Transmissão: {mediaData.first_air_date &&
-              new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.first_air_date))}
-          </Text>
-        )}
-        {mediaData?.last_air_date && (
-          <Text style={styles.contentText}>
-            Última Transmissão: {mediaData.last_air_date &&
-              new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.last_air_date))}
-          </Text>
-        )}
-      </View>
-    );
-  }
   
   
 const styles = StyleSheet.create({
@@ -336,9 +206,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  contentContainer: {
-    marginHorizontal: 10,
-  },
   favoriteButtonText: {
     color: '#fff',
   },
@@ -348,10 +215,5 @@ const styles = StyleSheet.create({
   contentText: {
     fontSize: 18,
     color: '#fff',
-  },
-  recommendationsRowTitle: {
-    color: '#fff',
-    fontSize: 20,
-    marginBottom: 10,
   },
 });

@@ -1,14 +1,7 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native';
-import { useContext, useEffect, useState } from 'react';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Fontisto from 'react-native-vector-icons/Fontisto';
-import LinearGradient from 'react-native-linear-gradient';
+import { StyleSheet, Text, View, ToastAndroid, ActivityIndicator } from 'react-native';
+import { useEffect, useState } from 'react';
 import ApiService from '../services/ApiService';
-import placeholder_poster from '../assets/images/placeholder_poster.png';
-import MediaRowList from '../components/MediaRowList';
-import { SessionContext } from '../contexts/SessionContext';
 import CollapsibleText from '../components/CollapsibleText';
-import LoadableImage from '../components/LoadableImage';
 import MediaDetails from './MediaDetails';
 
 
@@ -42,7 +35,81 @@ export default function TvShowDetails({tvShowId}) {
   }
 
   return (
-    <MediaDetails mediaDetails={tvShowDetails} />
+    <MediaDetails
+      mediaDetails={tvShowDetails}
+      mediaContent={() => <MediaContent mediaData={tvShowDetails} />}
+    />
+  );
+}
+
+function MediaContent({mediaData}) {
+
+  function formatTvShowStatus(status) {
+    switch (status) {
+      case ApiService.TvShowStatus.RETURNING_SERIES:
+        return 'Em Andamento';
+      case ApiService.TvShowStatus.PLANNED:
+        return 'Planejado';
+      case ApiService.TvShowStatus.IN_PRODUCTION:
+        return 'Em Produção';
+      case ApiService.TvShowStatus.ENDED:
+        return 'Terminado';
+      case ApiService.TvShowStatus.CANCELED:
+        return 'Cancelado';
+      case ApiService.TvShowStatus.PILOT:
+        return 'Pilot';  
+      default:
+        return status; 
+    }
+  }
+
+  return(
+    <View style={styles.contentContainer}>
+      {mediaData?.created_by.length > 0 && (
+        <Text style={styles.contentText}>
+          Criado por: {mediaData.created_by
+            .slice(0, 3)
+            .map(creator => creator.name)
+            .join(', ')}
+        </Text>
+      )}
+      <Text style={[styles.contentText, {marginBottom: 20}]}>
+        Elenco: {mediaData?.credits.cast
+          .slice(0, 3)
+          .map(actor => actor.name)
+          .join(', ')}
+      </Text>
+      {mediaData?.overview && (
+        <CollapsibleText
+          contentContainerStyle={{marginBottom: 20}}
+          numberOfLines={8}
+          textStyle={styles.contentText}
+        >
+          {mediaData.overview}
+        </CollapsibleText>
+      )}
+      <Text style={styles.contentText}>
+        Título Original: {mediaData?.original_name}
+      </Text>
+      <Text style={styles.contentText}>
+        Status: {mediaData?.status && formatTvShowStatus(mediaData.status)}
+      </Text>
+      <Text style={styles.contentText}>
+        Temporadas: {mediaData?.seasons.filter(tvShow => tvShow.name !== 'Especiais').length}
+      </Text>
+      {mediaData?.first_air_date && (
+        <Text style={styles.contentText}>
+          Primeira Transmissão: {mediaData.first_air_date &&
+            new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.first_air_date))}
+        </Text>
+      )}
+      {mediaData?.last_air_date && (
+        <Text style={styles.contentText}>
+          Última Transmissão: {mediaData.last_air_date &&
+            new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.last_air_date))}
+        </Text>
+      )}
+    </View>
   );
 }
 
@@ -52,76 +119,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#111',
   },
-  backdropImage: {
-    aspectRatio: 16/9,
-    width: '100%',
-    height: undefined,
-  },
-  gradientContainer: {
-    flex: 1,
-    marginTop: -100,
-  },
-  title: {
-    marginTop: 40,
-    fontSize: 40,
-    color: '#fff',
-    marginHorizontal: 10,
-    marginBottom: 10,
-  },
-  genresContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    marginBottom: 10,
-    gap: 8,
-  },
-  genrePill: {
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    height: 26,
-    paddingHorizontal: 12,
-    borderRadius: 12,
-  },
-  genreText: { 
-    fontSize: 14,
-    color: '#000'
-  },
-  ratingsAndFavoriteContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginHorizontal: 10,
-    marginBottom: 20,
-  },
-  ratingsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 16,
-  },
-  favoriteButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
   contentContainer: {
     marginHorizontal: 10,
-  },
-  favoriteButtonText: {
-    color: '#fff',
-  },
-  contentScrollContainer: {
-    marginBottom: 20,
   },
   contentText: {
     fontSize: 18,
     color: '#fff',
-  },
-  recommendationsRowTitle: {
-    color: '#fff',
-    fontSize: 20,
-    marginBottom: 10,
   },
 });
