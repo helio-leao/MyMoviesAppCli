@@ -1,7 +1,8 @@
 import { useRoute } from '@react-navigation/native';
 import ApiService from '../services/ApiService';
 import PersonDetails from '../components/PersonDetails';
-import MediaDetails from '../components/MediaDetails';
+import TvShowDetails from '../components/TvShowDetails';
+import MovieDetails from '../components/MovieDetails';
 
 
 export default function MediaDetailsScreen() {
@@ -12,12 +13,13 @@ export default function MediaDetailsScreen() {
 
   switch(mediaType) {
     case ApiService.MediaType.MOVIE:
+      return <MovieDetails movieId={mediaId} />
     case ApiService.MediaType.TV:
-      return <MediaDetails mediaId={mediaId} mediaType={mediaType} />
+      return <TvShowDetails tvShowId={mediaId} />
     case ApiService.MediaType.PERSON:
       return <PersonDetails personId={mediaId} />
     default:
-      console.warn('Media type invalid:', mediaType);
+      console.error('Media type invalid:', mediaType);
       return null;
   }
 }
