@@ -27,7 +27,7 @@ export default function CollapsibleText({
 
 
   return(
-    <View style={[contentContainerStyle, {gap: 10}]}>
+    <View style={[contentContainerStyle, {gap: 8}]}>
       <Text
         style={textStyle}
         numberOfLines={isCollapsed ? numberOfLines : 0}

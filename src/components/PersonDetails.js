@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, ToastAndroid, ActivityIndicator } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
 import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
@@ -8,6 +8,7 @@ import MediaRowList from './MediaRowList';
 import { SessionContext } from '../contexts/SessionContext';
 import CollapsibleText from './CollapsibleText';
 import LoadableImage from './LoadableImage';
+import Button from './Button';
 
 
 export default function PersonDetails({personId}) {
@@ -76,23 +77,11 @@ export default function PersonDetails({personId}) {
             <Text style={styles.subtitle}>{personData?.known_for_department}</Text>
 
             {session && (
-              // TODO: make this button a component to be used at searchcards too
-              <TouchableOpacity
-                style={{flexDirection: 'row',
-                  gap: 6,
-                  paddingVertical: 8,
-                  paddingHorizontal: 10,
-                  backgroundColor: '#333',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  alignSelf: 'flex-start',
-                  borderRadius: 4,
-                }}
+              <Button
+                label='Seguir'
+                icon={<FontAwesome name="user-plus" size={16} color="white" />}
                 onPress={handleFollowPress}
-              >
-                <FontAwesome name="user-plus" size={16} color="white" />
-                <Text style={{color: '#fff'}}>Seguir</Text>
-              </TouchableOpacity>
+              />
             )}
           </View>
 

@@ -104,7 +104,7 @@ export default function MediaDetails({mediaDetails, mediaContent = null}) {
             {mediaContent}
 
             {mediaDetails?.credits.cast.length > 0 && (
-              <View style={{marginTop: 30}}>
+              <View style={{marginTop: mediaContent ? 30 : 0}}>
                 <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
                   Elenco
                 </Text>
