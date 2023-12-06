@@ -115,7 +115,7 @@ function fetchMediaType(mediaData) {
 
 // HELPER FUNCTIONS
 
-async function fetchData(endpoint, query) {
+async function fetchData(endpoint, query = null) {
   const headers = {
     Authorization: `Bearer ${API_TOKEN}`
   };
@@ -130,16 +130,16 @@ async function fetchData(endpoint, query) {
   return response.data;
 }
 
-// ISSUE: there's no "with_people" for tv on the api
-// ISSUE: when uncommented this function will render the others useless, it will keep
-// giving status 401 api key not authorized
-// async function fetchTvShowsWithPeople(peopleIds = [], page = 1) {
-//   return await fetchData(
-//     `/discover/tv`,
-//     `include_video=false&page=${page}&sort_by=primary_release_date.desc&with_people=${
-//       peopleIds.join('|')}&without_genres=99` + COMMON_QUERY,
-//   );
-// }
+async function postData(endpoint, data) {
+  const headers = {
+    Authorization: `Bearer ${API_TOKEN}`
+  };
+  const url = API_BASE_URL + endpoint;
+  console.log(url);
+
+  const response = await axios.post(url, data, {headers});
+  return response.data;
+}
 
 
 // AUTHENTICATION FUNCTIONS
@@ -152,21 +152,14 @@ async function createRequestToken() {
   return await fetchData('/authentication/token/new');
 }
 
-// TODO: helper function postData
 async function createSession(requestToken) {
-  const url = API_BASE_URL + '/authentication/session/new';
+  const endpoint = '/authentication/session/new';
 
   const data = {
     request_token: requestToken,
   };
-  const headers = {
-    Authorization: `Bearer ${API_TOKEN}`,
-  };
 
-  console.log(url);
-
-  const response = await axios.post(url, data, {headers});
-  return response.data;
+  return await postData(endpoint, data);
 }
 
 async function deleteSession(sessionId) {
@@ -209,21 +202,15 @@ async function fetchFavorites(accountId, sessionId, mediaType, page = 1) {
 }
 
 async function addFavorite(accountId, sessionId, mediaData, mediaType) {
-  const url = API_BASE_URL + `/account/${accountId}/favorite?session_id=${sessionId}`;
+  const endpoint = `/account/${accountId}/favorite?session_id=${sessionId}`;
 
   const data = {
     media_type: mediaType,
     media_id: mediaData.id,
     favorite: true,
   };
-  const headers = {
-    Authorization: `Bearer ${API_TOKEN}`,
-  };
 
-  console.log(url);
-
-  const response = await axios.post(url, data, {headers});
-  return response.data;
+  return await postData(endpoint, data);
 }
 
 
