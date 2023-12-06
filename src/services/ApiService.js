@@ -8,7 +8,7 @@ const { API_TOKEN } = process.env;
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
 
-const COMMON_QUERY = `&include_adult=false&language=pt-BR`;
+const COMMON_QUERY = `include_adult=false&language=pt-BR`;
 
 
 // ENUMS
@@ -50,37 +50,41 @@ const Genres = {
 // MEDIA FETCH FUNCTIONS
 
 async function fetchTrendingMovies(timeWindow = TrendingTimeWindow.DAY) {
-  return await fetchData(`/trending/movie/${timeWindow}`, COMMON_QUERY);
+  const url = `/trending/movie/${timeWindow}?${COMMON_QUERY}`
+  return await fetchData(url);
 }
 
 async function fetchTrendingTvShows(timeWindow = TrendingTimeWindow.DAY) {
-  return await fetchData(`/trending/tv/${timeWindow}`, COMMON_QUERY);
+  const url = `/trending/tv/${timeWindow}?${COMMON_QUERY}`
+  return await fetchData(url);
 }
 
 async function fetchMovieDetails(movieId) {
-  return await fetchData(`/movie/${movieId}`,
-    `append_to_response=recommendations,credits` + COMMON_QUERY);
+  const url = `/movie/${movieId}?append_to_response=recommendations,credits&${COMMON_QUERY}`
+  return await fetchData(url);
 }
 
 async function fetchTvShowDetails(tvShowId) {
-  return await fetchData(`/tv/${tvShowId}`,
-    `append_to_response=recommendations,credits` + COMMON_QUERY);
+  const url = `/tv/${tvShowId}?append_to_response=recommendations,credits&${COMMON_QUERY}`
+  return await fetchData(url);
 }
 
 async function fetchPersonDetails(personId) {
-  return await fetchData(`/person/${personId}`,
-  `append_to_response=combined_credits` + COMMON_QUERY);
+  const url = `/person/${personId}?append_to_response=combined_credits&${COMMON_QUERY}`
+  return await fetchData(url);
 }
 
 async function fetchMulti(name = '', page = 1) {
-  return await fetchData(`/search/multi`, `query=${name}&page=${page}` + COMMON_QUERY);
+  const url = `/search/multi?query=${name}&page=${page}&${COMMON_QUERY}`
+  return await fetchData(url);
 }
 
 async function fetchMoviesWithPeople(peopleIds = [], page = 1) {
-  return await fetchData(
-    `/discover/movie`,
-    `include_video=false&page=${page}&sort_by=primary_release_date.desc&with_people=${
-      peopleIds.join('|')}&without_genres=${Genres.DOCUMENTARY}` + COMMON_QUERY);
+  const url = `/discover/movie?include_video=false&page=${
+    page}&sort_by=primary_release_date.desc&with_people=${
+      peopleIds.join('|')}&without_genres=${Genres.DOCUMENTARY}&${COMMON_QUERY}`
+    
+  return await fetchData(url);
 }
 
 function fetchFullImagePath(imagePath, size = 'original') {
@@ -115,29 +119,21 @@ function fetchMediaType(mediaData) {
 
 // HELPER FUNCTIONS
 
-async function fetchData(endpoint, query = null) {
-  const headers = {
-    Authorization: `Bearer ${API_TOKEN}`
-  };
-  let url = API_BASE_URL + endpoint;
+async function fetchData(url) {
+  const uri = API_BASE_URL + url;
+  const headers = {  Authorization: `Bearer ${API_TOKEN}` };
+  console.log(uri);
 
-  if(query) {
-    url += `?${query}`;
-  }
-  console.log(url);
-
-  const response = await axios.get(url, {headers});
+  const response = await axios.get(uri, {headers});
   return response.data;
 }
 
-async function postData(endpoint, data) {
-  const headers = {
-    Authorization: `Bearer ${API_TOKEN}`
-  };
-  const url = API_BASE_URL + endpoint;
-  console.log(url);
+async function postData(url, data) {
+  const uri = API_BASE_URL + url;
+  const headers = { Authorization: `Bearer ${API_TOKEN}` };
+  console.log(uri);
 
-  const response = await axios.post(url, data, {headers});
+  const response = await axios.post(uri, data, {headers});
   return response.data;
 }
 
@@ -153,24 +149,16 @@ async function createRequestToken() {
 }
 
 async function createSession(requestToken) {
-  const endpoint = '/authentication/session/new';
+  const url = '/authentication/session/new';
+  const data = { request_token: requestToken };
 
-  const data = {
-    request_token: requestToken,
-  };
-
-  return await postData(endpoint, data);
+  return await postData(url, data);
 }
 
 async function deleteSession(sessionId) {
   const url = API_BASE_URL + '/authentication/session';
-
-  const data = {
-    session_id: sessionId,
-  };
-  const headers = {
-    Authorization: `Bearer ${API_TOKEN}`,
-  };
+  const data = { session_id: sessionId };
+  const headers = { Authorization: `Bearer ${API_TOKEN}` };
 
   console.log(url);
 
@@ -179,30 +167,34 @@ async function deleteSession(sessionId) {
 }
 
 async function fetchAccountDetailsBySessionId(sessionId) {
-  return await fetchData('/account', `session_id=${sessionId}`);
+  const url = `/account?session_id=${sessionId}`
+  return await fetchData(url);
 }
 
 
 // AUTHENTICATED USER FUNCTIONS
 
 async function fetchFavorites(accountId, sessionId, mediaType, page = 1) {
-  let path = `/account/${accountId}/favorite`;
+  let url = `/account/${accountId}/favorite`;
 
   if(mediaType === MediaType.MOVIE) {
-    path += '/movies';
+    url += '/movies';
   } else if(mediaType === MediaType.TV) {
-    path += '/tv';
+    url += '/tv';
   } else {
     throw new Error(
       `MediaType has to be "tv" or "movies". Received: "${mediaType}"`
     );
   }
+
+  // NOTE: verify common query in the context of favorites
+  url += `?session_id=${sessionId}&sort_by=created_at.desc&page=${page}&${COMMON_QUERY}`
   
-  return await fetchData(path, `session_id=${sessionId}&sort_by=created_at.desc&page=${page}` + COMMON_QUERY);
+  return await fetchData(url);
 }
 
 async function addFavorite(accountId, sessionId, mediaData, mediaType) {
-  const endpoint = `/account/${accountId}/favorite?session_id=${sessionId}`;
+  const url = `/account/${accountId}/favorite?session_id=${sessionId}`;
 
   const data = {
     media_type: mediaType,
@@ -210,7 +202,7 @@ async function addFavorite(accountId, sessionId, mediaData, mediaType) {
     favorite: true,
   };
 
-  return await postData(endpoint, data);
+  return await postData(url, data);
 }
 
 
