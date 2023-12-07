@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, ToastAndroid } from 'react-native';
 import MediaGridList from '../components/MediaGridList';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -8,8 +8,6 @@ import placeholder_poster from '../assets/images/placeholder_poster.png';
 import { SessionContext } from '../contexts/SessionContext';
 import LoadableImage from '../components/LoadableImage';
 import SwitchButtons from '../components/SwitchButtons';
-
-// TODO: roll to top of flatlist on unfollow
 
 
 const switchOptions = [
@@ -25,6 +23,7 @@ export default function FollowingScreen() {
   const [followedPeople, setFollowedPeople] = useState([]);
   const [data, setData] = useState(null);
   const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE);
+  const mediaListGridRef = useRef(null);
 
   const isLastPage = data == null || data.page === data.total_pages;
 
@@ -50,6 +49,10 @@ export default function FollowingScreen() {
       if(followedPeople.length === 0) {
         setData(null);
         return;
+      }
+
+      if(mediaListGridRef.current) {
+        mediaListGridRef.current.scrollToOffset({ offset: 0 });
       }
 
       try {
@@ -163,6 +166,7 @@ export default function FollowingScreen() {
         />
 
         <MediaGridList
+          innerRef={mediaListGridRef}
           mediaData={data?.results}
           onEndReached={onEndReached}
           showLoadingMoreIndicator={!isLastPage}

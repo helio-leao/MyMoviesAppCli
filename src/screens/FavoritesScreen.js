@@ -1,11 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { StyleSheet, ToastAndroid, View } from "react-native";
 import ApiService from "../services/ApiService";
 import MediaGridList from "../components/MediaGridList";
 import SwitchButtons from "../components/SwitchButtons";
 import { SessionContext } from "../contexts/SessionContext";
-
-// TODO: roll to top of flatlist on media type change
 
 
 const switchOptions = [
@@ -19,12 +17,17 @@ export default function FavoritesScreen() {
   const {session} = useContext(SessionContext);
   const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE);
   const [data, setData] = useState(null);
+  const mediaListGridRef = useRef(null);
 
   const isLastPage = data == null || data.page === data.total_pages;
 
 
   useEffect(() => {
     async function loadData() {
+      if(mediaListGridRef.current) {
+        mediaListGridRef.current.scrollToOffset({ offset: 0 });
+      }
+
       try {
         const data = await ApiService.fetchFavorites(
           session.user.id, session.id, mediaType);
@@ -70,6 +73,7 @@ export default function FavoritesScreen() {
         onChangeSelection={setMediaType}
       />
       <MediaGridList
+        innerRef={mediaListGridRef}
         mediaData={data?.results}
         onEndReached={onEndReached}
         showLoadingMoreIndicator={!isLastPage}

@@ -9,6 +9,7 @@ export default function MediaGridList({
   onEndReached = () => {},
   showLoadingMoreIndicator = false,
   numColumns = 3,
+  innerRef = null,
 }) {
   const navigation = useNavigation();
   
@@ -21,6 +22,7 @@ export default function MediaGridList({
 
   return (
     <FlatList
+      ref={innerRef}
       data={mediaData}
       keyExtractor={item => String(item.id)}
       renderItem={({item}) => (

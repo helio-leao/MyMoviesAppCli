@@ -182,9 +182,7 @@ async function fetchFavorites(accountId, sessionId, mediaType, page = 1) {
   } else if(mediaType === MediaType.TV) {
     url += '/tv';
   } else {
-    throw new Error(
-      `MediaType has to be "tv" or "movies". Received: "${mediaType}"`
-    );
+    throw new Error(`MediaType has to be "tv" or "movies". Received: "${mediaType}"`);
   }
 
   // NOTE: verify common query in the context of favorites
