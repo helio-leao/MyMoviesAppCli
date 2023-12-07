@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
 import MediaDetailsScreen from '../screens/MediaDetailsScreen';
 
-
 const Stack = createNativeStackNavigator();
 
 

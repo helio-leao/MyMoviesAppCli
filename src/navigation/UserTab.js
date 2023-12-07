@@ -7,7 +7,6 @@ import FollowingScreen from '../screens/FollowingScreen';
 import MediaDetailsScreen from '../screens/MediaDetailsScreen';
 import { SessionContext } from '../contexts/SessionContext';
 
-
 const Stack = createNativeStackNavigator();
 
 

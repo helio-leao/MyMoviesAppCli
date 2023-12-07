@@ -145,7 +145,7 @@ export default function FollowingScreen() {
                 {item.name}
               </Text>
               <TouchableOpacity style={styles.unfollowButtonContainer} onPress={() => handleUnfollow(item.id)}>
-                <FontAwesome name="user-times" size={18} color="white" />
+                <FontAwesome name="user-times" size={16} color="white" />
               </TouchableOpacity>
             </View>
           )}

@@ -9,7 +9,6 @@ import { Image } from 'react-native';
 import ApiService from '../services/ApiService';
 import { SessionContext } from '../contexts/SessionContext';
 
-
 const Tab = createBottomTabNavigator();
 
 
