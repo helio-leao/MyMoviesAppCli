@@ -17,18 +17,14 @@ export default function MediaDetails({mediaDetails, mediaContent = null}) {
 
   async function onFavoritePress() {
     try {
-      const mediaType = ApiService.fetchMediaType(mediaDetails);
-
       const response = await ApiService.addFavorite(
         session.user.id,
         session.id,
         mediaDetails,
-        mediaType,
       );
 
       if(response.success) {
-        // NOTE: response.status_code 1 for inclusion, 12 for update
-        ToastAndroid.show('Operação bem sucedida.', ToastAndroid.SHORT);
+        ToastAndroid.show(response.status_message, ToastAndroid.SHORT);
       }
     } catch (error) {
       console.log('error response: ', error.response.data);

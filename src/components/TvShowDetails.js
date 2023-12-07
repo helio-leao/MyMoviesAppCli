@@ -44,25 +44,6 @@ export default function TvShowDetails({tvShowId}) {
 
 function MediaContent({mediaData}) {
 
-  function formatTvShowStatus(status) {
-    switch (status) {
-      case ApiService.TvShowStatus.RETURNING_SERIES:
-        return 'Em Andamento';
-      case ApiService.TvShowStatus.PLANNED:
-        return 'Planejado';
-      case ApiService.TvShowStatus.IN_PRODUCTION:
-        return 'Em Produção';
-      case ApiService.TvShowStatus.ENDED:
-        return 'Terminado';
-      case ApiService.TvShowStatus.CANCELED:
-        return 'Cancelado';
-      case ApiService.TvShowStatus.PILOT:
-        return 'Pilot';  
-      default:
-        return status; 
-    }
-  }
-
   return(
     <View style={styles.contentContainer}>
       {mediaData?.created_by.length > 0 && (
@@ -92,8 +73,11 @@ function MediaContent({mediaData}) {
         Título Original: {mediaData?.original_name}
       </Text>
       <Text style={styles.contentText}>
-        Status: {mediaData?.status && formatTvShowStatus(mediaData.status)}
+        Status: {mediaData?.status}
       </Text>
+      {/* NOTE: "Especiais" is not one of the main seasons. The API returns this for many tv shows */}
+      {/* TODO: better way to handle this. check round 6: it returns 2 seasons although only one aired */}
+      {/* {console.log(mediaData?.seasons)} */}
       <Text style={styles.contentText}>
         Temporadas: {mediaData?.seasons.filter(tvShow => tvShow.name !== 'Especiais').length}
       </Text>
