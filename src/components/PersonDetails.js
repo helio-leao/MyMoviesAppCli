@@ -74,7 +74,7 @@ export default function PersonDetails({personId}) {
 
           <View style={styles.headerCardData}>
             <Text style={styles.title}>{personData?.name}</Text>
-            <Text style={styles.subtitle}>{personData?.known_for_department}</Text>
+            <Text style={[styles.subtitle, {color: '#888'}]}>{personData?.known_for_department}</Text>
 
             {session && (
               <Button

@@ -91,7 +91,7 @@ export default function MediaDetails({mediaDetails, mediaContent = null}) {
 
               {session?.user && (
                 <TouchableOpacity style={styles.favoriteButton} onPress={onFavoritePress}>
-                  <FontAwesome name="heart" size={20} color="white" />
+                  <FontAwesome name="heart" size={16} color="white" />
                   <Text style={styles.favoriteButtonText}>Favoritar</Text>
                 </TouchableOpacity>
               )}

@@ -2,12 +2,13 @@ import { createContext, useEffect, useState } from "react";
 import SessionStorageService from "../services/SessionStorageService";
 import ApiService from "../services/ApiService";
 
-
 export const SessionContext = createContext();
 
 
 export function SessionProvider ({children}) {
+
   const [session, setSession] = useState(null);
+
 
   useEffect(() => {
     async function loadSessionData() {

@@ -44,11 +44,13 @@ export default function SearchScreen() {
         contentContainerStyle={styles.resultsContainer}
         data={data?.results}
         keyExtractor={item => String(item.id)}
-        renderItem={({item}) => <SearchResultCard item={item} />}
+        renderItem={({item}) => <SearchResultCard mediaData={item} />}
         ItemSeparatorComponent={<View style={{ height: 10 }} />}
         ListEmptyComponent={
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{color: '#333', fontSize: 18}}>Nenhum resultado para exibir.</Text>
+            <Text style={{color: '#333', fontSize: 18}}>
+              Nenhum resultado para exibir.
+            </Text>
           </View>
         }
       />

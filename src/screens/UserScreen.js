@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { SessionContext } from '../contexts/SessionContext';
 import placeholder_avatar from '../assets/images/placeholder_avatar.jpg';
 import LoadableImage from '../components/LoadableImage';
+import Button from '../components/Button';
 
 
 export default function UserScreen() {
@@ -58,16 +59,10 @@ export default function UserScreen() {
             {user.username}
           </Text>
 
-          <TouchableOpacity
-            style={[styles.button, {
-              alignSelf: 'flex-start',
-              paddingHorizontal: 14,
-              paddingVertical: 6,
-            }]}
+          <Button
+            label={'Logout'}
             onPress={handleLogoutPress}
-          >
-            <Text style={styles.buttonText}>Logout</Text>
-          </TouchableOpacity>
+          />
         </View>
       </View>
 
