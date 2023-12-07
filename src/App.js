@@ -12,7 +12,7 @@ import { SessionProvider } from './contexts/SessionContext';
 // reproduced by deleting the session after logged and opening the app again or with
 // the app open delete session on website and try any operation that requires the id
 
-// TODO: selection of people for media filtering (FollowingScreen)
+// TODO: add possibility to remove movies from specific followed persons on FollowingScreen
 
 // TODO: fetch images with correct size for better performance
 

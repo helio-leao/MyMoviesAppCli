@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, ToastAndroid } from 'react-native';
 import MediaGridList from '../components/MediaGridList';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -20,15 +20,14 @@ export default function FollowingScreen() {
 
   const {session} = useContext(SessionContext);
   const [isLoadingPeople, setIsLoadingPeople] = useState(true);
+  const [isLoadingMedia, setIsLoadingMedia] = useState(true);
   const [followedPeople, setFollowedPeople] = useState([]);
   const [data, setData] = useState(null);
   const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE);
-  const mediaListGridRef = useRef(null);
 
   const isLastPage = data == null || data.page === data.total_pages;
 
 
-  // loads followed people at screen mount
   useEffect(() => {
     async function loadFollowedPeople() {
       try {
@@ -43,7 +42,6 @@ export default function FollowingScreen() {
     loadFollowedPeople();
   }, []);
 
-  // user deletes a followed person or changes the media type
   useEffect(() => {
     async function loadData() {
       if(followedPeople.length === 0) {
@@ -51,11 +49,9 @@ export default function FollowingScreen() {
         return;
       }
 
-      if(mediaListGridRef.current) {
-        mediaListGridRef.current.scrollToOffset({ offset: 0 });
-      }
-
       try {
+        setIsLoadingMedia(true);
+
         const peopleIds = followedPeople.map(person => person.id);
         let data = null;
 
@@ -67,6 +63,7 @@ export default function FollowingScreen() {
           ToastAndroid.show('TODO: tv shows with people', ToastAndroid.SHORT);
         }
         setData(data);
+        setIsLoadingMedia(false);
       } catch (error) {
         console.error(error);
         ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
@@ -165,12 +162,17 @@ export default function FollowingScreen() {
           onChangeSelection={setMediaType}
         />
 
-        <MediaGridList
-          innerRef={mediaListGridRef}
-          mediaData={data?.results}
-          onEndReached={onEndReached}
-          showLoadingMoreIndicator={!isLastPage}
-        />
+        {isLoadingMedia ? (
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <ActivityIndicator color={'white'} size={'large'} />
+          </View>
+        ) : (
+          <MediaGridList
+            mediaData={data?.results}
+            onEndReached={onEndReached}
+            showLoadingMoreIndicator={!isLastPage}
+          />
+        )}
       </View>
 
     </View>

@@ -1,5 +1,5 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { StyleSheet, ToastAndroid, View } from "react-native";
+import { useContext, useEffect, useState } from "react";
+import { ActivityIndicator, StyleSheet, ToastAndroid, View } from "react-native";
 import ApiService from "../services/ApiService";
 import MediaGridList from "../components/MediaGridList";
 import SwitchButtons from "../components/SwitchButtons";
@@ -17,22 +17,21 @@ export default function FavoritesScreen() {
   const {session} = useContext(SessionContext);
   const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE);
   const [data, setData] = useState(null);
-  const mediaListGridRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const isLastPage = data == null || data.page === data.total_pages;
 
 
   useEffect(() => {
-    async function loadData() {
-      if(mediaListGridRef.current) {
-        mediaListGridRef.current.scrollToOffset({ offset: 0 });
-      }
-
+    async function loadData() {      
       try {
+        setIsLoading(true);
+
         const data = await ApiService.fetchFavorites(
           session.user.id, session.id, mediaType);
 
         setData(data);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
         ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
@@ -72,12 +71,18 @@ export default function FavoritesScreen() {
         value={mediaType}
         onChangeSelection={setMediaType}
       />
-      <MediaGridList
-        innerRef={mediaListGridRef}
-        mediaData={data?.results}
-        onEndReached={onEndReached}
-        showLoadingMoreIndicator={!isLastPage}
-      />
+
+      {isLoading ? (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <ActivityIndicator color={'white'} size={'large'} />
+        </View>
+      ) : (
+        <MediaGridList
+          mediaData={data?.results}
+          onEndReached={onEndReached}
+          showLoadingMoreIndicator={!isLastPage}
+        />
+      )}
     </View>
   );
 }
