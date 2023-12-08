@@ -33,15 +33,6 @@ const CrewJob = {
   THEATRE_PLAY: 'Theatre Play',
 }
 
-const TvShowStatus = {
-  RETURNING_SERIES: 'Returning Series',
-  PLANNED: 'Planned',
-  IN_PRODUCTION: 'In Production',
-  ENDED: 'Ended',
-  CANCELED: 'Canceled',
-  PILOT: 'Pilot',
-}
-
 const Genres = {
   DOCUMENTARY: 99,
 }
@@ -185,13 +176,12 @@ async function fetchFavorites(accountId, sessionId, mediaType, page = 1) {
     throw new Error(`MediaType has to be "tv" or "movies". Received: "${mediaType}"`);
   }
 
-  // NOTE: verify common query in the context of favorites
   url += `?session_id=${sessionId}&sort_by=created_at.desc&page=${page}&${commonQuery}`
   
   return await fetchData(url);
 }
 
-// NOTE: favorites can be tv or movie, person is not suported by the API
+// NOTE: favorites can be tv or movie (person not suported by the API)
 async function addFavorite(accountId, sessionId, mediaData) {
   const url = `/account/${accountId}/favorite?session_id=${sessionId}`;
 
@@ -209,7 +199,6 @@ export default {
   TrendingTimeWindow,
   MediaType,
   CrewJob,
-  TvShowStatus,
   fetchTrendingMovies,
   fetchTrendingTvShows,
   fetchMovieDetails,

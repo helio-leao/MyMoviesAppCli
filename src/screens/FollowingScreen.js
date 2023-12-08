@@ -22,10 +22,10 @@ export default function FollowingScreen() {
   const [isLoadingPeople, setIsLoadingPeople] = useState(true);
   const [isLoadingMedia, setIsLoadingMedia] = useState(true);
   const [followedPeople, setFollowedPeople] = useState([]);
-  const [data, setData] = useState(null);
+  const [mediaData, setMediaData] = useState(null);
   const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE);
 
-  const isLastPage = data == null || data.page === data.total_pages;
+  const isLastPage = mediaData == null || mediaData.page === mediaData.total_pages;
 
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function FollowingScreen() {
   useEffect(() => {
     async function loadData() {
       if(followedPeople.length === 0) {
-        setData(null);
+        setMediaData(null);
         return;
       }
 
@@ -62,7 +62,7 @@ export default function FollowingScreen() {
           // data = await ApiService.fetchTvShowsWithPeople(peopleIds);
           ToastAndroid.show('TODO: tv shows with people', ToastAndroid.SHORT);
         }
-        setData(data);
+        setMediaData(data);
         setIsLoadingMedia(false);
       } catch (error) {
         console.error(error);
@@ -73,12 +73,14 @@ export default function FollowingScreen() {
   }, [followedPeople, mediaType])
   
 
-  async function loadMoreData(page) {
+  async function loadMoreData() {
     try {
+      const page = mediaData.page + 1;
+
       const peopleIds = followedPeople.map(person => person.id);
       const data = await ApiService.fetchMoviesWithPeople(peopleIds, page);
       
-      setData(prev => ({
+      setMediaData(prev => ({
         ...data,
         results: [...prev.results, ...data.results],
       }));
@@ -101,7 +103,7 @@ export default function FollowingScreen() {
 
   function onEndReached() {
     if(!isLastPage) {
-      return loadMoreData(data.page + 1);
+      return loadMoreData();
     }
   }
 
@@ -168,7 +170,7 @@ export default function FollowingScreen() {
           </View>
         ) : (
           <MediaGridList
-            mediaData={data?.results}
+            mediaData={mediaData?.results}
             onEndReached={onEndReached}
             showLoadingMoreIndicator={!isLastPage}
           />

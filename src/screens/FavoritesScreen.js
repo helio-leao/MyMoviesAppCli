@@ -16,10 +16,10 @@ export default function FavoritesScreen() {
 
   const {session} = useContext(SessionContext);
   const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE);
-  const [data, setData] = useState(null);
+  const [mediaData, setMediaData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const isLastPage = data == null || data.page === data.total_pages;
+  const isLastPage = mediaData == null || mediaData.page === mediaData.total_pages;
 
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function FavoritesScreen() {
         const data = await ApiService.fetchFavorites(
           session.user.id, session.id, mediaType);
 
-        setData(data);
+        setMediaData(data);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -41,12 +41,14 @@ export default function FavoritesScreen() {
   }, [mediaType]);
 
 
-  async function loadMoreData(page) {
+  async function loadMoreData() {
     try {
+      const page = mediaData.page + 1;
+
       const data = await ApiService.fetchFavorites(
         session.user.id, session.id, mediaType, page);
 
-      setData(prev => ({
+      setMediaData(prev => ({
         ...data,
         results: [...prev.results, ...data.results],
       }));
@@ -58,7 +60,7 @@ export default function FavoritesScreen() {
 
   function onEndReached() {
     if(!isLastPage) {
-      return loadMoreData(data?.page + 1);
+      return loadMoreData();
     }
   }
 
@@ -78,7 +80,7 @@ export default function FavoritesScreen() {
         </View>
       ) : (
         <MediaGridList
-          mediaData={data?.results}
+          mediaData={mediaData?.results}
           onEndReached={onEndReached}
           showLoadingMoreIndicator={!isLastPage}
         />
