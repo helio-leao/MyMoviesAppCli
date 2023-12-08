@@ -22,10 +22,10 @@ export default function FollowingScreen() {
   const [isLoadingPeople, setIsLoadingPeople] = useState(true);
   const [isLoadingMedia, setIsLoadingMedia] = useState(true);
   const [followedPeople, setFollowedPeople] = useState([]);
-  const [mediaData, setMediaData] = useState(null);
+  const [data, setData] = useState(null);
   const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE);
 
-  const isLastPage = mediaData == null || mediaData.page === mediaData.total_pages;
+  const isLastPage = data == null || data.page === data.total_pages;
 
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function FollowingScreen() {
   useEffect(() => {
     async function loadData() {
       if(followedPeople.length === 0) {
-        setMediaData(null);
+        setData(null);
         return;
       }
 
@@ -62,7 +62,7 @@ export default function FollowingScreen() {
           // data = await ApiService.fetchTvShowsWithPeople(peopleIds);
           ToastAndroid.show('TODO: tv shows with people', ToastAndroid.SHORT);
         }
-        setMediaData(data);
+        setData(data);
         setIsLoadingMedia(false);
       } catch (error) {
         console.error(error);
@@ -73,14 +73,17 @@ export default function FollowingScreen() {
   }, [followedPeople, mediaType])
   
 
-  async function loadMoreData() {
-    try {
-      const page = mediaData.page + 1;
+  // TODO: updating only movies, verify if tv to fetch tv with people
+  async function updateData() {
+    if(isLastPage) return;
 
+    const page = data.page + 1;
+
+    try {
       const peopleIds = followedPeople.map(person => person.id);
       const data = await ApiService.fetchMoviesWithPeople(peopleIds, page);
       
-      setMediaData(prev => ({
+      setData(prev => ({
         ...data,
         results: [...prev.results, ...data.results],
       }));
@@ -98,12 +101,6 @@ export default function FollowingScreen() {
     } catch (error) {
       console.log(error);
       ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
-    }
-  }
-
-  function onEndReached() {
-    if(!isLastPage) {
-      return loadMoreData();
     }
   }
 
@@ -170,8 +167,8 @@ export default function FollowingScreen() {
           </View>
         ) : (
           <MediaGridList
-            mediaData={mediaData?.results}
-            onEndReached={onEndReached}
+            mediaDataList={data?.results}
+            onEndReached={updateData}
             showLoadingMoreIndicator={!isLastPage}
           />
         )}

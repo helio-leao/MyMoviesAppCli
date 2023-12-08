@@ -14,7 +14,7 @@ import Button from './Button';
 export default function PersonDetails({personId}) {
 
   const {session} = useContext(SessionContext);
-  const [personData, setPersonData] = useState(null);
+  const [personDetails, setPersonDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
 
@@ -22,7 +22,7 @@ export default function PersonDetails({personId}) {
     async function loadPersonData() {
       try {
         const personDetails = await ApiService.fetchPersonDetails(personId);
-        setPersonData(personDetails);
+        setPersonDetails(personDetails);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -34,7 +34,7 @@ export default function PersonDetails({personId}) {
 
 
   async function handleFollowPress() {
-    const {id, name, profile_path} = personData;
+    const {id, name, profile_path} = personDetails;
 
     try {
       const result = await StorageService.addFollowedPerson(session.user.id,
@@ -68,13 +68,13 @@ export default function PersonDetails({personId}) {
 
           <LoadableImage
             style={styles.personImage}
-            source={{uri: ApiService.fetchFullImagePath(personData?.profile_path)}}
+            source={{uri: ApiService.fetchFullImagePath(personDetails?.profile_path)}}
             placeholder={placeholder_poster}
           />
 
           <View style={styles.headerCardData}>
-            <Text style={styles.title}>{personData?.name}</Text>
-            <Text style={[styles.subtitle, {color: '#888'}]}>{personData?.known_for_department}</Text>
+            <Text style={styles.title}>{personDetails?.name}</Text>
+            <Text style={[styles.subtitle, {color: '#888'}]}>{personDetails?.known_for_department}</Text>
 
             {session && (
               <Button
@@ -87,38 +87,38 @@ export default function PersonDetails({personId}) {
 
         </View>
 
-        {personData?.biography && (
+        {personDetails?.biography && (
           <View style={styles.body}>
             <Text style={styles.subtitle}>Biografia</Text>
             <CollapsibleText
               textStyle={styles.text}
               numberOfLines={8}
             >
-              {personData.biography}
+              {personDetails.biography}
             </CollapsibleText>
           </View>
         )}
 
         <View style={styles.creditsContainer}>
-          {personData?.combined_credits.cast.length > 0 && (
+          {personDetails?.combined_credits.cast.length > 0 && (
             <View>
               <Text style={[styles.subtitle, {marginLeft: 10}]}>
                 Atuação
               </Text>
               <MediaRowList
-                mediaData={personData.combined_credits.cast}
+                mediaDataList={personDetails.combined_credits.cast}
                 contentContainerStyle={{paddingHorizontal: 10}}
               />
             </View>  
           )}
 
-          {personData?.combined_credits.crew.length > 0 && (
+          {personDetails?.combined_credits.crew.length > 0 && (
             <View>
               <Text style={[styles.subtitle, {marginLeft: 10}]}>
                 Produção
               </Text>
               <MediaRowList
-                mediaData={personData.combined_credits.crew}
+                mediaDataList={personDetails.combined_credits.crew}
                 contentContainerStyle={{paddingHorizontal: 10}}
               />
             </View>  

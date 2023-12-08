@@ -4,7 +4,7 @@ import ApiService from '../services/ApiService';
 import MediaCard from './MediaCard';
 
 
-export default function MediaRowList({contentContainerStyle, mediaData}) {
+export default function MediaRowList({contentContainerStyle, mediaDataList}) {
 
   const navigation = useNavigation();
 
@@ -33,7 +33,7 @@ export default function MediaRowList({contentContainerStyle, mediaData}) {
       showsHorizontalScrollIndicator={false}
       keyExtractor={keyExtractor}
       contentContainerStyle={contentContainerStyle}
-      data={mediaData}
+      data={mediaDataList}
       renderItem={({item}) => (
         <MediaCard
           style={styles.cardContainer}

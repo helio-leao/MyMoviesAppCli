@@ -51,7 +51,7 @@ export default function HomeScreen() {
           <View>
             <Text style={styles.moviesRowTitle}>Filmes em alta</Text>
             <MediaRowList
-              mediaData={trendingMovies}
+              mediaDataList={trendingMovies}
               contentContainerStyle={styles.moviesRowContentContainer}
             />
           </View>
@@ -59,7 +59,7 @@ export default function HomeScreen() {
           <View>
             <Text style={styles.moviesRowTitle}>Séries em alta</Text>
             <MediaRowList
-              mediaData={trendingTvShows}
+              mediaDataList={trendingTvShows}
               contentContainerStyle={styles.moviesRowContentContainer}
             />
           </View>

@@ -106,7 +106,7 @@ export default function MediaDetails({mediaDetails, mediaContent = null}) {
                   Elenco
                 </Text>
                 <MediaRowList
-                  mediaData={mediaDetails.credits.cast}
+                  mediaDataList={mediaDetails.credits.cast}
                   contentContainerStyle={{paddingHorizontal: 10}}
                 />
               </View>
@@ -118,7 +118,7 @@ export default function MediaDetails({mediaDetails, mediaContent = null}) {
                   Produção
                 </Text>
                 <MediaRowList
-                  mediaData={mediaDetails.credits.crew}
+                  mediaDataList={mediaDetails.credits.crew}
                   contentContainerStyle={{paddingHorizontal: 10}}
                 />
               </View>
@@ -130,7 +130,7 @@ export default function MediaDetails({mediaDetails, mediaContent = null}) {
                   Recomendações
                 </Text>
                 <MediaRowList
-                  mediaData={mediaDetails.recommendations.results}
+                  mediaDataList={mediaDetails.recommendations.results}
                   contentContainerStyle={{paddingHorizontal: 10}}
                 />
               </View>

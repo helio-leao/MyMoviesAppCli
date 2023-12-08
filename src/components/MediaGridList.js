@@ -5,7 +5,7 @@ import ApiService from '../services/ApiService';
 
 
 export default function MediaGridList({
-  mediaData,
+  mediaDataList,
   onEndReached = () => {},
   showLoadingMoreIndicator = false,
   numColumns = 3,
@@ -21,7 +21,7 @@ export default function MediaGridList({
 
   return (
     <FlatList
-      data={mediaData}
+      data={mediaDataList}
       keyExtractor={item => String(item.id)}
       renderItem={({item}) => (
         <MediaCard

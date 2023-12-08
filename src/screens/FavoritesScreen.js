@@ -16,10 +16,10 @@ export default function FavoritesScreen() {
 
   const {session} = useContext(SessionContext);
   const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE);
-  const [mediaData, setMediaData] = useState(null);
+  const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const isLastPage = mediaData == null || mediaData.page === mediaData.total_pages;
+  const isLastPage = data == null || data.page === data.total_pages;
 
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function FavoritesScreen() {
         const data = await ApiService.fetchFavorites(
           session.user.id, session.id, mediaType);
 
-        setMediaData(data);
+        setData(data);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -41,26 +41,22 @@ export default function FavoritesScreen() {
   }, [mediaType]);
 
 
-  async function loadMoreData() {
-    try {
-      const page = mediaData.page + 1;
+  async function updateData() {
+    if(isLastPage) return;
 
+    const page = data.page + 1;
+
+    try {
       const data = await ApiService.fetchFavorites(
         session.user.id, session.id, mediaType, page);
 
-      setMediaData(prev => ({
+      setData(prev => ({
         ...data,
         results: [...prev.results, ...data.results],
       }));
     } catch (error) {
       console.error(error);
       ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
-    }
-  }
-
-  function onEndReached() {
-    if(!isLastPage) {
-      return loadMoreData();
     }
   }
 
@@ -80,8 +76,8 @@ export default function FavoritesScreen() {
         </View>
       ) : (
         <MediaGridList
-          mediaData={mediaData?.results}
-          onEndReached={onEndReached}
+          mediaDataList={data?.results}
+          onEndReached={updateData}
           showLoadingMoreIndicator={!isLastPage}
         />
       )}
