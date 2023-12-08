@@ -5,6 +5,8 @@ import MediaGridList from "../components/MediaGridList";
 import SwitchButtons from "../components/SwitchButtons";
 import { SessionContext } from "../contexts/SessionContext";
 
+// TODO: reload data on focus
+
 
 const switchOptions = [
   { label: 'Filmes', value: ApiService.MediaType.MOVIE },

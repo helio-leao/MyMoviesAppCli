@@ -1,29 +1,64 @@
 import { StyleSheet, Text, View, ToastAndroid, ActivityIndicator } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ApiService from '../services/ApiService';
 import CollapsibleText from '../components/CollapsibleText';
 import MediaDetails from './MediaDetails';
+import { SessionContext } from '../contexts/SessionContext';
 
 
 export default function TvShowDetails({tvShowId}) {
 
+  const {session} = useContext(SessionContext);
   const [isLoading, setIsLoading] = useState(true);
   const [tvShowDetails, setTvShowDetails] = useState(null);
 
 
   useEffect(() => {
-    async function loadTvShowDetails() {
-      try {
-        const tvShowDetails = await ApiService.fetchTvShowDetails(tvShowId);
-        setTvShowDetails(tvShowDetails);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-        ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
-      }
+    async function initialize() {
+      await loadTvShowDetails();
+      setIsLoading(false);
     }
-    loadTvShowDetails();
+    initialize();
   }, []);
+
+
+  async function loadTvShowDetails() {
+    try {
+      const tvShowDetails = await ApiService.fetchTvShowDetails(tvShowId);
+      setTvShowDetails(tvShowDetails);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+    }
+  }
+
+  async function onFavoriteButtonPress() {
+    try {
+      let response;
+      
+      if(tvShowDetails.account_states.favorite) {
+        response = await ApiService.removeFavorite(
+          session.user.id,
+          session.id,
+          tvShowDetails,
+        );
+      } else {
+        response = await ApiService.addFavorite(
+          session.user.id,
+          session.id,
+          tvShowDetails,
+        );
+      }
+
+      if(response.success) {
+        await loadTvShowDetails();
+      }
+    } catch (error) {
+      console.log('Error response:', error.response.data);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+    }
+  }
 
 
   if(isLoading) {
@@ -37,7 +72,8 @@ export default function TvShowDetails({tvShowId}) {
   return (
     <MediaDetails
       mediaDetails={tvShowDetails}
-      mediaContent={<MediaContent mediaData={tvShowDetails} />}
+      bodyContent={<MediaContent mediaData={tvShowDetails} />}
+      onFavoriteButtonPress={session ? onFavoriteButtonPress : undefined}
     />
   );
 }

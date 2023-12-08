@@ -1,29 +1,63 @@
 import { StyleSheet, Text, View, ToastAndroid, ActivityIndicator } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ApiService from '../services/ApiService';
 import CollapsibleText from '../components/CollapsibleText';
 import MediaDetails from './MediaDetails';
+import { SessionContext } from '../contexts/SessionContext';
 
 
 export default function MovieDetails({movieId}) {
 
+  const {session} = useContext(SessionContext);
   const [isLoading, setIsLoading] = useState(true);
   const [movieDetails, setMovieDetails] = useState(null);
 
 
   useEffect(() => {
-    async function loadMovieDetails() {
-      try {
-        const movieDetails = await ApiService.fetchMovieDetails(movieId);
-        setMovieDetails(movieDetails);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-        ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
-      }
+    async function initialize() {
+      await loadMovieDetails();
+      setIsLoading(false);
     }
-    loadMovieDetails();
+    initialize();
   }, []);
+
+
+  async function loadMovieDetails() {
+    try {
+      const movieDetails = await ApiService.fetchMovieDetails(movieId);
+      setMovieDetails(movieDetails);
+    } catch (error) {
+      console.error(error);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+    }
+  }
+
+  async function onFavoriteButtonPress() {
+    try {
+      let response;
+      
+      if(movieDetails.account_states.favorite) {
+        response = await ApiService.removeFavorite(
+          session.user.id,
+          session.id,
+          movieDetails,
+        );
+      } else {
+        response = await ApiService.addFavorite(
+          session.user.id,
+          session.id,
+          movieDetails,
+        );
+      }
+
+      if(response.success) {
+        await loadMovieDetails();
+      }
+    } catch (error) {
+      console.log('Error response:', error.response.data);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+    }
+  }
 
 
   if(isLoading) {
@@ -37,7 +71,8 @@ export default function MovieDetails({movieId}) {
   return (
     <MediaDetails
       mediaDetails={movieDetails}
-      mediaContent={<MediaContent mediaData={movieDetails} />}
+      bodyContent={<MediaContent mediaData={movieDetails} />}
+      onFavoriteButtonPress={session ? onFavoriteButtonPress : undefined}
     />
   );
 }

@@ -51,12 +51,12 @@ async function fetchTrendingTvShows(timeWindow = TrendingTimeWindow.DAY) {
 }
 
 async function fetchMovieDetails(movieId) {
-  const url = `/movie/${movieId}?append_to_response=recommendations,credits&${commonQuery}`
+  const url = `/movie/${movieId}?append_to_response=recommendations,credits,account_states&${commonQuery}`
   return await fetchData(url);
 }
 
 async function fetchTvShowDetails(tvShowId) {
-  const url = `/tv/${tvShowId}?append_to_response=recommendations,credits&${commonQuery}`
+  const url = `/tv/${tvShowId}?append_to_response=recommendations,credits,account_states&${commonQuery}`
   return await fetchData(url);
 }
 
@@ -194,6 +194,18 @@ async function addFavorite(accountId, sessionId, mediaData) {
   return await postData(url, data);
 }
 
+async function removeFavorite(accountId, sessionId, mediaData) {
+  const url = `/account/${accountId}/favorite?session_id=${sessionId}`;
+
+  const data = {
+    media_type: fetchMediaType(mediaData),
+    media_id: mediaData.id,
+    favorite: false,
+  };
+
+  return await postData(url, data);
+}
+
 
 export default {
   TrendingTimeWindow,
@@ -215,4 +227,5 @@ export default {
   fetchAccountDetailsBySessionId,
   fetchFavorites,
   addFavorite,
+  removeFavorite,
 }

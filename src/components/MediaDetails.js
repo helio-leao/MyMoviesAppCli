@@ -1,37 +1,18 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ToastAndroid } from 'react-native';
-import { useContext } from 'react';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import LinearGradient from 'react-native-linear-gradient';
 import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 import MediaRowList from '../components/MediaRowList';
-import { SessionContext } from '../contexts/SessionContext';
 import LoadableImage from '../components/LoadableImage';
 
 
-export default function MediaDetails({mediaDetails, mediaContent = null}) {
-
-  const {session} = useContext(SessionContext);
-  
-
-  async function onFavoritePress() {
-    try {
-      const response = await ApiService.addFavorite(
-        session.user.id,
-        session.id,
-        mediaDetails,
-      );
-
-      if(response.success) {
-        ToastAndroid.show(response.status_message, ToastAndroid.SHORT);
-      }
-    } catch (error) {
-      console.log('error response: ', error.response.data);
-      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
-    }
-  }
-
+export default function MediaDetails({
+  mediaDetails,
+  bodyContent = undefined,
+  onFavoriteButtonPress = undefined,
+}) {
 
   return (
     <View style={styles.container}>
@@ -89,19 +70,26 @@ export default function MediaDetails({mediaDetails, mediaContent = null}) {
                 </View>
               </View>
 
-              {session?.user && (
-                <TouchableOpacity style={styles.favoriteButton} onPress={onFavoritePress}>
-                  <FontAwesome name="heart" size={16} color="white" />
-                  <Text style={styles.favoriteButtonText}>Favoritar</Text>
+              {onFavoriteButtonPress && (
+                <TouchableOpacity
+                  style={styles.favoriteButton}
+                  onPress={onFavoriteButtonPress}
+                >
+                  <FontAwesome
+                    name={mediaDetails.account_states.favorite ? "heart" : "heart-o"}
+                    size={16}
+                    color="white"
+                  />
+                  <Text style={styles.favoriteButtonText}>Favorito</Text>
                 </TouchableOpacity>
               )}
             </View>
             {/* end ratings and favorite button */}
 
-            {mediaContent}
+            {bodyContent}
 
             {mediaDetails?.credits.cast.length > 0 && (
-              <View style={{marginTop: mediaContent ? 30 : 0}}>
+              <View style={{marginTop: bodyContent ? 30 : 0}}>
                 <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
                   Elenco
                 </Text>

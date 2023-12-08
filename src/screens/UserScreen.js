@@ -22,7 +22,6 @@ export default function UserScreen() {
       if(response.success) {
         navigation.navigate('HomeTab');
         await deleteSession();
-        ToastAndroid.show('Logged out.', ToastAndroid.SHORT);
       }
     } catch (error) {
       console.log(error);
