@@ -8,18 +8,21 @@ async function addFollowedPerson(userId, newPerson) {
   const followedPeople = await getFollowedPeople(userId);
   
   if(followedPeople.find(person => newPerson.id === person.id)) {
-    return {success: false, message: `Você já segue ${newPerson.name}.`}; 
+    return new Error(`Você já segue ${newPerson.name}.`); 
   }
   
   await AsyncStorage.setItem(getFollowedPeopleStorageKey(userId),
     JSON.stringify([...followedPeople, newPerson]));
-
-  return {success: true};
 }
 
 async function getFollowedPeople(userId) {
   const followedPeople = await AsyncStorage.getItem(getFollowedPeopleStorageKey(userId));
   return followedPeople ? JSON.parse(followedPeople) : [];
+}
+
+async function getFollowedPerson(userId, personId) {
+  const followedPeople = await getFollowedPeople(userId);
+  return followedPeople.find(person => person.id === personId);
 }
 
 async function removeFollowedPerson(userId, followedPersonId) {
@@ -38,5 +41,6 @@ async function removeFollowedPerson(userId, followedPersonId) {
 export default {
   addFollowedPerson,
   getFollowedPeople,
+  getFollowedPerson,
   removeFollowedPerson,
 }

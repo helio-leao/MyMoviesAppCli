@@ -93,6 +93,7 @@ export default function MediaDetails({
                 <View style={{marginHorizontal: 10, marginTop: 20, flexDirection: 'row', gap: 10}}>
                   {mediaDetails['watch/providers'].results.BR.flatrate.map(provider => (
                     <Image
+                      key={String(provider.provider_id)}
                       style={{width: 60, height: 60, borderRadius: 4}}
                       source={{uri: ApiService.fetchFullImagePath(provider.logo_path)}}
                     />

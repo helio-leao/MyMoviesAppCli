@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet, Text, View, ToastAndroid, ActivityIndicator } f
 import { useContext, useEffect, useState } from 'react';
 import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
-import StorageService from '../services/FollowedPeopleStorageService';
+import FollowedPeopleStorageService from '../services/FollowedPeopleStorageService';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MediaRowList from './MediaRowList';
 import { SessionContext } from '../contexts/SessionContext';
@@ -17,6 +17,7 @@ export default function PersonDetails({personId}) {
 
   const {session} = useContext(SessionContext);
   const [personDetails, setPersonDetails] = useState(null);
+  const [isPersonFollowed, setIsPersonFollowed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
 
@@ -24,6 +25,15 @@ export default function PersonDetails({personId}) {
     async function loadPersonData() {
       try {
         const personDetails = await ApiService.fetchPersonDetails(personId);
+        const personFollowed = await FollowedPeopleStorageService
+          .getFollowedPerson(session.user.id, personDetails.id);
+
+        if(personFollowed) {
+          setIsPersonFollowed(true);
+        } else {
+          setIsPersonFollowed(false);
+        }
+
         setPersonDetails(personDetails);
         setIsLoading(false);
       } catch (error) {
@@ -39,17 +49,24 @@ export default function PersonDetails({personId}) {
     const {id, name, profile_path} = personDetails;
 
     try {
-      const result = await StorageService.addFollowedPerson(session.user.id,
-         { id, name, profile_path });
+      await FollowedPeopleStorageService
+        .addFollowedPerson(session.user.id, { id, name, profile_path });
 
-      if(result.success) {
-        ToastAndroid.show(`Você seguiu ${name}.`, ToastAndroid.SHORT);
-      } else {
-        ToastAndroid.show(result.message, ToastAndroid.SHORT);
-      }
+      setIsPersonFollowed(true);
     } catch (error) {
       console.log(error);
       ToastAndroid.show(`Ocorreu um erro.`, ToastAndroid.SHORT);
+    }
+  }
+
+  async function handleUnfollowPress() {
+    try {
+      await FollowedPeopleStorageService
+        .removeFollowedPerson(session.user.id, personDetails.id);
+      setIsPersonFollowed(false);
+    } catch (error) {
+      console.log(error);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     }
   }
 
@@ -76,14 +93,24 @@ export default function PersonDetails({personId}) {
 
           <View style={styles.headerCardData}>
             <Text style={styles.title}>{personDetails?.name}</Text>
-            <Text style={[styles.subtitle, {color: '#888'}]}>{personDetails?.known_for_department}</Text>
+            <Text style={[styles.subtitle, {color: '#888'}]}>
+              {personDetails?.known_for_department}
+            </Text>
 
             {session && (
-              <Button
-                label='Seguir'
-                icon={<FontAwesome name="user-plus" size={16} color="white" />}
-                onPress={handleFollowPress}
-              />
+              isPersonFollowed ? (
+                <Button
+                  label='Seguir'
+                  icon={<FontAwesome name="user-times" size={16} color="white" />}
+                  onPress={handleUnfollowPress}
+                />
+              ) : (
+                <Button
+                  label='Seguir'
+                  icon={<FontAwesome name="user-plus" size={16} color="white" />}
+                  onPress={handleFollowPress}
+                />
+              )
             )}
           </View>
 

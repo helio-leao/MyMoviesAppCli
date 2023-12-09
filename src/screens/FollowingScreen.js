@@ -3,7 +3,7 @@ import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, 
 import MediaGridList from '../components/MediaGridList';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ApiService from '../services/ApiService';
-import StorageService from '../services/FollowedPeopleStorageService';
+import FollowedPeopleStorageService from '../services/FollowedPeopleStorageService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 import { SessionContext } from '../contexts/SessionContext';
 import LoadableImage from '../components/LoadableImage';
@@ -31,7 +31,7 @@ export default function FollowingScreen() {
   useEffect(() => {
     async function loadFollowedPeople() {
       try {
-        const followedPeople = await StorageService.getFollowedPeople(session.user.id);
+        const followedPeople = await FollowedPeopleStorageService.getFollowedPeople(session.user.id);
         setFollowedPeople(followedPeople);
         setIsLoadingPeople(false);
       } catch (error) {
@@ -95,8 +95,8 @@ export default function FollowingScreen() {
 
   async function handleUnfollow(personId) {
     try {
-      await StorageService.removeFollowedPerson(session.user.id, personId);
-      const updatedFollowedPeople = await StorageService.getFollowedPeople(session.user.id);
+      await FollowedPeopleStorageService.removeFollowedPerson(session.user.id, personId);
+      const updatedFollowedPeople = await FollowedPeopleStorageService.getFollowedPeople(session.user.id);
       setFollowedPeople(updatedFollowedPeople);
     } catch (error) {
       console.log(error);

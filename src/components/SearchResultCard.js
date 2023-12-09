@@ -7,7 +7,7 @@ import Button from './Button';
 import { useContext } from 'react';
 import { SessionContext } from '../contexts/SessionContext';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import StorageService from '../services/FollowedPeopleStorageService';
+import FollowedPeopleStorageService from '../services/FollowedPeopleStorageService';
 
 
 export default function SearchResultCard({mediaData}) {
@@ -35,7 +35,7 @@ export default function SearchResultCard({mediaData}) {
     const {id, name, profile_path} = mediaData;
 
     try {
-      const result = await StorageService.addFollowedPerson(session.user.id,
+      const result = await FollowedPeopleStorageService.addFollowedPerson(session.user.id,
          { id, name, profile_path });
 
       if(result.success) {
