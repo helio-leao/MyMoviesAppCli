@@ -1,11 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { ActivityIndicator, StyleSheet, ToastAndroid, View } from "react-native";
 import ApiService from "../services/ApiService";
 import MediaGridList from "../components/MediaGridList";
 import SwitchButtons from "../components/SwitchButtons";
 import { SessionContext } from "../contexts/SessionContext";
-
-// TODO: reload data on focus
+import { useFocusEffect } from "@react-navigation/native";
 
 
 const switchOptions = [
@@ -24,23 +23,25 @@ export default function FavoritesScreen() {
   const isLastPage = data == null || data.page === data.total_pages;
 
 
-  useEffect(() => {
-    async function loadData() {      
-      try {
-        setIsLoading(true);
-
-        const data = await ApiService.fetchFavorites(
-          session.user.id, session.id, mediaType);
-
-        setData(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-        ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+  useFocusEffect(
+    useCallback(() => {
+      async function loadData() {      
+        try {
+          setIsLoading(true);
+    
+          const data = await ApiService.fetchFavorites(
+            session.user.id, session.id, mediaType);
+    
+          setData(data);
+          setIsLoading(false);
+        } catch (error) {
+          console.log(error);
+          ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+        }
       }
-    }
-    loadData();
-  }, [mediaType]);
+      loadData();
+    }, [mediaType])
+  );
 
 
   async function updateData() {
