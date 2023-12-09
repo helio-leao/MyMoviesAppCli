@@ -100,7 +100,7 @@ export default function PersonDetails({personId}) {
             {session && (
               isPersonFollowed ? (
                 <Button
-                  label='Seguir'
+                  label='Deixar de Seguir'
                   icon={<FontAwesome name="user-times" size={16} color="white" />}
                   onPress={handleUnfollowPress}
                 />

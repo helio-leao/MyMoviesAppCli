@@ -30,22 +30,17 @@ export default function SearchResultCard({mediaData}) {
     }
   }
 
-  // TODO: function repeated in PersonDetails component
   async function handleFollowPerson() {
     const {id, name, profile_path} = mediaData;
 
     try {
-      const result = await FollowedPeopleStorageService.addFollowedPerson(session.user.id,
-         { id, name, profile_path });
+      await FollowedPeopleStorageService.addFollowedPerson(
+        session.user.id, { id, name, profile_path });
 
-      if(result.success) {
-        ToastAndroid.show(`Você seguiu ${name}.`, ToastAndroid.SHORT);
-      } else {
-        ToastAndroid.show(result.message, ToastAndroid.SHORT);
-      }
+      ToastAndroid.show(`Você seguiu ${name}.`, ToastAndroid.SHORT);
     } catch (error) {
       console.log(error);
-      ToastAndroid.show(`Ocorreu um erro.`, ToastAndroid.SHORT);
+      ToastAndroid.show(error.message, ToastAndroid.SHORT);
     }
   }
 
@@ -84,7 +79,7 @@ export default function SearchResultCard({mediaData}) {
         <Text style={styles.resultCardText} numberOfLines={2}>
           {mediaData.media_type}
         </Text>
-        {session && (
+        {/* {session && (
           <Button
             label={mediaData.media_type === ApiService.MediaType.PERSON ?
               'Seguir' : 'Favoritar'}
@@ -95,7 +90,7 @@ export default function SearchResultCard({mediaData}) {
             )}
             onPress={handleButtonPress}
           />
-        )}
+        )} */}
       </View>
     </TouchableOpacity>
   );

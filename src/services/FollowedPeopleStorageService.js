@@ -8,7 +8,7 @@ async function addFollowedPerson(userId, newPerson) {
   const followedPeople = await getFollowedPeople(userId);
   
   if(followedPeople.find(person => newPerson.id === person.id)) {
-    return new Error(`Você já segue ${newPerson.name}.`); 
+    throw new Error(`Você já segue ${newPerson.name}.`); 
   }
   
   await AsyncStorage.setItem(getFollowedPeopleStorageKey(userId),
