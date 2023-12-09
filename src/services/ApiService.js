@@ -51,12 +51,12 @@ async function fetchTrendingTvShows(timeWindow = TrendingTimeWindow.DAY) {
 }
 
 async function fetchMovieDetails(movieId) {
-  const url = `/movie/${movieId}?append_to_response=recommendations,credits,account_states&${commonQuery}`
+  const url = `/movie/${movieId}?append_to_response=recommendations,credits,account_states,watch/providers&${commonQuery}`
   return await fetchData(url);
 }
 
 async function fetchTvShowDetails(tvShowId) {
-  const url = `/tv/${tvShowId}?append_to_response=recommendations,credits,account_states&${commonQuery}`
+  const url = `/tv/${tvShowId}?append_to_response=recommendations,credits,account_states,watch/providers&${commonQuery}`
   return await fetchData(url);
 }
 
@@ -112,7 +112,7 @@ function fetchMediaType(mediaData) {
 
 async function fetchData(url) {
   const uri = API_BASE_URL + url;
-  const headers = {  Authorization: `Bearer ${API_TOKEN}` };
+  const headers = { Authorization: `Bearer ${API_TOKEN}` };
   console.log(uri);
 
   const response = await axios.get(uri, {headers});

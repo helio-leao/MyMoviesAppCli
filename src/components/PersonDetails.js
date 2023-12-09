@@ -10,6 +10,8 @@ import CollapsibleText from './CollapsibleText';
 import LoadableImage from './LoadableImage';
 import Button from './Button';
 
+// TODO: order media by popularity
+
 
 export default function PersonDetails({personId}) {
 

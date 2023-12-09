@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import LinearGradient from 'react-native-linear-gradient';
@@ -87,6 +87,19 @@ export default function MediaDetails({
             {/* end ratings and favorite button */}
 
             {bodyContent}
+
+            {mediaDetails['watch/providers'].results.BR?.flatrate && (
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <View style={{marginHorizontal: 10, marginTop: 20, flexDirection: 'row', gap: 10}}>
+                  {mediaDetails['watch/providers'].results.BR.flatrate.map(provider => (
+                    <Image
+                      style={{width: 60, height: 60, borderRadius: 4}}
+                      source={{uri: ApiService.fetchFullImagePath(provider.logo_path)}}
+                    />
+                  ))}
+                </View>
+              </ScrollView>
+            )}
 
             {mediaDetails?.credits.cast.length > 0 && (
               <View style={{marginTop: bodyContent ? 30 : 0}}>

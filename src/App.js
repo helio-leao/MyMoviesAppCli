@@ -3,8 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import RootTabNavigator from './navigation/RootTabNavigator';
 import { SessionProvider } from './contexts/SessionContext';
 
-// TODO: "remove favorite" functionality
-
 // TODO: "rating media" funcionality
 
 // TODO: operations that use session id might throw errors if session deleted on tmdb
