@@ -17,6 +17,13 @@ export default function LoadableImage({style, source, placeholder}) {
 
   return(
     <View>
+      {/* image */}
+      <Image
+        style={style}
+        source={isSourceValid() ? source : placeholder}
+        onLoadEnd={() => setIsLoading(false)}
+      />
+
       {/* placeholder */}
       {(isLoading && placeholder) && (
         <Image
@@ -24,13 +31,6 @@ export default function LoadableImage({style, source, placeholder}) {
           source={placeholder}
         />
       )}
-
-      {/* image */}
-      <Image
-        style={style}
-        source={isSourceValid() ? source : placeholder}
-        onLoadEnd={() => setIsLoading(false)}
-      />
     </View>
   );
 }
