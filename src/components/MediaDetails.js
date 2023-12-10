@@ -13,6 +13,8 @@ export default function MediaDetails({
   bodyContent = undefined,
   onFavoriteButtonPress = undefined,
 }) {
+  // TODO: add trailer to component
+  console.log(mediaDetails.videos.results);
 
   return (
     <View style={styles.container}>
@@ -26,8 +28,9 @@ export default function MediaDetails({
       {/* gradient container */}
       <LinearGradient
         style={styles.gradientContainer}
-        colors={['#111', '#11111100']}
-        start={{x: 0, y: 0.15}} end={{x: 0, y: 0}}
+        colors={['#111111ff', '#11111100']}
+        start={{x: 0, y: 0.15}}
+        end={{x: 0, y: 0}}
       >
         {/* title for movies or name for tv */}
         <Text style={styles.title} numberOfLines={2}>

@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, View, ScrollView, Text, ActivityIndicator, ToastAndroid } from 'react-native';
+import { StyleSheet, View, ScrollView, Text, ActivityIndicator, ToastAndroid, TouchableOpacity } from 'react-native';
 import ApiService from '../services/ApiService';
 import MediaRowList from '../components/MediaRowList';
+import LoadableImage from '../components/LoadableImage';
+import LinearGradient from 'react-native-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function HomeScreen() {
@@ -9,6 +12,8 @@ export default function HomeScreen() {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [trendingTvShows, setTrendingTvShows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigation = useNavigation();
 
 
   useEffect(() => {
@@ -45,7 +50,54 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <ScrollView>      
+      <ScrollView>
+
+        {/* TOP TRENDING MOVIE CARD */}
+        <TouchableOpacity
+          style={{width: '100%'}}
+          onPress={() => navigation.push(
+            'MediaDetailsScreen',
+            {
+              mediaId: trendingMovies[0].id,
+              mediaType: trendingMovies[0].media_type
+            },
+          )}
+        >
+          <LoadableImage
+            style={{width: '100%', height: undefined, aspectRatio: 16/9}}
+            source={{uri: ApiService.fetchFullImagePath(trendingMovies[0].backdrop_path)}}
+          />
+          <LinearGradient
+            style={{position: 'absolute', width: '70%', height: '100%', paddingHorizontal: 10, paddingVertical: 40}}
+            colors={['#111111ff', '#11111100']}
+            start={{x: 0.5, y: 0}}
+            end={{x: 1, y: 0}}
+          >
+            <View style={{width: '100%', height: '100%'}}>
+              <Text
+                style={{                
+                  fontSize: 30,
+                  fontWeight: 600,
+                  color: '#fff',
+                  marginBottom: 10,
+                }}
+                numberOfLines={2}
+              >
+                  {trendingMovies[0].title}
+              </Text>
+              <Text
+                style={{                
+                  fontSize: 16,
+                  color: '#fff',
+                }}
+                numberOfLines={3}
+              >
+                  {trendingMovies[0].overview}
+              </Text>
+            </View>
+          </LinearGradient>
+        </TouchableOpacity>
+        {/* END TOP TRENDING MOVIE CARD */}
 
         <View style={styles.moviesRowsContainer}>
           <View>
