@@ -5,6 +5,9 @@ import { SessionProvider } from './contexts/SessionContext';
 
 // TODO: "rating media" funcionality
 
+// TODO: invert cast and crew order on PersonDetailsScreen depending on person's
+// known for job
+
 // TODO: operations that use session id might throw errors if session deleted on tmdb
 // webpage. adjust all operations that use session id, start by session context.
 // reproduced by deleting the session after logged and opening the app again or with

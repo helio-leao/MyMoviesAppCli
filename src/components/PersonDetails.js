@@ -10,8 +10,6 @@ import CollapsibleText from './CollapsibleText';
 import LoadableImage from './LoadableImage';
 import Button from './Button';
 
-// TODO: order media by popularity
-
 
 export default function PersonDetails({personId}) {
 
@@ -68,6 +66,10 @@ export default function PersonDetails({personId}) {
       console.log(error);
       ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     }
+  }
+
+  function compareVoteCount(a, b) {
+    return b.vote_count - a.vote_count;
   }
 
 
@@ -135,7 +137,8 @@ export default function PersonDetails({personId}) {
                 Atuação
               </Text>
               <MediaRowList
-                mediaDataList={personDetails.combined_credits.cast}
+                mediaDataList={personDetails.combined_credits
+                  .cast.sort(compareVoteCount)}
                 contentContainerStyle={{paddingHorizontal: 10}}
               />
             </View>  
@@ -147,7 +150,8 @@ export default function PersonDetails({personId}) {
                 Produção
               </Text>
               <MediaRowList
-                mediaDataList={personDetails.combined_credits.crew}
+                mediaDataList={personDetails.combined_credits
+                  .crew.sort(compareVoteCount)}
                 contentContainerStyle={{paddingHorizontal: 10}}
               />
             </View>  

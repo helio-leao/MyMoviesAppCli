@@ -16,7 +16,6 @@ export default function SearchResultCard({mediaData}) {
   const navigation = useNavigation();
 
 
-  // TODO: function repeated in MediaDetails component
   function handleCardPress() {
     const {id: mediaId, media_type: mediaType} = mediaData;
     navigation.push('MediaDetailsScreen', {mediaId, mediaType});
