@@ -51,12 +51,12 @@ async function fetchTrendingTvShows(timeWindow = TrendingTimeWindow.DAY) {
 }
 
 async function fetchMovieDetails(movieId) {
-  const url = `/movie/${movieId}?append_to_response=recommendations,credits,account_states,watch/providers&${commonQuery}`
+  const url = `/movie/${movieId}?append_to_response=recommendations,credits,videos,account_states,watch/providers&${commonQuery}`
   return await fetchData(url);
 }
 
 async function fetchTvShowDetails(tvShowId) {
-  const url = `/tv/${tvShowId}?append_to_response=recommendations,credits,account_states,watch/providers&${commonQuery}`
+  const url = `/tv/${tvShowId}?append_to_response=recommendations,credits,videos,account_states,watch/providers&${commonQuery}`
   return await fetchData(url);
 }
 
