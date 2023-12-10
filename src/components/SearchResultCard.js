@@ -75,7 +75,13 @@ export default function SearchResultCard({mediaData}) {
         <Text style={styles.resultCardTitle} numberOfLines={2}>
           {mediaData.title || mediaData.name}
         </Text>
-        <Text style={styles.resultCardText} numberOfLines={2}>
+        {/* TODO: improve this??? */}
+        {(mediaData.first_air_date || mediaData.release_date) && (
+          <Text style={styles.resultCardText}>
+            {new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.first_air_date || mediaData.release_date))}
+          </Text>
+        )}
+        <Text style={styles.resultCardText}>
           {mediaData.media_type}
         </Text>
         {/* {session && (
@@ -118,6 +124,5 @@ const styles = StyleSheet.create({
   resultCardText: {
     fontSize: 18,
     color: '#888',
-    marginBottom: 10,
   },
 });

@@ -5,6 +5,8 @@ import { SessionProvider } from './contexts/SessionContext';
 
 // TODO: "rating media" funcionality
 
+// TODO: scroll flatlist up on new search
+
 // TODO: invert cast and crew order on PersonDetailsScreen depending on person's
 // known for job
 

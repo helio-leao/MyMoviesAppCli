@@ -95,6 +95,9 @@ export default function PersonDetails({personId}) {
 
           <View style={styles.headerCardData}>
             <Text style={styles.title}>{personDetails?.name}</Text>
+            <Text style={styles.text}>
+              {new Intl.DateTimeFormat('pt-BR').format(new Date(personDetails?.birthday))}
+            </Text>
             <Text style={[styles.subtitle, {color: '#888'}]}>
               {personDetails?.known_for_department}
             </Text>
@@ -191,7 +194,7 @@ const styles = StyleSheet.create({
   subtitle: {
     color: '#fff',
     fontSize: 22,
-    marginBottom: 10
+    marginBottom: 10,
   },
   text: {
     color: '#fff',
