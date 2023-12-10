@@ -68,12 +68,12 @@ export default function HomeScreen() {
             source={{uri: ApiService.fetchFullImagePath(trendingMovies[0].backdrop_path)}}
           />
           <LinearGradient
-            style={{position: 'absolute', width: '70%', height: '100%', paddingHorizontal: 10, paddingVertical: 40}}
+            style={{position: 'absolute', width: '70%', height: '100%', paddingHorizontal: 10, paddingTop: 40}}
             colors={['#111111ff', '#11111100']}
             start={{x: 0.5, y: 0}}
             end={{x: 1, y: 0}}
           >
-            <View style={{width: '100%', height: '100%'}}>
+            <View style={{overflow: 'hidden', width: '100%', height: '100%'}}>
               <Text
                 style={{                
                   fontSize: 30,
@@ -83,16 +83,16 @@ export default function HomeScreen() {
                 }}
                 numberOfLines={2}
               >
-                  {trendingMovies[0].title}
+                {trendingMovies[0].title}
               </Text>
               <Text
                 style={{                
                   fontSize: 16,
                   color: '#fff',
                 }}
-                numberOfLines={3}
+                numberOfLines={4}
               >
-                  {trendingMovies[0].overview}
+                {trendingMovies[0].overview}
               </Text>
             </View>
           </LinearGradient>
