@@ -23,16 +23,19 @@ export default function PersonDetails({personId}) {
     async function loadPersonData() {
       try {
         const personDetails = await ApiService.fetchPersonDetails(personId);
-        const personFollowed = await FollowedPeopleStorageService
-          .getFollowedPerson(session.user.id, personDetails.id);
+        setPersonDetails(personDetails);
 
-        if(personFollowed) {
-          setIsPersonFollowed(true);
-        } else {
-          setIsPersonFollowed(false);
+        if(session) {
+          const personFollowed = await FollowedPeopleStorageService
+            .getFollowedPerson(session.user.id, personDetails.id);
+  
+          if(personFollowed) {
+            setIsPersonFollowed(true);
+          } else {
+            setIsPersonFollowed(false);
+          }
         }
 
-        setPersonDetails(personDetails);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
