@@ -24,6 +24,10 @@ const MediaType = {
   PERSON: 'person',
 }
 
+const Department = {
+  ACTING: 'Acting',
+}
+
 const CrewJob = {
   DIRECTOR: 'Director',
   SCREENPLAY: 'Screenplay',
@@ -210,6 +214,7 @@ async function removeFavorite(accountId, sessionId, mediaData) {
 export default {
   TrendingTimeWindow,
   MediaType,
+  Department,
   CrewJob,
   fetchTrendingMovies,
   fetchTrendingTvShows,

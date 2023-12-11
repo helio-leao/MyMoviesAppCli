@@ -136,31 +136,64 @@ export default function PersonDetails({personId}) {
           </View>
         )}
 
+        {/* TODO: refactor this code repetition */}
         <View style={styles.creditsContainer}>
-          {personDetails?.combined_credits.cast.length > 0 && (
-            <View>
-              <Text style={[styles.subtitle, {marginLeft: 10}]}>
-                Atuação
-              </Text>
-              <MediaRowList
-                mediaDataList={personDetails.combined_credits
-                  .cast.sort(compareVoteCount)}
-                contentContainerStyle={{paddingHorizontal: 10}}
-              />
-            </View>  
-          )}
+          {personDetails?.known_for_department === ApiService.Department.ACTING ? (
+            <>
+              {personDetails?.combined_credits.cast.length > 0 && (
+                <View>
+                  <Text style={[styles.subtitle, {marginLeft: 10}]}>
+                    Atuação
+                  </Text>
+                  <MediaRowList
+                    mediaDataList={personDetails.combined_credits
+                      .cast.sort(compareVoteCount)}
+                    contentContainerStyle={{paddingHorizontal: 10}}
+                  />
+                </View>  
+              )}
 
-          {personDetails?.combined_credits.crew.length > 0 && (
-            <View>
-              <Text style={[styles.subtitle, {marginLeft: 10}]}>
-                Produção
-              </Text>
-              <MediaRowList
-                mediaDataList={personDetails.combined_credits
-                  .crew.sort(compareVoteCount)}
-                contentContainerStyle={{paddingHorizontal: 10}}
-              />
-            </View>  
+              {personDetails?.combined_credits.crew.length > 0 && (
+                <View>
+                  <Text style={[styles.subtitle, {marginLeft: 10}]}>
+                    Produção
+                  </Text>
+                  <MediaRowList
+                    mediaDataList={personDetails.combined_credits
+                      .crew.sort(compareVoteCount)}
+                    contentContainerStyle={{paddingHorizontal: 10}}
+                  />
+                </View>  
+              )}
+            </>
+          ) : (
+            <>
+              {personDetails?.combined_credits.crew.length > 0 && (
+                <View>
+                  <Text style={[styles.subtitle, {marginLeft: 10}]}>
+                    Produção
+                  </Text>
+                  <MediaRowList
+                    mediaDataList={personDetails.combined_credits
+                      .crew.sort(compareVoteCount)}
+                    contentContainerStyle={{paddingHorizontal: 10}}
+                  />
+                </View>  
+              )}
+
+              {personDetails?.combined_credits.cast.length > 0 && (
+                <View>
+                  <Text style={[styles.subtitle, {marginLeft: 10}]}>
+                    Atuação
+                  </Text>
+                  <MediaRowList
+                    mediaDataList={personDetails.combined_credits
+                      .cast.sort(compareVoteCount)}
+                    contentContainerStyle={{paddingHorizontal: 10}}
+                  />
+                </View>  
+              )}
+            </>
           )}
         </View>
 
