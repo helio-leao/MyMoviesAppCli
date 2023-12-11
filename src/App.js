@@ -5,6 +5,10 @@ import { SessionProvider } from './contexts/SessionContext';
 
 // TODO: "rating media" funcionality
 
+// TODO: "react-native-keep-awake" for video playing
+
+// TODO: prevent orientation change on MediaDetailsScreen
+
 // TODO: share list of favorites and/or movie pages
 
 // TODO: scroll flatlist up on new search

@@ -6,6 +6,8 @@ import LoadableImage from '../components/LoadableImage';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
+const TOP_TRENDING_MOVIE_INDEX = 0;
+
 
 export default function HomeScreen() {
 
@@ -55,44 +57,52 @@ export default function HomeScreen() {
         {/* TOP TRENDING MOVIE CARD */}
         <TouchableOpacity
           style={{width: '100%'}}
-          onPress={() => navigation.push(
-            'MediaDetailsScreen',
-            {
-              mediaId: trendingMovies[0].id,
-              mediaType: trendingMovies[0].media_type
+          onPress={() => navigation.push('MediaDetailsScreen', {
+              mediaId: trendingMovies[TOP_TRENDING_MOVIE_INDEX].id,
+              mediaType: trendingMovies[TOP_TRENDING_MOVIE_INDEX].media_type
             },
           )}
         >
           <LoadableImage
-            style={{width: '100%', height: undefined, aspectRatio: 16/9}}
-            source={{uri: ApiService.fetchFullImagePath(trendingMovies[0].backdrop_path)}}
+            style={{
+              width: '100%',
+              height: undefined,
+              aspectRatio: 16/9
+            }}
+            source={{uri: ApiService.fetchFullImagePath(
+              trendingMovies[TOP_TRENDING_MOVIE_INDEX].backdrop_path)}}
           />
           <LinearGradient
-            style={{position: 'absolute', width: '70%', height: '100%', paddingHorizontal: 10, paddingTop: 40}}
+            style={{
+              position: 'absolute',
+              width: '50%',
+              height: '100%',
+              justifyContent: 'center',
+            }}
             colors={['#111111ff', '#11111100']}
-            start={{x: 0.5, y: 0}}
+            start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}
           >
-            <View style={{overflow: 'hidden', width: '100%', height: '100%'}}>
+            <View style={{marginLeft: 20}}>
               <Text
                 style={{                
-                  fontSize: 30,
+                  fontSize: 24,
                   fontWeight: 600,
                   color: '#fff',
                   marginBottom: 10,
                 }}
                 numberOfLines={2}
               >
-                {trendingMovies[0].title}
+                {trendingMovies[TOP_TRENDING_MOVIE_INDEX].title}
               </Text>
               <Text
                 style={{                
-                  fontSize: 16,
+                  fontSize: 14,
                   color: '#fff',
                 }}
                 numberOfLines={4}
               >
-                {trendingMovies[0].overview}
+                {trendingMovies[TOP_TRENDING_MOVIE_INDEX].overview}
               </Text>
             </View>
           </LinearGradient>
