@@ -145,7 +145,7 @@ export default function MediaDetails({
 
             {/* NOTE: add more of the videos? */}
             {mediaDetails?.videos.results.map(video => (
-              <View style={{marginTop: 30}}>
+              <View key={video.key} style={{marginTop: 30}}>
                 <YoutubePlayer
                   height={220}
                   videoId={video.key}
