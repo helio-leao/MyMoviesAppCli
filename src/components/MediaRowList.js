@@ -41,7 +41,7 @@ export default function MediaRowList({contentContainerStyle, mediaDataList}) {
           onPress={() => handleCardPress(item)}
         />
       )}
-      ItemSeparatorComponent={<View style={{width: 20}} />}
+      ItemSeparatorComponent={<View style={{width: 14}} />}
     />
   );
 }

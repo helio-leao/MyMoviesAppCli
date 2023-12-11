@@ -6,6 +6,10 @@ import ApiService from '../services/ApiService';
 import placeholder_poster from '../assets/images/placeholder_poster.png';
 import MediaRowList from '../components/MediaRowList';
 import LoadableImage from '../components/LoadableImage';
+import YoutubePlayer from "react-native-youtube-iframe";
+
+// TODO: verify the need for optional chaining in MediaDetailsScreen components
+// as this, MovieDetails and TvShowDetails
 
 
 export default function MediaDetails({
@@ -13,8 +17,6 @@ export default function MediaDetails({
   bodyContent = undefined,
   onFavoriteButtonPress = undefined,
 }) {
-  // TODO: add trailer to component
-  console.log(mediaDetails.videos.results);
 
   return (
     <View style={styles.container}>
@@ -140,6 +142,16 @@ export default function MediaDetails({
                 />
               </View>
             )}
+
+            {/* NOTE: add more of the videos? */}
+            {mediaDetails?.videos.results.map(video => (
+              <View style={{marginTop: 30}}>
+                <YoutubePlayer
+                  height={220}
+                  videoId={video.key}
+                />
+              </View>
+            ))}
 
           </View>
         </ScrollView>
