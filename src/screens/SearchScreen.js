@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FlatList, StyleSheet, TextInput, TouchableOpacity, View, Text, ToastAndroid } from 'react-native';
+import { FlatList, StyleSheet, TextInput, TouchableOpacity, View, Text, ToastAndroid, ActivityIndicator } from 'react-native';
 import SearchResultCard from '../components/SearchResultCard';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ApiService from '../services/ApiService';
@@ -9,12 +9,15 @@ export default function SearchScreen() {
 
   const [query, setQuery] = useState('');
   const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
 
   async function handleSearch() {
     try {
+      setIsLoading(true);
       const data = await ApiService.fetchMulti(query);
       setData(data);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
       ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
@@ -40,20 +43,26 @@ export default function SearchScreen() {
       </View>
 
       {/* result list */}
-      <FlatList
-        contentContainerStyle={styles.resultsContainer}
-        data={data?.results}
-        keyExtractor={item => String(item.id)}
-        renderItem={({item}) => <SearchResultCard mediaData={item} />}
-        ItemSeparatorComponent={<View style={{ height: 10 }} />}
-        ListEmptyComponent={
-          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{color: '#333', fontSize: 18}}>
-              Nenhum resultado para exibir.
-            </Text>
-          </View>
-        }
-      />
+      {isLoading ? (
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <ActivityIndicator color={'white'} size={'large'} />
+        </View>
+      ) : (
+        <FlatList
+          contentContainerStyle={styles.resultsContainer}
+          data={data?.results}
+          keyExtractor={item => String(item.id)}
+          renderItem={({item}) => <SearchResultCard mediaData={item} />}
+          ItemSeparatorComponent={<View style={{ height: 10 }} />}
+          ListEmptyComponent={
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={{color: '#333', fontSize: 18}}>
+                Nenhum resultado para exibir.
+              </Text>
+            </View>
+          }
+        />
+      )}
     </View>
   );
 }
