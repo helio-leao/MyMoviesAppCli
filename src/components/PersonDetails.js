@@ -138,8 +138,7 @@ export default function PersonDetails({personId}) {
 
         {/* TODO: refactor this code repetition */}
         <View style={styles.creditsContainer}>
-          {/* {personDetails?.known_for_department === ApiService.Department.ACTING ? ( */}
-          {personDetails?.known_for_department === 'Acting' ? (
+          {personDetails?.known_for_department === ApiService.Department.ACTING ? (
             <>
               {personDetails?.combined_credits.cast.length > 0 && (
                 <View>

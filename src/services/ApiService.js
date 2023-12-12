@@ -24,11 +24,9 @@ const MediaType = {
   PERSON: 'person',
 }
 
-// NOTE: this works on emulator and connected to computer
-// phone, but creates a problem for debug apk builds
-// const Department = {
-//   ACTING: 'Acting',
-// }
+const Department = {
+  ACTING: 'Acting',
+}
 
 const CrewJob = {
   DIRECTOR: 'Director',
@@ -216,7 +214,7 @@ async function removeFavorite(accountId, sessionId, mediaData) {
 export default {
   TrendingTimeWindow,
   MediaType,
-  // Department,
+  Department,
   CrewJob,
   fetchTrendingMovies,
   fetchTrendingTvShows,
