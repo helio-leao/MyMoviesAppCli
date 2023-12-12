@@ -111,11 +111,10 @@ function MediaContent({mediaData}) {
       <Text style={styles.contentText}>
         Status: {mediaData?.status}
       </Text>
-      {/* NOTE: "Especiais" is not one of the main seasons. The API returns this for many tv shows */}
-      {/* TODO: better way to handle this. check round 6: it returns 2 seasons although only one aired */}
-      {/* {console.log(mediaData?.seasons)} */}
+      {/* TODO: show only the number of main seasons */}
+      {console.log(mediaData?.seasons)}
       <Text style={styles.contentText}>
-        Temporadas: {mediaData?.seasons.filter(tvShow => tvShow.name !== 'Especiais').length}
+        Temporadas: {mediaData?.seasons.length}
       </Text>
       {mediaData?.first_air_date && (
         <Text style={styles.contentText}>

@@ -30,7 +30,6 @@ export default function SearchResultCard({mediaData}) {
         <Text style={styles.resultCardTitle} numberOfLines={2}>
           {mediaData.title || mediaData.name}
         </Text>
-        {/* TODO: improve this??? */}
         {(mediaData.first_air_date || mediaData.release_date) && (
           <Text style={styles.resultCardText}>
             {new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.first_air_date || mediaData.release_date))}
