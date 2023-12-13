@@ -1,25 +1,32 @@
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 
+// NOTE: maybe more descriptive names would be better for components, like
+// containerStyle instead of style
+
 
 export default function SwitchButtons({options, value, onChangeSelection, style}) {
   return (
-    <View style={[style, styles.container]}>
-      {options.map(option => (
-        <TouchableOpacity
-          key={option.label}
-          style={value === option.value ? styles.activeButton : styles.inactiveButton}
-          onPress={() => onChangeSelection(option.value)}
-        >
-          <Text style={styles.text}>{option.label}</Text>
-        </TouchableOpacity>
-      ))}
+    <View style={style}>
+      <View style={styles.buttonsContainer}>
+        {options.map(option => (
+          <TouchableOpacity
+            key={option.label}
+            style={value === option.value ? styles.activeButton : styles.inactiveButton}
+            onPress={() => onChangeSelection(option.value)}
+          >
+            <Text style={styles.text}>{option.label}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  buttonsContainer: {
     flexDirection: 'row',
+    borderRadius: 4,
+    overflow: 'hidden',
   },
   activeButton: {
     backgroundColor: '#888',
