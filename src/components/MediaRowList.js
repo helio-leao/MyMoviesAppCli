@@ -49,5 +49,6 @@ export default function MediaRowList({contentContainerStyle, mediaDataList}) {
 const styles = StyleSheet.create({
   cardContainer: {
     width: 120,
+    borderRadius: 4,
   },
 });
