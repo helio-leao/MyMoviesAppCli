@@ -99,7 +99,6 @@ export default function HomeScreen() {
               </Text>
               <Text
                 style={{                
-                  fontSize: 14,
                   color: '#fff',
                 }}
                 numberOfLines={4}
