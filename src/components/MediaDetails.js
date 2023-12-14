@@ -7,6 +7,8 @@ import placeholder_poster from '../assets/images/placeholder_poster.png';
 import MediaRowList from '../components/MediaRowList';
 import LoadableImage from '../components/LoadableImage';
 import YoutubePlayer from "react-native-youtube-iframe";
+import { useNavigation } from '@react-navigation/native';
+import { useEffect } from 'react';
 
 // TODO: verify the need for optional chaining in MediaDetailsScreen components
 // as this, MovieDetails and TvShowDetails
@@ -18,30 +20,38 @@ export default function MediaDetails({
   onFavoriteButtonPress = undefined,
 }) {
 
-  async function handleShare() {
-    const url = `https://www.imdb.com/title/${mediaDetails.external_ids.imdb_id}`;
+  const navigation = useNavigation();
 
-    await Share.share({
-      message: url,
-      title: mediaDetails.title || mediaDetails.name,
-      url: url,
+
+  useEffect(() => {
+    async function handleShare() {
+      const url = `https://www.imdb.com/title/${mediaDetails.external_ids.imdb_id}`;
+  
+      await Share.share({
+        message: url,
+        title: mediaDetails.title || mediaDetails.name,
+        url: url,
+      });
+    }
+
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={handleShare}>
+          <Fontisto name={"share"} size={18} color="white" />
+        </TouchableOpacity>
+      ),
     });
-  }
+  }, []);
 
 
   return (
     <View style={styles.container}>
       {/* image */}
-      <View>
-        <LoadableImage
-          style={styles.backdropImage}
-          source={{uri: ApiService.fetchFullImagePath(mediaDetails?.backdrop_path)}}
-          placeholder={placeholder_poster}
-        />
-        <TouchableOpacity style={{position: 'absolute', right: 10, top: 10}} onPress={handleShare}>
-          <FontAwesome name={"share-alt-square"} size={40} color="white" />
-        </TouchableOpacity>
-      </View>
+      <LoadableImage
+        style={styles.backdropImage}
+        source={{uri: ApiService.fetchFullImagePath(mediaDetails?.backdrop_path)}}
+        placeholder={placeholder_poster}
+      />
       
       {/* gradient container */}
       <LinearGradient

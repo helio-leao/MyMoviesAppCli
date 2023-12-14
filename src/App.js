@@ -3,15 +3,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import RootTabNavigator from './navigation/RootTabNavigator';
 import { SessionProvider } from './contexts/SessionContext';
 
-// TODO: bell notification for new movies from followed persons
+// TODO: bell notification for new movies from followed people
 
 // TODO: "rating media" funcionality
+
+// TODO: change logic for favorite icon change? don't call the api to get the updated
+// object. update it via state data editing instead. this would make the icon change
+// faster.
 
 // TODO: "react-native-keep-awake" for video playing
 
 // TODO: prevent orientation change on MediaDetailsScreen
-
-// TODO: share list of favorites and/or movie pages, maybe trailers
 
 // TODO: operations that use session id might throw errors if session deleted on tmdb
 // webpage. adjust all operations that use session id, start by session context.
