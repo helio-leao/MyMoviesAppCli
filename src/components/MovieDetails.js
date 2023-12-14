@@ -14,44 +14,40 @@ export default function MovieDetails({movieId}) {
 
 
   useEffect(() => {
-    async function initialize() {
-      await loadMovieDetails();
-      setIsLoading(false);
+    async function loadMovieDetails() {
+      try {
+        const movieDetails = await ApiService.fetchMovieDetails(movieId);
+        setMovieDetails(movieDetails);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+        ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+      }
     }
-    initialize();
+    loadMovieDetails();
   }, []);
 
 
-  async function loadMovieDetails() {
-    try {
-      const movieDetails = await ApiService.fetchMovieDetails(movieId);
-      setMovieDetails(movieDetails);
-    } catch (error) {
-      console.error(error);
-      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
-    }
-  }
-
   async function onFavoriteButtonPress() {
     try {
-      let response;
-      
-      if(movieDetails.account_states.favorite) {
-        response = await ApiService.removeFavorite(
-          session.user.id,
-          session.id,
-          movieDetails,
-        );
-      } else {
-        response = await ApiService.addFavorite(
-          session.user.id,
-          session.id,
-          movieDetails,
-        );
-      }
+      const favoriteAction = movieDetails.account_states.favorite
+        ? ApiService.removeFavorite
+        : ApiService.addFavorite;
+
+      const response = await favoriteAction(
+        session.user.id,
+        session.id,
+        movieDetails,
+      );
 
       if(response.success) {
-        await loadMovieDetails();
+        setMovieDetails(prev => ({
+          ...prev,
+          account_states: {
+            ...prev.account_states,
+            favorite: !prev.account_states.favorite,
+          }
+        }))
       }
     } catch (error) {
       console.log('Error response:', error.response.data);

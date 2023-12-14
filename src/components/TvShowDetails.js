@@ -14,45 +14,40 @@ export default function TvShowDetails({tvShowId}) {
 
 
   useEffect(() => {
-    async function initialize() {
-      await loadTvShowDetails();
-      setIsLoading(false);
+    async function loadTvShowDetails() {
+      try {
+        const tvShowDetails = await ApiService.fetchTvShowDetails(tvShowId);
+        setTvShowDetails(tvShowDetails);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+        ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+      }
     }
-    initialize();
+    loadTvShowDetails();
   }, []);
 
 
-  async function loadTvShowDetails() {
-    try {
-      const tvShowDetails = await ApiService.fetchTvShowDetails(tvShowId);
-      setTvShowDetails(tvShowDetails);
-      setIsLoading(false);
-    } catch (error) {
-      console.error(error);
-      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
-    }
-  }
-
   async function onFavoriteButtonPress() {
     try {
-      let response;
-      
-      if(tvShowDetails.account_states.favorite) {
-        response = await ApiService.removeFavorite(
-          session.user.id,
-          session.id,
-          tvShowDetails,
-        );
-      } else {
-        response = await ApiService.addFavorite(
-          session.user.id,
-          session.id,
-          tvShowDetails,
-        );
-      }
+      const favoriteAction = tvShowDetails.account_states.favorite
+        ? ApiService.removeFavorite
+        : ApiService.addFavorite;
+
+      const response = await favoriteAction(
+        session.user.id,
+        session.id,
+        tvShowDetails,
+      );
 
       if(response.success) {
-        await loadTvShowDetails();
+        setTvShowDetails(prev => ({
+          ...prev,
+          account_states: {
+            ...prev.account_states,
+            favorite: !prev.account_states.favorite,
+          }
+        }))
       }
     } catch (error) {
       console.log('Error response:', error.response.data);

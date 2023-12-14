@@ -7,10 +7,6 @@ import { SessionProvider } from './contexts/SessionContext';
 
 // TODO: "rating media" funcionality
 
-// TODO: change logic for favorite icon change? don't call the api to get the updated
-// object. update it via state data editing instead. this would make the icon change
-// faster.
-
 // TODO: "react-native-keep-awake" for video playing
 
 // TODO: prevent orientation change on MediaDetailsScreen
@@ -20,7 +16,7 @@ import { SessionProvider } from './contexts/SessionContext';
 // reproduced by deleting the session after logged and opening the app again or with
 // the app open delete session on website and try any operation that requires the id
 
-// TODO: add possibility to remove movies from specific followed persons on FollowingScreen
+// TODO: add possibility to remove movies from specific followed people on FollowingScreen
 
 // TODO: fetch images with correct size for better performance
 
