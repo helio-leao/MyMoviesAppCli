@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Share } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Share, ToastAndroid } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import LinearGradient from 'react-native-linear-gradient';
@@ -8,7 +8,9 @@ import MediaRowList from '../components/MediaRowList';
 import LoadableImage from '../components/LoadableImage';
 import YoutubePlayer from "react-native-youtube-iframe";
 import { useNavigation } from '@react-navigation/native';
-import { useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import RatingModal from './RatingModal';
+import { SessionContext } from '../contexts/SessionContext';
 
 // TODO: verify the need for optional chaining in MediaDetailsScreen components
 // as this, MovieDetails and TvShowDetails
@@ -20,6 +22,8 @@ export default function MediaDetails({
   onFavoriteButtonPress = undefined,
 }) {
 
+  const {session} = useContext(SessionContext);
+  const [ratingModalVisible, setRatingModalVisible] = useState(false);
   const navigation = useNavigation();
 
 
@@ -44,8 +48,73 @@ export default function MediaDetails({
   }, []);
 
 
+  // TODO: add tv rating
+  async function handleRate(rate) {
+    // test block
+    const mediaType = ApiService.fetchMediaType(mediaDetails);
+
+    if(mediaType !== ApiService.MediaType.MOVIE) {
+      console.log('todo: tv rating not implemented yet');
+      return;
+    }
+    // end test block
+
+    try {
+      const response = await ApiService.addMovieRating(
+        mediaDetails.id,
+        session.id,
+        rate,
+      );
+
+      if(response.success) {
+        // todo: update rate state
+      }
+    } catch (error) {
+      console.error(error);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+    }
+  }
+
+  // TODO: add tv rating
+  async function onDeleteRate() {
+    // test block
+    const mediaType = ApiService.fetchMediaType(mediaDetails);
+
+    if(mediaType !== ApiService.MediaType.MOVIE) {
+      console.log('todo: tv rating not implemented yet');
+      return;
+    }
+    // end test block
+
+    try {
+      const response = await ApiService.deleteMovieRating(
+        mediaDetails.id,
+        session.id,
+      );
+
+      if(response.success) {
+        console.log('it worked')
+      }
+    } catch (error) {
+      console.error(error);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+    }
+  }
+
+
   return (
     <View style={styles.container}>
+      <RatingModal
+        visible={ratingModalVisible}
+        rating={mediaDetails.account_states.rated?.value}
+        onRate={async (rate) => {
+          await handleRate(rate);
+          setRatingModalVisible(false);
+        }}
+        onOutsidePress={() => setRatingModalVisible(false)}
+        onDeleteRate={onDeleteRate}
+      />
+
       {/* image */}
       <LoadableImage
         style={styles.backdropImage}
@@ -84,7 +153,10 @@ export default function MediaDetails({
 
             {/* ratings and favorite button */}
             <View style={styles.ratingsAndFavoriteContainer}>
-              <View style={styles.ratingsContainer}>
+              <TouchableOpacity
+                style={styles.ratingsContainer}
+                onPress={() => setRatingModalVisible(true)}
+              >
                 <Fontisto name="star" size={30} color="yellow" />
 
                 <View>
@@ -99,7 +171,7 @@ export default function MediaDetails({
 
                   <Text style={styles.contentText}>{mediaDetails?.vote_count}</Text>
                 </View>
-              </View>
+              </TouchableOpacity>
 
               {onFavoriteButtonPress && (
                 <TouchableOpacity

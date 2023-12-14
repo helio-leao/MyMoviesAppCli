@@ -210,6 +210,28 @@ async function removeFavorite(accountId, sessionId, mediaData) {
   return await postData(url, data);
 }
 
+async function addMovieRating(movieId, sessionId, rate) {
+  const url = `/movie/${movieId}/rating?session_id=${sessionId}`;
+  const data = { value: rate };
+  return await postData(url, data);
+}
+
+async function deleteMovieRating(movieId, sessionId) {
+  const url = `/movie/${movieId}/rating?session_id=${sessionId}`;
+  return await axios.delete(url);
+}
+
+async function addTvShowRating(tvShowId, sessionId, rate) {
+  const url = `/tv/${tvShowId}/rating?session_id=${sessionId}`;
+  const data = { value: rate };
+  return await postData(url, data);
+}
+
+async function deleteTvShowRating(tvShowId, sessionId) {
+  const url = `/tv/${tvShowId}/rating?session_id=${sessionId}`;
+  return await axios.delete(url);
+}
+
 
 export default {
   TrendingTimeWindow,
@@ -233,4 +255,8 @@ export default {
   fetchFavorites,
   addFavorite,
   removeFavorite,
+  addMovieRating,
+  deleteMovieRating,
+  addTvShowRating,
+  deleteTvShowRating,
 }
