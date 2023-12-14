@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Share } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import LinearGradient from 'react-native-linear-gradient';
@@ -18,14 +18,30 @@ export default function MediaDetails({
   onFavoriteButtonPress = undefined,
 }) {
 
+  async function handleShare() {
+    const url = `https://www.imdb.com/title/${mediaDetails.external_ids.imdb_id}`;
+
+    await Share.share({
+      message: url,
+      title: mediaDetails.title || mediaDetails.name,
+      url: url,
+    });
+  }
+
+
   return (
     <View style={styles.container}>
       {/* image */}
-      <LoadableImage
-        style={styles.backdropImage}
-        source={{uri: ApiService.fetchFullImagePath(mediaDetails?.backdrop_path)}}
-        placeholder={placeholder_poster}
-      />
+      <View>
+        <LoadableImage
+          style={styles.backdropImage}
+          source={{uri: ApiService.fetchFullImagePath(mediaDetails?.backdrop_path)}}
+          placeholder={placeholder_poster}
+        />
+        <TouchableOpacity style={{position: 'absolute', right: 10, top: 10}} onPress={handleShare}>
+          <FontAwesome name={"share-alt-square"} size={40} color="white" />
+        </TouchableOpacity>
+      </View>
       
       {/* gradient container */}
       <LinearGradient
