@@ -218,7 +218,9 @@ async function addMovieRating(movieId, sessionId, rate) {
 
 async function deleteMovieRating(movieId, sessionId) {
   const url = `/movie/${movieId}/rating?session_id=${sessionId}`;
-  return await axios.delete(url);
+  const headers = { Authorization: `Bearer ${API_TOKEN}` };
+  const response = await axios.delete(API_BASE_URL + url, {headers});
+  return response.data;
 }
 
 async function addTvShowRating(tvShowId, sessionId, rate) {
@@ -229,7 +231,9 @@ async function addTvShowRating(tvShowId, sessionId, rate) {
 
 async function deleteTvShowRating(tvShowId, sessionId) {
   const url = `/tv/${tvShowId}/rating?session_id=${sessionId}`;
-  return await axios.delete(url);
+  const headers = { Authorization: `Bearer ${API_TOKEN}` };
+  const response = await axios.delete(API_BASE_URL + url, {headers});
+  return response.data;
 }
 
 

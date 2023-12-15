@@ -5,13 +5,13 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function RatingModal({
   visible = false,
-  rating: ratingProp = 0,
+  rating: ratingProp = undefined,
   onRate = () => {},
   onDeleteRate = () => {},
   onOutsidePress = () => {},
 }) {
 
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(undefined);
 
 
   useEffect(() => {
@@ -61,15 +61,16 @@ export default function RatingModal({
           </View>
 
           <TouchableOpacity
-            style={[styles.button, {backgroundColor: 'cornflowerblue'}]}
+            style={[styles.button, {backgroundColor: rating == undefined ? 'grey' : 'cornflowerblue'}]}
             onPress={() => {
               handleRate(rating);
             }}
+            disabled={rating == undefined}
           >
             <Text style={styles.text}>Avaliar</Text>
           </TouchableOpacity>
 
-          {ratingProp !== 0 && (
+          {ratingProp && (
             <TouchableOpacity style={styles.button} onPress={handleDeleteRating}>
               <Text style={{color: 'cornflowerblue'}}>Deletar avaliação</Text>
             </TouchableOpacity>

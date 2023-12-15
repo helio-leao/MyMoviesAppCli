@@ -28,7 +28,7 @@ export default function MovieDetails({movieId}) {
   }, []);
 
 
-  async function onFavoriteButtonPress() {
+  async function handleFavoriteAction() {
     try {
       const favoriteAction = movieDetails.account_states.favorite
         ? ApiService.removeFavorite
@@ -55,6 +55,53 @@ export default function MovieDetails({movieId}) {
     }
   }
 
+  async function handleMovieRate(rate) {
+    try {
+      const response = await ApiService.addMovieRating(
+        movieDetails.id,
+        session.id,
+        rate,
+      );
+
+      if(response.success) {
+        setMovieDetails(prev => ({
+          ...prev,
+          account_states: {
+            ...prev.account_states,
+            rated: {
+              value: rate,
+            },
+          }
+        }))
+      }
+    } catch (error) {
+      console.error(error);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+    }
+  }
+
+  async function handleDeleteMovieRate() {
+    try {
+      const response = await ApiService.deleteMovieRating(
+        movieDetails.id,
+        session.id,
+      );
+
+      if(response.success) {
+        setMovieDetails(prev => ({
+          ...prev,
+          account_states: {
+            ...prev.account_states,
+            rated: false,
+          }
+        }))
+      }
+    } catch (error) {
+      console.error(error);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+    }
+  }
+
 
   if(isLoading) {
     return (
@@ -68,7 +115,9 @@ export default function MovieDetails({movieId}) {
     <MediaDetails
       mediaDetails={movieDetails}
       bodyContent={<MediaContent mediaData={movieDetails} />}
-      onFavoriteButtonPress={session ? onFavoriteButtonPress : undefined}
+      onFavoriteButtonPress={session ? handleFavoriteAction : undefined}
+      onRate={handleMovieRate}
+      onDeleteRate={handleDeleteMovieRate}
     />
   );
 }
