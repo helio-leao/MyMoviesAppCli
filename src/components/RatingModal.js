@@ -36,15 +36,15 @@ export default function RatingModal({
   return(
     <Modal visible={visible} transparent={true} animationType="fade">
       <Pressable
-        style={styles.container}
+        style={styles.outside}
         onPress={() => {
           onOutsidePress();
           setRating(ratingProp);
         }}
       >
 
-        <View style={styles.contentContainer}>
-          <View style={styles.ratingIconsContainer}>
+        <View style={styles.container}>
+          <View style={styles.starsContainer}>
             {renderStars()}
           </View>
 
@@ -53,7 +53,7 @@ export default function RatingModal({
             onPress={() => onRate(rating)}
             disabled={rating == undefined}
           >
-            <Text style={styles.text}>Avaliar</Text>
+            <Text style={{color: '#fff'}}>Avaliar</Text>
           </TouchableOpacity>
 
           {ratingProp && (
@@ -69,13 +69,13 @@ export default function RatingModal({
 }
 
 const styles = StyleSheet.create({
-  container: {
+  outside: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000000aa'
   },
-  contentContainer: {
+  container: {
     backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingTop: 30,
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     gap: 10,
   },
-  ratingIconsContainer: {
+  starsContainer: {
     flexDirection: 'row',
     gap: 8,
     marginBottom: 10,
@@ -92,8 +92,5 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 4,
     alignItems: 'center',
-  },
-  text: {
-    color: '#fff',
   },
 });
