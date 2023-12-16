@@ -43,7 +43,8 @@ export default function RatingModal({
         }}
       >
 
-        <View style={styles.container}>
+        {/* NOTE: this pressable avoids triggering parent's onPress when this wrapper is pressed */}
+        <Pressable style={styles.container}>
           <View style={styles.starsContainer}>
             {renderStars()}
           </View>
@@ -61,7 +62,7 @@ export default function RatingModal({
               <Text style={{color: 'cornflowerblue'}}>Deletar avaliação</Text>
             </TouchableOpacity>
           )}
-        </View>
+        </Pressable>
 
       </Pressable>
     </Modal>
