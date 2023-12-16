@@ -8,6 +8,10 @@ import { SessionProvider } from './contexts/SessionContext';
 // TODO: looks like it's not possible to rate a movie that's not yet released.
 // test it and verify the release date to render rating button or not
 
+// TODO: verify if total ratings changes when user adds a rating, in which case it
+// will be necessary to fetch the movie again after a modification in favorites or
+// rating. this is the right thing, but slower
+
 // TODO: "rating media" funcionality
 
 // TODO: "react-native-keep-awake" for video playing

@@ -11,7 +11,7 @@ export default function RatingModal({
   onOutsidePress = () => {},
 }) {
 
-  const [rating, setRating] = useState(undefined);
+  const [rating, setRating] = useState(ratingProp);
 
 
   useEffect(() => {
@@ -19,31 +19,19 @@ export default function RatingModal({
   }, [ratingProp]);
 
 
-  function handleStarPress(index) {
-    setRating(index + 1);
-  }
-
-  function handleRate() {
-    onRate(rating);
-  }
-
-  function handleDeleteRating() {
-    onDeleteRate();
-  }
-
   function renderStars() {
     const stars = [];
 
     for(let i = 0; i < 10; i++) {
       stars.push(
-        <Pressable key={i} onPress={() => handleStarPress(i)}>
+        <Pressable key={i} onPress={() => setRating(i + 1)}>
           <FontAwesome name={i < rating ? "star": "star-o"} size={26} color="cornflowerblue" />
         </Pressable>
       );
     }
-
     return stars;
   }
+
 
   return(
     <Modal visible={visible} transparent={true} animationType="fade">
@@ -62,21 +50,18 @@ export default function RatingModal({
 
           <TouchableOpacity
             style={[styles.button, {backgroundColor: rating == undefined ? 'grey' : 'cornflowerblue'}]}
-            onPress={() => {
-              handleRate(rating);
-            }}
+            onPress={() => onRate(rating)}
             disabled={rating == undefined}
           >
             <Text style={styles.text}>Avaliar</Text>
           </TouchableOpacity>
 
           {ratingProp && (
-            <TouchableOpacity style={styles.button} onPress={handleDeleteRating}>
+            <TouchableOpacity style={styles.button} onPress={onDeleteRate}>
               <Text style={{color: 'cornflowerblue'}}>Deletar avaliação</Text>
             </TouchableOpacity>
           )}
         </View>
-
 
       </Pressable>
     </Modal>
