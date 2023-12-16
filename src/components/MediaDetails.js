@@ -55,12 +55,12 @@ export default function MediaDetails({
         rating={mediaDetails.account_states.rated?.value}
         onRate={async (rate) => {
           await onRate(rate);
-          setRatingModalVisible(false);
+          // setRatingModalVisible(false);
         }}
         onOutsidePress={() => setRatingModalVisible(false)}
         onDeleteRate={async () => {
           await onDeleteRate();
-          setRatingModalVisible(false);
+          // setRatingModalVisible(false);
         }}
       />
 
@@ -102,11 +102,9 @@ export default function MediaDetails({
 
             {/* ratings and favorite button */}
             <View style={styles.ratingsAndFavoriteContainer}>
-              <TouchableOpacity
-                style={styles.ratingsContainer}
-                onPress={() => setRatingModalVisible(true)}
-              >
-                <Fontisto name="star" size={30} color="yellow" />
+
+              <View style={styles.ratingsContainer}>
+                <FontAwesome name="star" size={30} color="yellow" />
 
                 <View>
                   <Text style={{color: '#fff'}}>
@@ -120,6 +118,27 @@ export default function MediaDetails({
 
                   <Text style={styles.contentText}>{mediaDetails?.vote_count}</Text>
                 </View>
+              </View>
+
+              <TouchableOpacity
+                style={styles.ratingsContainer}
+                onPress={() => setRatingModalVisible(true)}
+              >
+                <FontAwesome
+                  name={mediaDetails.account_states.rated ? "star" : "star-o"}
+                  size={30}
+                  color="cornflowerblue"
+                />
+
+                {mediaDetails.account_states.rated ? (
+                  <Text style={{color: 'cornflowerblue', fontSize: 20, fontWeight: '800'}}>
+                    {mediaDetails.account_states.rated.value}/10
+                  </Text>
+                ) : (
+                  <Text style={{color: 'cornflowerblue', fontSize: 20, fontWeight: '800'}}>
+                    Avaliar
+                  </Text>
+                )}
               </TouchableOpacity>
 
               {onFavoriteButtonPress && (
@@ -135,6 +154,7 @@ export default function MediaDetails({
                   <Text style={styles.favoriteButtonText}>Favorito</Text>
                 </TouchableOpacity>
               )}
+
             </View>
             {/* end ratings and favorite button */}
 
@@ -259,7 +279,7 @@ const styles = StyleSheet.create({
   ratingsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 16,
+    gap: 10,
   },
   favoriteButton: {
     paddingVertical: 10,

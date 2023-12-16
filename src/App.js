@@ -5,6 +5,9 @@ import { SessionProvider } from './contexts/SessionContext';
 
 // TODO: bell notification for new movies from followed people
 
+// TODO: looks like it's not possible to rate a movie that's not yet released.
+// test it and verify the release date to render rating button or not
+
 // TODO: "rating media" funcionality
 
 // TODO: "react-native-keep-awake" for video playing

@@ -46,7 +46,7 @@ export default function RatingModal({
   }
 
   return(
-    <Modal visible={visible} transparent={true}>
+    <Modal visible={visible} transparent={true} animationType="fade">
       <Pressable
         style={styles.container}
         onPress={() => {
