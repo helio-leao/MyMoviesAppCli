@@ -20,7 +20,8 @@ export default function FavoritesScreen() {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const isLastPage = data == null || data.page === data.total_pages;
+  // NOTE: if there is no result, the api returns page 1 and total pages 0
+  const isLastPage = data == null || data.page >= data.total_pages;
 
 
   useFocusEffect(

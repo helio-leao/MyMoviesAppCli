@@ -6,8 +6,6 @@ import SwitchButtons from "../../components/SwitchButtons";
 import { SessionContext } from "../../contexts/SessionContext";
 import { useFocusEffect } from "@react-navigation/native";
 
-// ISSUE: MediaGridList loading indicator showing even when list is empty
-
 
 const switchOptions = [
   { label: 'Filmes', value: ApiService.MediaType.MOVIE },
@@ -22,7 +20,8 @@ export default function RatedMediaScreen() {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const isLastPage = data == null || data.page === data.total_pages;
+  // NOTE: if there is no result, the api returns page 1 and total pages 0
+  const isLastPage = data == null || data.page >= data.total_pages;
 
 
   useFocusEffect(
