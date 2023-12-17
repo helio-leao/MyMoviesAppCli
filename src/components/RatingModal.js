@@ -25,7 +25,7 @@ export default function RatingModal({
     for(let i = 0; i < 10; i++) {
       stars.push(
         <Pressable key={i} onPress={() => setRating(i + 1)}>
-          <FontAwesome name={i < rating ? "star": "star-o"} size={26} color="cornflowerblue" />
+          <FontAwesome name={i < rating ? "star" : "star-o"} size={26} color="cornflowerblue" />
         </Pressable>
       );
     }
@@ -45,10 +45,22 @@ export default function RatingModal({
 
         {/* NOTE: this pressable avoids triggering parent's onPress when this wrapper is pressed */}
         <Pressable style={styles.container}>
+
+          {/* big star on top */}
+          <View style={{position: 'absolute', alignSelf: 'center', top: rating ? -(40 + rating) : -40}}>
+            <FontAwesome name={"star"} size={rating ? (80 + rating) : 80} color="cornflowerblue" />
+
+            <View style={{justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', position: 'absolute'}}>
+              <Text style={{fontSize: rating ? (16 + rating) : 16, color: '#fff'}}>{rating}</Text>
+            </View>
+          </View>
+
+          {/* 10 interactible stars */}
           <View style={styles.starsContainer}>
             {renderStars()}
           </View>
 
+          {/* buttons */}
           <TouchableOpacity
             style={[styles.button, {backgroundColor: rating == undefined ? 'grey' : 'cornflowerblue'}]}
             onPress={() => onRate(rating)}
@@ -58,7 +70,7 @@ export default function RatingModal({
           </TouchableOpacity>
 
           {ratingProp && (
-            <TouchableOpacity style={styles.button} onPress={onDeleteRate}>
+            <TouchableOpacity style={[styles.button, {alignSelf: 'center'}]} onPress={onDeleteRate}>
               <Text style={{color: 'cornflowerblue'}}>Deletar avaliação</Text>
             </TouchableOpacity>
           )}
@@ -79,7 +91,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     paddingHorizontal: 20,
-    paddingTop: 30,
+    paddingTop: 60,
     paddingBottom: 20,
     borderRadius: 10,
     gap: 10,
