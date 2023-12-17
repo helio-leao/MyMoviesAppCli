@@ -25,7 +25,11 @@ export default function RatingModal({
     for(let i = 0; i < 10; i++) {
       stars.push(
         <Pressable key={i} onPress={() => setRating(i + 1)}>
-          <FontAwesome name={i < rating ? "star" : "star-o"} size={26} color="cornflowerblue" />
+          <FontAwesome
+            name={i < rating ? "star" : "star-o"}
+            size={26}
+            color="cornflowerblue"
+          />
         </Pressable>
       );
     }
@@ -59,11 +63,11 @@ export default function RatingModal({
             />
 
             <View style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: '100%',
-                height: '100%',
-                position: 'absolute',
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
               <Text style={{
                 fontSize: rating ? (16 + rating) : 16,
@@ -82,19 +86,23 @@ export default function RatingModal({
 
           {/* buttons */}
           <TouchableOpacity
-            style={[styles.button, {backgroundColor: rating == undefined ? 'grey' : 'cornflowerblue'}]}
+            style={[styles.button, {
+              backgroundColor: rating ? 'cornflowerblue' : 'grey',
+            }]}
             onPress={() => onRate(rating)}
             disabled={rating == undefined}
           >
-            <Text style={{color: '#fff'}}>Avaliar</Text>
+            <Text style={{color: '#fff', fontWeight: '800'}}>
+              Avaliar
+            </Text>
           </TouchableOpacity>
 
           {ratingProp && (
             <TouchableOpacity
-              style={[styles.button, {alignSelf: 'center'}]}
+              style={[styles.button, {alignSelf: 'center', marginTop: 10}]}
               onPress={onDeleteRate}
             >
-              <Text style={{color: 'cornflowerblue'}}>
+              <Text style={{color: 'cornflowerblue', fontWeight: '800'}}>
                 Deletar avaliação
               </Text>
             </TouchableOpacity>
@@ -116,15 +124,14 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     paddingHorizontal: 20,
-    paddingTop: 60,
-    paddingBottom: 20,
+    paddingTop: 50,
+    paddingBottom: 30,
     borderRadius: 10,
-    gap: 10,
   },
   starsContainer: {
     flexDirection: 'row',
     gap: 8,
-    marginBottom: 10,
+    marginBottom: 20,
   },
   button: {
     padding: 10,
