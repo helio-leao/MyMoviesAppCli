@@ -5,7 +5,8 @@ import CollapsibleText from '../../../components/CollapsibleText';
 import MediaDetails from './MediaDetails';
 import { SessionContext } from '../../../contexts/SessionContext';
 
-// TODO: replicate movie rating functions for tv show
+// TODO: change some setTvShowDetails to fetching the updated tv data would be
+// the correct behaviour instead of changing data just for speed.
 
 
 export default function TvShowDetails({tvShowId}) {
@@ -57,6 +58,53 @@ export default function TvShowDetails({tvShowId}) {
     }
   }
 
+  async function handleTvShowRate(rate) {
+    try {
+      const response = await ApiService.addTvShowRating(
+        tvShowDetails.id,
+        session.id,
+        rate,
+      );
+
+      if(response.success) {
+        setTvShowDetails(prev => ({
+          ...prev,
+          account_states: {
+            ...prev.account_states,
+            rated: {
+              value: rate,
+            },
+          }
+        }))
+      }
+    } catch (error) {
+      console.error(error);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+    }
+  }
+
+  async function handleDeleteTvShowRate() {
+    try {
+      const response = await ApiService.deleteTvShowRating(
+        tvShowDetails.id,
+        session.id,
+      );
+
+      if(response.success) {
+        setTvShowDetails(prev => ({
+          ...prev,
+          account_states: {
+            ...prev.account_states,
+            rated: false,
+          }
+        }))
+      }
+    } catch (error) {
+      console.error(error);
+      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
+    }
+  }
+
 
   if(isLoading) {
     return (
@@ -71,8 +119,8 @@ export default function TvShowDetails({tvShowId}) {
       mediaDetails={tvShowDetails}
       bodyContent={<MediaContent mediaData={tvShowDetails} />}
       onFavoriteButtonPress={session ? onFavoriteButtonPress : null}
-      onRate={null}
-      onDeleteRate={null}
+      onRate={session ? handleTvShowRate : null}
+      onDeleteRate={session ? handleDeleteTvShowRate : null}
     />
   );
 }
