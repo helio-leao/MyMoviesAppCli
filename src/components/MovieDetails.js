@@ -118,9 +118,9 @@ export default function MovieDetails({movieId}) {
     <MediaDetails
       mediaDetails={movieDetails}
       bodyContent={<MediaContent mediaData={movieDetails} />}
-      onFavoriteButtonPress={session ? handleFavoriteAction : undefined}
-      onRate={handleMovieRate}
-      onDeleteRate={handleDeleteMovieRate}
+      onFavoriteButtonPress={session ? handleFavoriteAction : null}
+      onRate={session ? handleMovieRate : null}
+      onDeleteRate={session ? handleDeleteMovieRate : null}
     />
   );
 }

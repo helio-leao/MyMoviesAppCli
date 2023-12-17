@@ -5,6 +5,8 @@ import CollapsibleText from '../components/CollapsibleText';
 import MediaDetails from './MediaDetails';
 import { SessionContext } from '../contexts/SessionContext';
 
+// TODO: replicate movie rating functions for tv show
+
 
 export default function TvShowDetails({tvShowId}) {
 
@@ -68,7 +70,9 @@ export default function TvShowDetails({tvShowId}) {
     <MediaDetails
       mediaDetails={tvShowDetails}
       bodyContent={<MediaContent mediaData={tvShowDetails} />}
-      onFavoriteButtonPress={session ? onFavoriteButtonPress : undefined}
+      onFavoriteButtonPress={session ? onFavoriteButtonPress : null}
+      onRate={null}
+      onDeleteRate={null}
     />
   );
 }

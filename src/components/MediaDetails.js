@@ -14,8 +14,6 @@ import RatingModal from './RatingModal';
 // TODO: verify the need for optional chaining in MediaDetailsScreen components
 // as this, MovieDetails and TvShowDetails
 
-// ISSUE: favorite and rating can't show for user not logged in
-
 
 export default function MediaDetails({
   mediaDetails,
@@ -122,26 +120,28 @@ export default function MediaDetails({
                 </View>
               </View>
 
-              <TouchableOpacity
-                style={styles.ratingsContainer}
-                onPress={() => setRatingModalVisible(true)}
-              >
-                <FontAwesome
-                  name={mediaDetails.account_states.rated ? "star" : "star-o"}
-                  size={26}
-                  color="cornflowerblue"
-                />
+              {onRate && (
+                <TouchableOpacity
+                  style={styles.ratingsContainer}
+                  onPress={() => setRatingModalVisible(true)}
+                >
+                  <FontAwesome
+                    name={mediaDetails.account_states.rated ? "star" : "star-o"}
+                    size={26}
+                    color="cornflowerblue"
+                  />
 
-                {mediaDetails.account_states.rated ? (
-                  <Text style={{color: 'cornflowerblue', fontSize: 20, fontWeight: '800'}}>
-                    {mediaDetails.account_states.rated.value}/10
-                  </Text>
-                ) : (
-                  <Text style={{color: 'cornflowerblue', fontSize: 16, fontWeight: '800'}}>
-                    Avaliar
-                  </Text>
-                )}
-              </TouchableOpacity>
+                  {mediaDetails.account_states.rated ? (
+                    <Text style={{color: 'cornflowerblue', fontSize: 20, fontWeight: '800'}}>
+                      {mediaDetails.account_states.rated.value}/10
+                    </Text>
+                  ) : (
+                    <Text style={{color: 'cornflowerblue', fontSize: 16, fontWeight: '800'}}>
+                      Avaliar
+                    </Text>
+                  )}
+                </TouchableOpacity>
+              )}
 
               {onFavoriteButtonPress && (
                 <TouchableOpacity
