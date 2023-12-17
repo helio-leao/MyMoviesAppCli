@@ -37,6 +37,10 @@ export default function UserScreen() {
     navigation.navigate('FollowingScreen');
   }
 
+  function handleRatedPress() {
+    navigation.navigate('RatedMediaScreen');
+  }
+
 
   return (
     <View style={styles.container}>
@@ -72,6 +76,10 @@ export default function UserScreen() {
 
         <TouchableOpacity style={styles.button} onPress={handleFollowingPress}>
           <Text style={styles.buttonText}>Seguindo</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={handleRatedPress}>
+          <Text style={styles.buttonText}>Avaliados</Text>
         </TouchableOpacity>
       </View>
 

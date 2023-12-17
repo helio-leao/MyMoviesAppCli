@@ -169,6 +169,23 @@ async function fetchAccountDetailsBySessionId(sessionId) {
 
 // AUTHENTICATED USER FUNCTIONS
 
+// NOTE: tv episodes are also an option
+async function fetchRated(accountId, sessionId, mediaType, page = 1) {
+  let url = `/account/${accountId}/rated`;
+
+  if(mediaType === MediaType.MOVIE) {
+    url += '/movies';
+  } else if(mediaType === MediaType.TV) {
+    url += '/tv';
+  } else {
+    throw new Error(`MediaType has to be "tv" or "movies". Received: "${mediaType}"`);
+  }
+
+  url += `?session_id=${sessionId}&sort_by=created_at.desc&page=${page}&${commonQuery}`
+  
+  return await fetchData(url);
+}
+
 async function fetchFavorites(accountId, sessionId, mediaType, page = 1) {
   let url = `/account/${accountId}/favorite`;
 
@@ -256,6 +273,7 @@ export default {
   createSession,
   deleteSession,
   fetchAccountDetailsBySessionId,
+  fetchRated,
   fetchFavorites,
   addFavorite,
   removeFavorite,

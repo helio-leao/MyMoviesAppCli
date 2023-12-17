@@ -4,6 +4,7 @@ import UserScreen from '../screens/UserScreen';
 import LoginScreen from '../screens/LoginScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import FollowingScreen from '../screens/FollowingScreen';
+import RatedMediaScreen from '../screens/RatedMediaScreen';
 import MediaDetailsScreen from '../screens/MediaDetailsScreen';
 import { SessionContext } from '../contexts/SessionContext';
 
@@ -36,6 +37,11 @@ function LoggedInStackNavigator() {
         name={'FollowingScreen'}
         component={FollowingScreen}
         options={{title: 'Seguindo'}}
+      />
+      <Stack.Screen
+        name={'RatedMediaScreen'}
+        component={RatedMediaScreen}
+        options={{title: 'Avaliados'}}
       />
       <Stack.Screen
         name={'MediaDetailsScreen'}

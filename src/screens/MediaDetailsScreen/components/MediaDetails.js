@@ -113,7 +113,9 @@ export default function MediaDetails({
                     </Text>
                   </Text>
 
-                  <Text style={styles.contentText}>{mediaDetails.vote_count}</Text>
+                  <Text style={styles.contentText}>
+                    {mediaDetails.vote_count}
+                  </Text>
                 </View>
               </View>
 
@@ -129,11 +131,19 @@ export default function MediaDetails({
                   />
 
                   {mediaDetails.account_states.rated ? (
-                    <Text style={{color: 'cornflowerblue', fontSize: 20, fontWeight: '800'}}>
+                    <Text style={{
+                      color: 'cornflowerblue',
+                      fontSize: 20,
+                      fontWeight: '800'
+                    }}>
                       {mediaDetails.account_states.rated.value}/10
                     </Text>
                   ) : (
-                    <Text style={{color: 'cornflowerblue', fontSize: 16, fontWeight: '800'}}>
+                    <Text style={{
+                      color: 'cornflowerblue',
+                      fontSize: 16,
+                      fontWeight: '800'
+                    }}>
                       Avaliar
                     </Text>
                   )}
@@ -163,12 +173,18 @@ export default function MediaDetails({
 
             {mediaDetails['watch/providers'].results.BR?.flatrate && (
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <View style={{marginHorizontal: 10, marginTop: 20, flexDirection: 'row', gap: 10}}>
-                  {mediaDetails['watch/providers'].results.BR.flatrate.map(provider => (
+                <View style={{
+                  marginHorizontal: 10,
+                  marginTop: 20,
+                  flexDirection: 'row',
+                  gap: 10
+                }}>
+                  {mediaDetails['watch/providers'].results['BR'].flatrate.map(provider => (
                     <Image
                       key={String(provider.provider_id)}
                       style={{width: 60, height: 60, borderRadius: 4}}
-                      source={{uri: ApiService.fetchFullImagePath(provider.logo_path)}}
+                      source={{uri: ApiService
+                        .fetchFullImagePath(provider.logo_path)}}
                     />
                   ))}
                 </View>
@@ -177,7 +193,11 @@ export default function MediaDetails({
 
             {mediaDetails.credits.cast.length > 0 && (
               <View style={{marginTop: bodyContent ? 30 : 0}}>
-                <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
+                <Text style={[styles.contentText, {
+                  fontSize: 22,
+                  marginHorizontal: 10,
+                  marginBottom: 16,
+                }]}>
                   Elenco
                 </Text>
                 <MediaRowList
@@ -189,7 +209,11 @@ export default function MediaDetails({
 
             {mediaDetails.credits.crew.length > 0 && (
               <View style={{marginTop: 30}}>
-                <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
+                <Text style={[styles.contentText, {
+                  fontSize: 22,
+                  marginHorizontal: 10,
+                  marginBottom: 16,
+                }]}>
                   Produção
                 </Text>
                 <MediaRowList
@@ -201,7 +225,11 @@ export default function MediaDetails({
 
             {mediaDetails.recommendations.total_results > 0 && (
               <View style={{marginTop: 30}}>
-                <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
+                <Text style={[styles.contentText, {
+                  fontSize: 22,
+                  marginHorizontal: 10,
+                  marginBottom: 16,
+                }]}>
                   Recomendações
                 </Text>
                 <MediaRowList
