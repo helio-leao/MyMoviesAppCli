@@ -11,9 +11,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import RatingModal from './RatingModal';
 
-// TODO: verify the need for optional chaining in MediaDetailsScreen components
-// as this, MovieDetails and TvShowDetails
-
 
 export default function MediaDetails({
   mediaDetails,
@@ -52,7 +49,7 @@ export default function MediaDetails({
     <View style={styles.container}>
       <RatingModal
         visible={ratingModalVisible}
-        rating={mediaDetails.account_states.rated?.value}
+        rating={mediaDetails.account_states.rated.value}
         onRate={rate => {
           onRate(rate);
           // setRatingModalVisible(false);
@@ -67,7 +64,7 @@ export default function MediaDetails({
       {/* image */}
       <LoadableImage
         style={styles.backdropImage}
-        source={{uri: ApiService.fetchFullImagePath(mediaDetails?.backdrop_path)}}
+        source={{uri: ApiService.fetchFullImagePath(mediaDetails.backdrop_path)}}
         placeholder={placeholder_poster}
       />
       
@@ -80,7 +77,7 @@ export default function MediaDetails({
       >
         {/* title for movies or name for tv */}
         <Text style={styles.title} numberOfLines={2}>
-          {mediaDetails?.title || mediaDetails?.name}
+          {mediaDetails.title || mediaDetails.name}
         </Text>
         
 
@@ -91,7 +88,7 @@ export default function MediaDetails({
             <View>
               <ScrollView showsHorizontalScrollIndicator={false} horizontal>
                 <View style={styles.genresContainer}>
-                  {mediaDetails?.genres.map(genre => (
+                  {mediaDetails.genres.map(genre => (
                     <View key={genre.id} style={styles.genrePill}>
                       <Text style={styles.genreText}>{genre.name}</Text>
                     </View>
@@ -109,14 +106,14 @@ export default function MediaDetails({
                 <View>
                   <Text style={{color: '#fff'}}>
                     <Text style={{fontSize: 20, fontWeight: '800'}}>
-                      {mediaDetails?.vote_average.toFixed(1)}
+                      {mediaDetails.vote_average.toFixed(1)}
                     </Text>
                     <Text style={{fontSize: 18}}>
                       /10
                     </Text>
                   </Text>
 
-                  <Text style={styles.contentText}>{mediaDetails?.vote_count}</Text>
+                  <Text style={styles.contentText}>{mediaDetails.vote_count}</Text>
                 </View>
               </View>
 
@@ -178,7 +175,7 @@ export default function MediaDetails({
               </ScrollView>
             )}
 
-            {mediaDetails?.credits.cast.length > 0 && (
+            {mediaDetails.credits.cast.length > 0 && (
               <View style={{marginTop: bodyContent ? 30 : 0}}>
                 <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
                   Elenco
@@ -190,7 +187,7 @@ export default function MediaDetails({
               </View>
             )}
 
-            {mediaDetails?.credits.crew.length > 0 && (
+            {mediaDetails.credits.crew.length > 0 && (
               <View style={{marginTop: 30}}>
                 <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
                   Produção
@@ -202,7 +199,7 @@ export default function MediaDetails({
               </View>
             )}
 
-            {mediaDetails?.recommendations.total_results > 0 && (
+            {mediaDetails.recommendations.total_results > 0 && (
               <View style={{marginTop: 30}}>
                 <Text style={[styles.contentText, {fontSize: 22, marginHorizontal: 10, marginBottom: 16}]}>
                   Recomendações
@@ -215,7 +212,7 @@ export default function MediaDetails({
             )}
 
             {/* NOTE: add more of the videos? */}
-            {mediaDetails?.videos.results.map(video => (
+            {mediaDetails.videos.results.map(video => (
               <View key={video.key} style={{marginTop: 30}}>
                 <YoutubePlayer
                   height={220}
