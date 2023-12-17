@@ -283,7 +283,6 @@ const styles = StyleSheet.create({
   },
   favoriteButton: {
     paddingVertical: 10,
-    paddingHorizontal: 12,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
