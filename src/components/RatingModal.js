@@ -47,13 +47,33 @@ export default function RatingModal({
         <Pressable style={styles.container}>
 
           {/* big star on top */}
-          <View style={{position: 'absolute', alignSelf: 'center', top: rating ? -(40 + rating) : -40}}>
-            <FontAwesome name={"star"} size={rating ? (80 + rating) : 80} color="cornflowerblue" />
+          <View style={{
+              position: 'absolute',
+              alignSelf: 'center',
+              top: rating ? -(40 + rating) : -40,
+          }}>
+            <FontAwesome
+              name={"star"}
+              size={rating ? (80 + rating) : 80}
+              color="cornflowerblue"
+            />
 
-            <View style={{justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', position: 'absolute'}}>
-              <Text style={{fontSize: rating ? (16 + rating) : 16, color: '#fff'}}>{rating}</Text>
+            <View style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+            }}>
+              <Text style={{
+                fontSize: rating ? (16 + rating) : 16,
+                color: '#fff',
+              }}>
+                {rating}
+              </Text>
             </View>
           </View>
+          {/* end big star on top */}
 
           {/* 10 interactible stars */}
           <View style={styles.starsContainer}>
@@ -70,8 +90,13 @@ export default function RatingModal({
           </TouchableOpacity>
 
           {ratingProp && (
-            <TouchableOpacity style={[styles.button, {alignSelf: 'center'}]} onPress={onDeleteRate}>
-              <Text style={{color: 'cornflowerblue'}}>Deletar avaliação</Text>
+            <TouchableOpacity
+              style={[styles.button, {alignSelf: 'center'}]}
+              onPress={onDeleteRate}
+            >
+              <Text style={{color: 'cornflowerblue'}}>
+                Deletar avaliação
+              </Text>
             </TouchableOpacity>
           )}
         </Pressable>
