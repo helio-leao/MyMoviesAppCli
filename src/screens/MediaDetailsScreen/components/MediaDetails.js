@@ -2,14 +2,14 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Share } fr
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import LinearGradient from 'react-native-linear-gradient';
-import ApiService from '../services/ApiService';
-import placeholder_poster from '../assets/images/placeholder_poster.png';
-import MediaRowList from '../components/MediaRowList';
-import LoadableImage from '../components/LoadableImage';
+import ApiService from '../../../services/ApiService';
+import placeholder_poster from '../../../assets/images/placeholder_poster.png';
+import MediaRowList from '../../../components/MediaRowList';
+import LoadableImage from '../../../components/LoadableImage';
 import YoutubePlayer from "react-native-youtube-iframe";
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import RatingModal from './RatingModal';
+import RatingModal from '../../../components/RatingModal';
 
 
 export default function MediaDetails({

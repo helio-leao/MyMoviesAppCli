@@ -1,8 +1,8 @@
 import { useRoute } from '@react-navigation/native';
-import ApiService from '../services/ApiService';
-import PersonDetails from '../components/PersonDetails';
-import TvShowDetails from '../components/TvShowDetails';
-import MovieDetails from '../components/MovieDetails';
+import ApiService from '../../services/ApiService';
+import PersonDetails from './components/PersonDetails';
+import TvShowDetails from './components/TvShowDetails';
+import MovieDetails from './components/MovieDetails';
 
 
 export default function MediaDetailsScreen() {

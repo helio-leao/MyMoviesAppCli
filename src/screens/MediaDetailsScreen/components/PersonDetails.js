@@ -1,14 +1,14 @@
 import { ScrollView, StyleSheet, Text, View, ToastAndroid, ActivityIndicator } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
-import ApiService from '../services/ApiService';
-import placeholder_poster from '../assets/images/placeholder_poster.png';
-import FollowedPeopleStorageService from '../services/FollowedPeopleStorageService';
+import ApiService from '../../../services/ApiService';
+import placeholder_poster from '../../../assets/images/placeholder_poster.png';
+import FollowedPeopleStorageService from '../../../services/FollowedPeopleStorageService';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import MediaRowList from './MediaRowList';
-import { SessionContext } from '../contexts/SessionContext';
-import CollapsibleText from './CollapsibleText';
-import LoadableImage from './LoadableImage';
-import Button from './Button';
+import MediaRowList from '../../../components/MediaRowList';
+import { SessionContext } from '../../../contexts/SessionContext';
+import CollapsibleText from '../../../components/CollapsibleText';
+import LoadableImage from '../../../components/LoadableImage';
+import Button from '../../../components/Button';
 
 
 export default function PersonDetails({personId}) {

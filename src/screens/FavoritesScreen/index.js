@@ -1,9 +1,9 @@
 import { useCallback, useContext, useState } from "react";
 import { ActivityIndicator, StyleSheet, ToastAndroid, View } from "react-native";
-import ApiService from "../services/ApiService";
-import MediaGridList from "../components/MediaGridList";
-import SwitchButtons from "../components/SwitchButtons";
-import { SessionContext } from "../contexts/SessionContext";
+import ApiService from "../../services/ApiService";
+import MediaGridList from "../../components/MediaGridList";
+import SwitchButtons from "../../components/SwitchButtons";
+import { SessionContext } from "../../contexts/SessionContext";
 import { useFocusEffect } from "@react-navigation/native";
 
 

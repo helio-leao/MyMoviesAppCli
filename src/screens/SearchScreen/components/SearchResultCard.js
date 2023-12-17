@@ -1,8 +1,8 @@
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import ApiService from '../services/ApiService';
-import placeholder_poster from '../assets/images/placeholder_poster.png';
-import LoadableImage from './LoadableImage';
+import ApiService from '../../../services/ApiService';
+import placeholder_poster from '../../../assets/images/placeholder_poster.png';
+import LoadableImage from '../../../components/LoadableImage';
 
 
 export default function SearchResultCard({mediaData}) {

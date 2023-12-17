@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, Text, ActivityIndicator, ToastAndroid, TouchableOpacity } from 'react-native';
-import ApiService from '../services/ApiService';
-import MediaRowList from '../components/MediaRowList';
-import LoadableImage from '../components/LoadableImage';
+import ApiService from '../../services/ApiService';
+import MediaRowList from '../../components/MediaRowList';
+import LoadableImage from '../../components/LoadableImage';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-import placeholder_poster from '../assets/images/placeholder_poster.png';
+import placeholder_poster from '../../assets/images/placeholder_poster.png';
 
 const TOP_TRENDING_MOVIE_INDEX = 0;
 

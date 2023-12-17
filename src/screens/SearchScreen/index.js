@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { FlatList, StyleSheet, TextInput, TouchableOpacity, View, Text, ToastAndroid, ActivityIndicator } from 'react-native';
-import SearchResultCard from '../components/SearchResultCard';
+import SearchResultCard from './components/SearchResultCard';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import ApiService from '../services/ApiService';
+import ApiService from '../../services/ApiService';
 
 
 export default function SearchScreen() {

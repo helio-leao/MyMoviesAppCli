@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, ToastAndroid, ActivityIndicator } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
-import ApiService from '../services/ApiService';
-import CollapsibleText from '../components/CollapsibleText';
+import ApiService from '../../../services/ApiService';
+import CollapsibleText from '../../../components/CollapsibleText';
 import MediaDetails from './MediaDetails';
-import { SessionContext } from '../contexts/SessionContext';
+import { SessionContext } from '../../../contexts/SessionContext';
 
 // TODO: change some setMovieDetais to fetching the updated movie data would be
 // the correct behaviour instead of changing data just for speed.

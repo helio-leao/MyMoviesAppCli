@@ -1,8 +1,8 @@
 import { StyleSheet, View, ToastAndroid, ActivityIndicator } from 'react-native';
-import ApiService from '../services/ApiService';
+import ApiService from '../../services/ApiService';
 import { useContext, useEffect, useState } from 'react';
 import WebView from 'react-native-webview';
-import { SessionContext } from '../contexts/SessionContext';
+import { SessionContext } from '../../contexts/SessionContext';
 
 
 export default function LoginScreen() {

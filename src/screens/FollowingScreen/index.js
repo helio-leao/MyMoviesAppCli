@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View, ToastAndroid } from 'react-native';
-import MediaGridList from '../components/MediaGridList';
+import MediaGridList from '../../components/MediaGridList';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import ApiService from '../services/ApiService';
-import FollowedPeopleStorageService from '../services/FollowedPeopleStorageService';
-import placeholder_poster from '../assets/images/placeholder_poster.png';
-import { SessionContext } from '../contexts/SessionContext';
-import LoadableImage from '../components/LoadableImage';
-import SwitchButtons from '../components/SwitchButtons';
+import ApiService from '../../services/ApiService';
+import FollowedPeopleStorageService from '../../services/FollowedPeopleStorageService';
+import placeholder_poster from '../../assets/images/placeholder_poster.png';
+import { SessionContext } from '../../contexts/SessionContext';
+import LoadableImage from '../../components/LoadableImage';
+import SwitchButtons from '../../components/SwitchButtons';
 
 
 const switchOptions = [

@@ -1,11 +1,11 @@
 import { StyleSheet, View, ToastAndroid, TouchableOpacity, Text } from 'react-native';
-import ApiService from '../services/ApiService';
+import ApiService from '../../services/ApiService';
 import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { SessionContext } from '../contexts/SessionContext';
-import placeholder_avatar from '../assets/images/placeholder_avatar.jpg';
-import LoadableImage from '../components/LoadableImage';
-import Button from '../components/Button';
+import { SessionContext } from '../../contexts/SessionContext';
+import placeholder_avatar from '../../assets/images/placeholder_avatar.jpg';
+import LoadableImage from '../../components/LoadableImage';
+import Button from '../../components/Button';
 
 
 export default function UserScreen() {
