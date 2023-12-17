@@ -14,13 +14,15 @@ import RatingModal from './RatingModal';
 // TODO: verify the need for optional chaining in MediaDetailsScreen components
 // as this, MovieDetails and TvShowDetails
 
+// ISSUE: favorite and rating can't show for user not logged in
+
 
 export default function MediaDetails({
   mediaDetails,
   bodyContent = undefined,
-  onFavoriteButtonPress = undefined,
-  onRate = undefined,
-  onDeleteRate = undefined,
+  onFavoriteButtonPress = () => {},
+  onRate = () => {},
+  onDeleteRate = () => {},
 }) {
 
   const [ratingModalVisible, setRatingModalVisible] = useState(false);
@@ -53,13 +55,13 @@ export default function MediaDetails({
       <RatingModal
         visible={ratingModalVisible}
         rating={mediaDetails.account_states.rated?.value}
-        onRate={async (rate) => {
-          await onRate(rate);
+        onRate={rate => {
+          onRate(rate);
           // setRatingModalVisible(false);
         }}
         onOutsidePress={() => setRatingModalVisible(false)}
-        onDeleteRate={async () => {
-          await onDeleteRate();
+        onDeleteRate={() => {
+          onDeleteRate();
           // setRatingModalVisible(false);
         }}
       />
@@ -104,7 +106,7 @@ export default function MediaDetails({
             <View style={styles.ratingsAndFavoriteContainer}>
 
               <View style={styles.ratingsContainer}>
-                <FontAwesome name="star" size={30} color="yellow" />
+                <FontAwesome name="star" size={26} color="yellow" />
 
                 <View>
                   <Text style={{color: '#fff'}}>
@@ -126,7 +128,7 @@ export default function MediaDetails({
               >
                 <FontAwesome
                   name={mediaDetails.account_states.rated ? "star" : "star-o"}
-                  size={30}
+                  size={26}
                   color="cornflowerblue"
                 />
 
@@ -135,7 +137,7 @@ export default function MediaDetails({
                     {mediaDetails.account_states.rated.value}/10
                   </Text>
                 ) : (
-                  <Text style={{color: 'cornflowerblue', fontSize: 20, fontWeight: '800'}}>
+                  <Text style={{color: 'cornflowerblue', fontSize: 16, fontWeight: '800'}}>
                     Avaliar
                   </Text>
                 )}
@@ -148,10 +150,12 @@ export default function MediaDetails({
                 >
                   <FontAwesome
                     name={mediaDetails.account_states.favorite ? "heart" : "heart-o"}
-                    size={16}
-                    color="white"
+                    size={22}
+                    color="red"
                   />
-                  <Text style={styles.favoriteButtonText}>Favorito</Text>
+                  <Text style={{color: '#fff', fontSize: 16, fontWeight: '800'}}>
+                    Favorito
+                  </Text>
                 </TouchableOpacity>
               )}
 
@@ -279,7 +283,7 @@ const styles = StyleSheet.create({
   ratingsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 6,
   },
   favoriteButton: {
     paddingVertical: 10,
@@ -287,9 +291,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-  },
-  favoriteButtonText: {
-    color: '#fff',
   },
   contentScrollContainer: {
     marginBottom: 20,
