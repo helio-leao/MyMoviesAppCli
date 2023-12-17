@@ -66,6 +66,7 @@ export default function RootTabNavigator() {
             }
 
             // NOTE: could be the gravatar, add it later???
+            
             // user logged has no avatar
             if(!session?.user.avatar.tmdb.avatar_path) {
               return <FontAwesome name={focused ? "user-circle" : "user-circle-o"} size={size} color={color} />

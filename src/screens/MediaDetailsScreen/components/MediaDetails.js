@@ -148,7 +148,7 @@ export default function MediaDetails({
                   <FontAwesome
                     name={mediaDetails.account_states.favorite ? "heart" : "heart-o"}
                     size={22}
-                    color="red"
+                    color="#fff"
                   />
                   <Text style={{color: '#fff', fontSize: 16, fontWeight: '800'}}>
                     Favorito
@@ -211,7 +211,6 @@ export default function MediaDetails({
               </View>
             )}
 
-            {/* NOTE: add more of the videos? */}
             {mediaDetails.videos.results.map(video => (
               <View key={video.key} style={{marginTop: 30}}>
                 <YoutubePlayer
