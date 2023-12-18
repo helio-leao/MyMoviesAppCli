@@ -33,9 +33,8 @@ export default function MovieDetails({movieId}) {
 
   async function handleFavoriteAction() {
     try {
-      const favoriteAction = movieDetails.account_states.favorite
-        ? ApiService.removeFavorite
-        : ApiService.addFavorite;
+      const favoriteAction = movieDetails.account_states
+        .favorite ? ApiService.removeFavorite : ApiService.addFavorite;
 
       const response = await favoriteAction(
         session.user.id,
@@ -129,14 +128,14 @@ function MediaContent({mediaData}) {
   return(
     <View style={styles.contentContainer}>
       <Text style={styles.contentText}>
-        Direção: {mediaData?.credits.crew
+        Direção: {mediaData.credits.crew
           .filter(person => person.job === ApiService.CrewJob.DIRECTOR)
           .slice(0, 3)
           .map(director => director.name)
           .join(', ')}
       </Text>
       <Text style={styles.contentText}>
-        Roteiro: {mediaData?.credits.crew
+        Roteiro: {mediaData.credits.crew
           .filter(person => person.job === ApiService.CrewJob.SCREENPLAY ||
             person.job === ApiService.CrewJob.WRITER ||
             person.job === ApiService.CrewJob.AUTHOR ||
@@ -147,12 +146,12 @@ function MediaContent({mediaData}) {
           .join(', ')}
       </Text>
       <Text style={[styles.contentText, {marginBottom: 20}]}>
-            Elenco: {mediaData?.credits.cast
+            Elenco: {mediaData.credits.cast
           .slice(0, 3)
           .map(actor => actor.name)
           .join(', ')}
       </Text>
-      {mediaData?.overview && (
+      {mediaData.overview && (
         <CollapsibleText
           contentContainerStyle={{marginBottom: 20}}
           numberOfLines={8}
@@ -162,10 +161,10 @@ function MediaContent({mediaData}) {
         </CollapsibleText>
       )}
       <Text style={styles.contentText}>
-        Título Original: {mediaData?.original_title}
+        Título Original: {mediaData.original_title}
       </Text>
       <Text style={styles.contentText}>
-        Lançamento: {mediaData?.release_date &&
+        Lançamento: {mediaData.release_date &&
           new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.release_date))}
       </Text>
     </View>

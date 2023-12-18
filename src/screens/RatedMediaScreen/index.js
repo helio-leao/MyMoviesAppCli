@@ -80,7 +80,7 @@ export default function RatedMediaScreen() {
         </View>
       ) : (
         <MediaGridList
-          mediaDataList={data?.results}
+          mediaDataList={data.results}
           onEndReached={updateData}
           showLoadingMoreIndicator={!isLastPage}
         />

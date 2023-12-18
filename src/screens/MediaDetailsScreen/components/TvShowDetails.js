@@ -129,7 +129,7 @@ function MediaContent({mediaData}) {
 
   return(
     <View style={styles.contentContainer}>
-      {mediaData?.created_by.length > 0 && (
+      {mediaData.created_by.length > 0 && (
         <Text style={styles.contentText}>
           Criado por: {mediaData.created_by
             .slice(0, 3)
@@ -138,12 +138,12 @@ function MediaContent({mediaData}) {
         </Text>
       )}
       <Text style={[styles.contentText, {marginBottom: 20}]}>
-        Elenco: {mediaData?.credits.cast
+        Elenco: {mediaData.credits.cast
           .slice(0, 3)
           .map(actor => actor.name)
           .join(', ')}
       </Text>
-      {mediaData?.overview && (
+      {mediaData.overview && (
         <CollapsibleText
           contentContainerStyle={{marginBottom: 20}}
           numberOfLines={8}
@@ -153,23 +153,23 @@ function MediaContent({mediaData}) {
         </CollapsibleText>
       )}
       <Text style={styles.contentText}>
-        Título Original: {mediaData?.original_name}
+        Título Original: {mediaData.original_name}
       </Text>
       <Text style={styles.contentText}>
-        Status: {mediaData?.status}
+        Status: {mediaData.status}
       </Text>
       {/* TODO: show only the number of main seasons */}
-      {console.log(mediaData?.seasons)}
+      {console.log(mediaData.seasons)}
       <Text style={styles.contentText}>
-        Temporadas: {mediaData?.seasons.length}
+        Temporadas: {mediaData.seasons.length}
       </Text>
-      {mediaData?.first_air_date && (
+      {mediaData.first_air_date && (
         <Text style={styles.contentText}>
           Primeira Transmissão: {mediaData.first_air_date &&
             new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.first_air_date))}
         </Text>
       )}
-      {mediaData?.last_air_date && (
+      {mediaData.last_air_date && (
         <Text style={styles.contentText}>
           Última Transmissão: {mediaData.last_air_date &&
             new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.last_air_date))}

@@ -91,17 +91,17 @@ export default function PersonDetails({personId}) {
 
           <LoadableImage
             style={styles.personImage}
-            source={{uri: ApiService.fetchFullImagePath(personDetails?.profile_path)}}
+            source={{uri: ApiService.fetchFullImagePath(personDetails.profile_path)}}
             placeholder={placeholder_poster}
           />
 
           <View style={styles.headerCardData}>
-            <Text style={styles.title}>{personDetails?.name}</Text>
+            <Text style={styles.title}>{personDetails.name}</Text>
             <Text style={styles.text}>
-              {new Intl.DateTimeFormat('pt-BR').format(new Date(personDetails?.birthday))}
+              {new Intl.DateTimeFormat('pt-BR').format(new Date(personDetails.birthday))}
             </Text>
             <Text style={[styles.subtitle, {color: '#888'}]}>
-              {personDetails?.known_for_department}
+              {personDetails.known_for_department}
             </Text>
 
             {session && (
@@ -121,7 +121,7 @@ export default function PersonDetails({personId}) {
 
         </View>
 
-        {personDetails?.biography && (
+        {personDetails.biography && (
           <View style={styles.body}>
             <Text style={styles.subtitle}>Biografia</Text>
             <CollapsibleText
@@ -135,9 +135,9 @@ export default function PersonDetails({personId}) {
 
         {/* TODO: refactor this code repetition */}
         <View style={styles.creditsContainer}>
-          {personDetails?.known_for_department === ApiService.Department.ACTING ? (
+          {personDetails.known_for_department === ApiService.Department.ACTING ? (
             <>
-              {personDetails?.combined_credits.cast.length > 0 && (
+              {personDetails.combined_credits.cast.length > 0 && (
                 <View>
                   <Text style={[styles.subtitle, {marginLeft: 10}]}>
                     Atuação
@@ -150,7 +150,7 @@ export default function PersonDetails({personId}) {
                 </View>  
               )}
 
-              {personDetails?.combined_credits.crew.length > 0 && (
+              {personDetails.combined_credits.crew.length > 0 && (
                 <View>
                   <Text style={[styles.subtitle, {marginLeft: 10}]}>
                     Produção
@@ -165,7 +165,7 @@ export default function PersonDetails({personId}) {
             </>
           ) : (
             <>
-              {personDetails?.combined_credits.crew.length > 0 && (
+              {personDetails.combined_credits.crew.length > 0 && (
                 <View>
                   <Text style={[styles.subtitle, {marginLeft: 10}]}>
                     Produção
@@ -178,7 +178,7 @@ export default function PersonDetails({personId}) {
                 </View>  
               )}
 
-              {personDetails?.combined_credits.cast.length > 0 && (
+              {personDetails.combined_credits.cast.length > 0 && (
                 <View>
                   <Text style={[styles.subtitle, {marginLeft: 10}]}>
                     Atuação

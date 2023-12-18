@@ -52,12 +52,14 @@ export default function MediaDetails({
         rating={mediaDetails.account_states.rated.value}
         onRate={rating => {
           onRate(rating);
-          // setRatingModalVisible(false);
+          setRatingModalVisible(false);
         }}
-        onOutsidePress={() => setRatingModalVisible(false)}
+        onOutsidePress={() => {
+          setRatingModalVisible(false);
+        }}
         onDeleteRating={() => {
           onDeleteRating();
-          // setRatingModalVisible(false);
+          setRatingModalVisible(false);
         }}
       />
 
@@ -100,6 +102,7 @@ export default function MediaDetails({
             {/* ratings and favorite button */}
             <View style={styles.ratingsAndFavoriteContainer}>
 
+              {/* other people ratings */}
               <View style={styles.ratingsContainer}>
                 <FontAwesome name="star" size={26} color="yellow" />
 
@@ -119,6 +122,7 @@ export default function MediaDetails({
                 </View>
               </View>
 
+              {/* user rating */}
               {onRate && (
                 <TouchableOpacity
                   style={styles.ratingsContainer}
@@ -150,6 +154,7 @@ export default function MediaDetails({
                 </TouchableOpacity>
               )}
 
+              {/* favorite button */}
               {onFavoriteButtonPress && (
                 <TouchableOpacity
                   style={styles.favoriteButton}

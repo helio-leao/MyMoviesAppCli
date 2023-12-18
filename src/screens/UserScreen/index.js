@@ -18,7 +18,7 @@ export default function UserScreen() {
   function handleLogoutPress() {
     Alert.alert(
       'Atenção',
-      'Confirma o logout na aplicação?',
+      'Confirma o logout?',
       [
         {text: 'Cancelar', style: 'cancel'},
         {text: 'Sim', onPress: logout},

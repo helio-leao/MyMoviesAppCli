@@ -168,7 +168,7 @@ export default function FollowingScreen() {
           </View>
         ) : (
           <MediaGridList
-            mediaDataList={data?.results}
+            mediaDataList={data.results}
             onEndReached={updateData}
             showLoadingMoreIndicator={!isLastPage}
           />
