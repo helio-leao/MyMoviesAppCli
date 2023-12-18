@@ -61,7 +61,7 @@ export default function FollowingScreen() {
         } else if (mediaType === ApiService.MediaType.TV) {
           // ISSUE: there's no with_people for tv on the api
           // data = await ApiService.fetchTvShowsWithPeople(peopleIds);
-          ToastAndroid.show('TODO: tv shows with people', ToastAndroid.SHORT);
+          throw new Error('No tv with people implemented.');
         }
         setData(data);
         setIsLoadingMedia(false);

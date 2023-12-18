@@ -1,10 +1,12 @@
 import { useCallback, useContext, useState } from "react";
-import { ActivityIndicator, StyleSheet, ToastAndroid, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import ApiService from "../../services/ApiService";
 import MediaGridList from "../../components/MediaGridList";
 import SwitchButtons from "../../components/SwitchButtons";
 import { SessionContext } from "../../contexts/SessionContext";
 import { useFocusEffect } from "@react-navigation/native";
+
+// TODO: replicate empty result logic on favorite and following screens
 
 
 const switchOptions = [
@@ -79,11 +81,19 @@ export default function RatedMediaScreen() {
           <ActivityIndicator color={'white'} size={'large'} />
         </View>
       ) : (
-        <MediaGridList
-          mediaDataList={data.results}
-          onEndReached={updateData}
-          showLoadingMoreIndicator={!isLastPage}
-        />
+        data.results > 0 ? (
+          <MediaGridList
+            mediaDataList={data.results}
+            onEndReached={updateData}
+            showLoadingMoreIndicator={!isLastPage}
+          />
+        ) : (
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{color: '#333', fontSize: 18}}>
+              Não há itens avaliados.
+            </Text>
+          </View>
+        )
       )}
     </View>
   );
