@@ -58,12 +58,12 @@ export default function MovieDetails({movieId}) {
     }
   }
 
-  async function handleMovieRate(rate) {
+  async function handleMovieRate(rating) {
     try {
       const response = await ApiService.addMovieRating(
         movieDetails.id,
         session.id,
-        rate,
+        rating,
       );
 
       if(response.success) {
@@ -72,7 +72,7 @@ export default function MovieDetails({movieId}) {
           account_states: {
             ...prev.account_states,
             rated: {
-              value: rate,
+              value: rating,
             },
           }
         }))

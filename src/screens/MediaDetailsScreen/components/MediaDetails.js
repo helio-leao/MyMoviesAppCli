@@ -17,7 +17,7 @@ export default function MediaDetails({
   bodyContent = undefined,
   onFavoriteButtonPress = () => {},
   onRate = () => {},
-  onDeleteRate = () => {},
+  onDeleteRate: onDeleteRating = () => {},
 }) {
 
   const [ratingModalVisible, setRatingModalVisible] = useState(false);
@@ -50,13 +50,13 @@ export default function MediaDetails({
       <RatingModal
         visible={ratingModalVisible}
         rating={mediaDetails.account_states.rated.value}
-        onRate={rate => {
-          onRate(rate);
+        onRate={rating => {
+          onRate(rating);
           // setRatingModalVisible(false);
         }}
         onOutsidePress={() => setRatingModalVisible(false)}
-        onDeleteRate={() => {
-          onDeleteRate();
+        onDeleteRating={() => {
+          onDeleteRating();
           // setRatingModalVisible(false);
         }}
       />

@@ -7,7 +7,7 @@ export default function RatingModal({
   visible = false,
   rating: ratingProp = undefined,
   onRate = () => {},
-  onDeleteRate = () => {},
+  onDeleteRating = () => {},
   onOutsidePress = () => {},
 }) {
 
@@ -100,7 +100,7 @@ export default function RatingModal({
           {ratingProp && (
             <TouchableOpacity
               style={[styles.button, {alignSelf: 'center', marginTop: 10}]}
-              onPress={onDeleteRate}
+              onPress={onDeleteRating}
             >
               <Text style={{color: 'cornflowerblue', fontWeight: '800'}}>
                 Deletar avaliação

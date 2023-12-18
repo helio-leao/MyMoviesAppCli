@@ -44,7 +44,16 @@ export default function MediaCard({mediaData, onPress, style}) {
             {mediaData.media_type}
           </Text>
         )}
+
+        {mediaData.rating && (
+          <View style={styles.ratingContainer}>
+            <Text style={styles.text}>
+              Avaliação: {mediaData.rating}
+            </Text>
+          </View>
+        )}
       </View>
+
 
     </TouchableOpacity>
   );

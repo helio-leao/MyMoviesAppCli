@@ -227,9 +227,9 @@ async function removeFavorite(accountId, sessionId, mediaData) {
   return await postData(url, data);
 }
 
-async function addMovieRating(movieId, sessionId, rate) {
+async function addMovieRating(movieId, sessionId, rating) {
   const url = `/movie/${movieId}/rating?session_id=${sessionId}`;
-  const data = { value: rate };
+  const data = { value: rating };
   return await postData(url, data);
 }
 
@@ -240,9 +240,9 @@ async function deleteMovieRating(movieId, sessionId) {
   return response.data;
 }
 
-async function addTvShowRating(tvShowId, sessionId, rate) {
+async function addTvShowRating(tvShowId, sessionId, rating) {
   const url = `/tv/${tvShowId}/rating?session_id=${sessionId}`;
-  const data = { value: rate };
+  const data = { value: rating };
   return await postData(url, data);
 }
 

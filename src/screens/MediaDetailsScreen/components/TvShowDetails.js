@@ -58,12 +58,12 @@ export default function TvShowDetails({tvShowId}) {
     }
   }
 
-  async function handleTvShowRate(rate) {
+  async function handleTvShowRate(rating) {
     try {
       const response = await ApiService.addTvShowRating(
         tvShowDetails.id,
         session.id,
-        rate,
+        rating,
       );
 
       if(response.success) {
@@ -72,7 +72,7 @@ export default function TvShowDetails({tvShowId}) {
           account_states: {
             ...prev.account_states,
             rated: {
-              value: rate,
+              value: rating,
             },
           }
         }))
