@@ -1,4 +1,4 @@
-import { StyleSheet, View, ToastAndroid, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, ToastAndroid, TouchableOpacity, Text, Alert } from 'react-native';
 import ApiService from '../../services/ApiService';
 import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -15,17 +15,29 @@ export default function UserScreen() {
   const {user} = session;
 
 
-  async function handleLogoutPress() {
-    try {
-      const response = await ApiService.deleteSession(session.id);
+  function handleLogoutPress() {
+    Alert.alert(
+      'Atenção',
+      'Confirma o logout na aplicação?',
+      [
+        {text: 'Cancelar', style: 'cancel'},
+        {text: 'Sim', onPress: logout},
+      ],
+      {cancelable: true},
+    );
 
-      if(response.success) {
-        navigation.navigate('HomeTab');
-        await deleteSession();
+    async function logout() {
+      try {
+        const response = await ApiService.deleteSession(session.id);
+  
+        if(response.success) {
+          navigation.navigate('HomeTab');
+          await deleteSession();
+        }
+      } catch (error) {
+        console.log(error);
+        ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
       }
-    } catch (error) {
-      console.log(error);
-      ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     }
   }
 
