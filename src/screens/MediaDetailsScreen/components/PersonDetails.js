@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View, ToastAndroid, ActivityIndicator } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, ToastAndroid, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
 import ApiService from '../../../services/ApiService';
 import placeholder_poster from '../../../assets/images/placeholder_poster.png';
@@ -8,7 +8,6 @@ import MediaRowList from '../../../components/MediaRowList';
 import { SessionContext } from '../../../contexts/SessionContext';
 import CollapsibleText from '../../../components/CollapsibleText';
 import LoadableImage from '../../../components/LoadableImage';
-import Button from '../../../components/Button';
 
 
 export default function PersonDetails({personId}) {
@@ -107,17 +106,15 @@ export default function PersonDetails({personId}) {
 
             {session && (
               isPersonFollowed ? (
-                <Button
-                  label='Unfollow'
-                  icon={<FontAwesome name="user-times" size={16} color="white" />}
-                  onPress={handleUnfollowPress}
-                />
+                <TouchableOpacity style={styles.button} onPress={handleUnfollowPress}>
+                  <FontAwesome name="user-times" size={16} color="white" />
+                  <Text style={{color: '#fff'}}>Unfollow</Text>
+                </TouchableOpacity>
               ) : (
-                <Button
-                  label='Follow'
-                  icon={<FontAwesome name="user-plus" size={16} color="white" />}
-                  onPress={handleFollowPress}
-                />
+                <TouchableOpacity style={styles.button} onPress={handleFollowPress}>
+                  <FontAwesome name="user-plus" size={16} color="white" />
+                  <Text style={{color: '#fff'}}>Follow</Text>
+                </TouchableOpacity>
               )
             )}
           </View>
@@ -243,5 +240,16 @@ const styles = StyleSheet.create({
   creditsContainer: {
     marginBottom: 20,
     gap: 20,
-  }
+  },
+  button: {
+    flexDirection: 'row',
+      gap: 6,
+      paddingVertical: 8,
+      paddingHorizontal: 10,
+      backgroundColor: '#333',
+      justifyContent: 'center',
+      alignItems: 'center',
+      alignSelf: 'flex-start',
+      borderRadius: 4,
+  },
 });

@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { SessionContext } from '../../contexts/SessionContext';
 import placeholder_avatar from '../../assets/images/placeholder_avatar.jpg';
 import LoadableImage from '../../components/LoadableImage';
-import Button from '../../components/Button';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 
 export default function UserScreen() {
@@ -46,13 +46,19 @@ export default function UserScreen() {
     <View style={styles.container}>
 
       <View style={styles.userDataContainer}>
-        <LoadableImage
-          style={styles.avatar}
-          source={{uri: ApiService.fetchFullImagePath(user.avatar.tmdb.avatar_path)}}
-          placeholder={placeholder_avatar}
-        />
+        <View>
+          <LoadableImage
+            style={styles.avatar}
+            source={{uri: ApiService.fetchFullImagePath(user.avatar.tmdb.avatar_path)}}
+            placeholder={placeholder_avatar}
+          />
 
-        <View style={{flex: 1}}>
+          <TouchableOpacity style={styles.signOutButton} onPress={handleLogoutPress}>
+            <FontAwesome name="sign-out" size={22} color={'#fff'} />
+          </TouchableOpacity>
+        </View>
+
+        <View>
           {user.name && (
             <Text style={{color: '#fff', fontSize: 20}}>
               {user.name}
@@ -61,11 +67,6 @@ export default function UserScreen() {
           <Text style={{color: '#fff', fontSize: 20, marginBottom: 14}}>
             {user.username}
           </Text>
-
-          <Button
-            label={'Logout'}
-            onPress={handleLogoutPress}
-          />
         </View>
       </View>
 
@@ -95,14 +96,14 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   userDataContainer: {
-    marginBottom: 20,
-    flexDirection: 'row',
-    gap: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   avatar: {
     height: 150,
     width: 150,
     borderRadius: 75,
+    marginBottom: 20,
   },
   button: {
     paddingHorizontal: 20,
@@ -113,5 +114,16 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#000',
     alignSelf: 'center',
+  },
+  signOutButton: {
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+    backgroundColor: '#444',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
