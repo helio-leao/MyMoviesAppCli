@@ -113,16 +113,26 @@ export default function MovieDetails({movieId}) {
     );
   }
 
-  return (
-    <MediaDetails
-      mediaDetails={movieDetails}
-      bodyContent={<MediaContent mediaData={movieDetails} />}
-      onFavoriteButtonPress={session ? handleFavoriteAction : null}
-      onRate={session ? handleMovieRate : null}
-      onDeleteRate={session ? handleDeleteMovieRate : null}
-    />
-  );
+  if(session) {
+    return (
+      <MediaDetails
+        mediaDetails={movieDetails}
+        bodyContent={<MediaContent mediaData={movieDetails} />}
+        onFavoriteButtonPress={handleFavoriteAction}
+        onRate={handleMovieRate}
+        onDeleteRating={handleDeleteMovieRate}
+      />
+    );
+  } else {
+    return (
+      <MediaDetails
+        mediaDetails={movieDetails}
+        bodyContent={<MediaContent mediaData={movieDetails} />}
+      />
+    );
+  }
 }
+
 
 function MediaContent({mediaData}) {
   return(

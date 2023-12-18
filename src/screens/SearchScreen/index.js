@@ -50,7 +50,7 @@ export default function SearchScreen() {
       ) : (
         <FlatList
           contentContainerStyle={styles.resultsContainer}
-          data={data.results}
+          data={data?.results}
           keyExtractor={item => String(item.id)}
           renderItem={({item}) => <SearchResultCard mediaData={item} />}
           ItemSeparatorComponent={<View style={{ height: 10 }} />}

@@ -12,8 +12,6 @@ import { SessionProvider } from './contexts/SessionContext';
 // will be necessary to fetch the movie again after a modification in favorites or
 // rating. this is the right thing, but slower
 
-// TODO: "rating media" funcionality
-
 // TODO: "react-native-keep-awake" for video playing
 
 // TODO: prevent orientation change on MediaDetailsScreen

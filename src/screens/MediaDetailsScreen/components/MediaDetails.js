@@ -15,9 +15,9 @@ import RatingModal from '../../../components/RatingModal';
 export default function MediaDetails({
   mediaDetails,
   bodyContent = undefined,
-  onFavoriteButtonPress = () => {},
-  onRate = () => {},
-  onDeleteRate: onDeleteRating = () => {},
+  onFavoriteButtonPress = undefined,
+  onRate = undefined,
+  onDeleteRating = undefined,
 }) {
 
   const [ratingModalVisible, setRatingModalVisible] = useState(false);

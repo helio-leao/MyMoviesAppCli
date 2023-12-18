@@ -114,16 +114,26 @@ export default function TvShowDetails({tvShowId}) {
     );
   }
 
-  return (
-    <MediaDetails
-      mediaDetails={tvShowDetails}
-      bodyContent={<MediaContent mediaData={tvShowDetails} />}
-      onFavoriteButtonPress={session ? onFavoriteButtonPress : null}
-      onRate={session ? handleTvShowRate : null}
-      onDeleteRate={session ? handleDeleteTvShowRate : null}
-    />
-  );
+  if(session) {
+    return (
+      <MediaDetails
+        mediaDetails={tvShowDetails}
+        bodyContent={<MediaContent mediaData={tvShowDetails} />}
+        onFavoriteButtonPress={onFavoriteButtonPress}
+        onRate={handleTvShowRate}
+        onDeleteRating={handleDeleteTvShowRate}
+      />
+    );
+  } else {
+    return (
+      <MediaDetails
+        mediaDetails={tvShowDetails}
+        bodyContent={<MediaContent mediaData={tvShowDetails} />}
+      />
+    );
+  }
 }
+
 
 function MediaContent({mediaData}) {
 

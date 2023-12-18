@@ -87,12 +87,12 @@ export default function UserScreen() {
           <Text style={styles.buttonText}>Favoritos</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={handleFollowingPress}>
-          <Text style={styles.buttonText}>Seguindo</Text>
-        </TouchableOpacity>
-
         <TouchableOpacity style={styles.button} onPress={handleRatedPress}>
           <Text style={styles.buttonText}>Avaliados</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={handleFollowingPress}>
+          <Text style={styles.buttonText}>Seguindo (armazenamento local)</Text>
         </TouchableOpacity>
       </View>
 

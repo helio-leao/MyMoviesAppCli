@@ -6,9 +6,9 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 export default function RatingModal({
   visible = false,
   rating: ratingProp = undefined,
-  onRate = () => {},
-  onDeleteRating = () => {},
-  onOutsidePress = () => {},
+  onRate = undefined,
+  onDeleteRating = undefined,
+  onOutsidePress = undefined,
 }) {
 
   const [rating, setRating] = useState(ratingProp);

@@ -6,7 +6,7 @@ import ApiService from '../services/ApiService';
 
 export default function MediaGridList({
   mediaDataList,
-  onEndReached = () => {},
+  onEndReached = undefined,
   showLoadingMoreIndicator = false,
   numColumns = 3,
 }) {
