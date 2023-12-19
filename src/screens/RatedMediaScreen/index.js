@@ -81,7 +81,7 @@ export default function RatedMediaScreen() {
           <ActivityIndicator color={'white'} size={'large'} />
         </View>
       ) : (
-        data.results > 0 ? (
+        data.results.length > 0 ? (
           <MediaGridList
             mediaDataList={data.results}
             onEndReached={updateData}

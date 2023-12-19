@@ -1,5 +1,5 @@
 import { useCallback, useContext, useState } from "react";
-import { ActivityIndicator, StyleSheet, ToastAndroid, View } from "react-native";
+import { ActivityIndicator, StyleSheet, ToastAndroid, View, Text } from "react-native";
 import ApiService from "../../services/ApiService";
 import MediaGridList from "../../components/MediaGridList";
 import SwitchButtons from "../../components/SwitchButtons";
@@ -79,11 +79,19 @@ export default function FavoritesScreen() {
           <ActivityIndicator color={'white'} size={'large'} />
         </View>
       ) : (
-        <MediaGridList
-          mediaDataList={data.results}
-          onEndReached={updateData}
-          showLoadingMoreIndicator={!isLastPage}
-        />
+        data.results.length > 0 ? (
+          <MediaGridList
+            mediaDataList={data.results}
+            onEndReached={updateData}
+            showLoadingMoreIndicator={!isLastPage}
+          />
+        ) : (
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{color: '#333', fontSize: 18}}>
+              Não há itens favoritados.
+            </Text>
+          </View>
+        )
       )}
     </View>
   );
