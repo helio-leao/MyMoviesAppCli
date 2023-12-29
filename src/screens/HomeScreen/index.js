@@ -26,8 +26,8 @@ export default function HomeScreen() {
           trendingMoviesData,
           trendingTvShowsData,
         ] = await Promise.all([
-          ApiService.fetchTrendingMovies(),
-          ApiService.fetchTrendingTvShows(),
+          ApiService.fetchTrendingMedia(ApiService.MediaType.MOVIE),
+          ApiService.fetchTrendingMedia(ApiService.MediaType.TV),
         ]);
   
         setTrendingMovies(trendingMoviesData.results);

@@ -19,7 +19,8 @@ export default function TvShowDetails({tvShowId}) {
   useEffect(() => {
     async function loadTvShowDetails() {
       try {
-        const tvShowDetails = await ApiService.fetchTvShowDetails(tvShowId, session?.id);
+        const tvShowDetails = await ApiService.fetchMediaDetails(
+          tvShowId, ApiService.MediaType.TV, session?.id);
         setTvShowDetails(tvShowDetails);
         setIsLoading(false);
       } catch (error) {

@@ -44,63 +44,33 @@ const Genres = {
 
 // MEDIA FETCH FUNCTIONS
 
-async function fetchTrendingMovies(timeWindow = TrendingTimeWindow.DAY) {
-  const url = `/trending/movie/${timeWindow}?${commonQuery}`;
+async function fetchTrendingMedia(mediaType, timeWindow = TrendingTimeWindow.DAY) {
+  const url = `/trending/${mediaType}/${timeWindow}?${commonQuery}`;
   return await fetchData(url);
 }
 
-async function fetchTrendingTvShows(timeWindow = TrendingTimeWindow.DAY) {
-  const url = `/trending/tv/${timeWindow}?${commonQuery}`;
-  return await fetchData(url);
-}
-
-async function fetchMovieDetails(movieId, sessionId = undefined) {
-  const movieDetailsUrl = `/movie/${movieId}?append_to_response=external_ids,recommendations,credits,videos,watch/providers&${commonQuery}`;
+async function fetchMediaDetails(mediaId, mediaType, sessionId = undefined) {
+  const mediaDetailsUrl = `/${mediaType}/${mediaId}?append_to_response=external_ids,recommendations,credits,videos,watch/providers&${commonQuery}`;
 
   if(!sessionId) {
-    return await fetchData(movieDetailsUrl);
+    return await fetchData(mediaDetailsUrl);
   }
 
-  const movieAccountStatesUrl = `/movie/${movieId}/account_states?session_id=${sessionId}`;
+  const mediaAccountStatesUrl = `/${mediaType}/${mediaId}/account_states?session_id=${sessionId}`;
 
   const [
-    movieDetails,
-    movieAccountStates,
+    mediaDetails,
+    mediaAccountStates,
   ] = await Promise.all([
-    fetchData(movieDetailsUrl),
-    fetchData(movieAccountStatesUrl),
+    fetchData(mediaDetailsUrl),
+    fetchData(mediaAccountStatesUrl),
   ]);
 
   return {
-    ...movieDetails,
+    ...mediaDetails,
     account_states: {
-      ...movieAccountStates,
-    }
-  };
-}
-
-async function fetchTvShowDetails(tvShowId, sessionId = undefined) {
-  const tvShowDetailsUrl = `/tv/${tvShowId}?append_to_response=external_ids,recommendations,credits,videos,watch/providers&${commonQuery}`;
-
-  if(!sessionId) {
-    return await fetchData(tvShowDetailsUrl);
-  }
-
-  const tvShowAccountStatesUrl = `/tv/${tvShowId}/account_states?session_id=${sessionId}`;
-
-  const [
-    tvShowDetails,
-    tvShowAccountStates,
-  ] = await Promise.all([
-    fetchData(tvShowDetailsUrl),
-    fetchData(tvShowAccountStatesUrl),
-  ]);
-
-  return {
-    ...tvShowDetails,
-    account_states: {
-      ...tvShowAccountStates,
-    }
+      ...mediaAccountStates,
+    },
   };
 }
 
@@ -134,12 +104,10 @@ function fetchFullImagePath(imagePath, size = 'original') {
 }
 
 function fetchMediaType(mediaData) {
-  // NOTE: for media that has media_type property (i.e. multi, combined_credits)
   if(mediaData.hasOwnProperty('media_type')) {
     return mediaData.media_type;
   }
 
-  // NOTE: for media that does not have media_type property
   if(mediaData.hasOwnProperty('title') && mediaData.hasOwnProperty('poster_path')) {
     return MediaType.MOVIE;
   } else if(mediaData.hasOwnProperty('name') && mediaData.hasOwnProperty('poster_path')) {
@@ -209,23 +177,12 @@ async function fetchAccountDetailsBySessionId(sessionId) {
 
 // AUTHENTICATED USER FUNCTIONS
 
-// NOTE: tv episodes are also an option
 async function fetchRated(accountId, sessionId, mediaType, page = 1) {
-  let url = `/account/${accountId}/rated`;
-
-  if(mediaType === MediaType.MOVIE) {
-    url += '/movies';
-  } else if(mediaType === MediaType.TV) {
-    url += '/tv';
-  } else {
-    throw new Error(`MediaType has to be "tv" or "movies". Received: "${mediaType}"`);
-  }
-
-  url += `?session_id=${sessionId}&sort_by=created_at.desc&page=${page}&${commonQuery}`;
-  
+  const url = `/account/${accountId}/rated/${mediaType}?session_id=${sessionId}&sort_by=created_at.desc&page=${page}&${commonQuery}`;  
   return await fetchData(url);
 }
 
+// ISSUE: error 404
 async function fetchFavorites(accountId, sessionId, mediaType, page = 1) {
   let url = `/account/${accountId}/favorite`;
 
@@ -238,7 +195,7 @@ async function fetchFavorites(accountId, sessionId, mediaType, page = 1) {
   }
 
   url += `?session_id=${sessionId}&sort_by=created_at.desc&page=${page}&${commonQuery}`;
-  
+
   return await fetchData(url);
 }
 
@@ -299,10 +256,8 @@ export default {
   MediaType,
   Department,
   CrewJob,
-  fetchTrendingMovies,
-  fetchTrendingTvShows,
-  fetchMovieDetails,
-  fetchTvShowDetails,
+  fetchTrendingMedia,
+  fetchMediaDetails,
   fetchPersonDetails,
   fetchMulti,
   fetchMoviesWithPeople,

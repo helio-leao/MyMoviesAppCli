@@ -19,7 +19,8 @@ export default function MovieDetails({movieId}) {
   useEffect(() => {
     async function loadMovieDetails() {
       try {
-        const movieDetails = await ApiService.fetchMovieDetails(movieId, session?.id);
+        const movieDetails = await ApiService.fetchMediaDetails(
+          movieId, ApiService.MediaType.MOVIE, session?.id);
         setMovieDetails(movieDetails);
         setIsLoading(false);
       } catch (error) {
