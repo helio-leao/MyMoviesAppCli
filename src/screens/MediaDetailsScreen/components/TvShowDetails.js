@@ -32,24 +32,19 @@ export default function TvShowDetails({tvShowId}) {
   }, []);
 
 
-  async function onFavoriteButtonPress() {
+  async function handleToggleFavorite() {
     try {
-      const favoriteAction = tvShowDetails.account_states.favorite
-        ? ApiService.removeFavorite
-        : ApiService.addFavorite;
+      const favorite = !tvShowDetails.account_states.favorite;
 
-      const response = await favoriteAction(
-        session.user.id,
-        session.id,
-        tvShowDetails,
-      );
+      const response = await ApiService.setFavorite(
+        session.user.id, session.id, tvShowDetails, favorite);
 
       if(response.success) {
         setTvShowDetails(prev => ({
           ...prev,
           account_states: {
             ...prev.account_states,
-            favorite: !prev.account_states.favorite,
+            favorite: favorite,
           }
         }))
       }
@@ -61,8 +56,9 @@ export default function TvShowDetails({tvShowId}) {
 
   async function handleTvShowRate(rating) {
     try {
-      const response = await ApiService.addTvShowRating(
+      const response = await ApiService.addMediaRating(
         tvShowDetails.id,
+        ApiService.MediaType.TV,
         session.id,
         rating,
       );
@@ -86,8 +82,9 @@ export default function TvShowDetails({tvShowId}) {
 
   async function handleDeleteTvShowRate() {
     try {
-      const response = await ApiService.deleteTvShowRating(
+      const response = await ApiService.deleteMediaRating(
         tvShowDetails.id,
+        ApiService.MediaType.TV,
         session.id,
       );
 
@@ -120,7 +117,7 @@ export default function TvShowDetails({tvShowId}) {
       <MediaDetails
         mediaDetails={tvShowDetails}
         bodyContent={<MediaContent mediaData={tvShowDetails} />}
-        onFavoriteButtonPress={onFavoriteButtonPress}
+        onFavoriteButtonPress={handleToggleFavorite}
         onRate={handleTvShowRate}
         onDeleteRating={handleDeleteTvShowRate}
       />

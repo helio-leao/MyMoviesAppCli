@@ -165,7 +165,7 @@ async function deleteSession(sessionId) {
 
   console.log(url);
 
-  const response = await axios.delete(url, {data, headers});
+  const response = await axios.delete(url, {headers, data});
   return response.data;
 }
 
@@ -178,75 +178,45 @@ async function fetchAccountDetailsBySessionId(sessionId) {
 // AUTHENTICATED USER FUNCTIONS
 
 async function fetchRated(accountId, sessionId, mediaType, page = 1) {
-  const url = `/account/${accountId}/rated/${mediaType}?session_id=${sessionId}&sort_by=created_at.desc&page=${page}&${commonQuery}`;  
+  const url = `/account/${accountId}/rated/${mediaType === MediaType.MOVIE ?
+    'movies' : mediaType}?session_id=${sessionId}&sort_by=created_at.desc&page=${page}&${commonQuery}`;
+
   return await fetchData(url);
 }
 
-// ISSUE: error 404
 async function fetchFavorites(accountId, sessionId, mediaType, page = 1) {
-  let url = `/account/${accountId}/favorite`;
-
-  if(mediaType === MediaType.MOVIE) {
-    url += '/movies';
-  } else if(mediaType === MediaType.TV) {
-    url += '/tv';
-  } else {
-    throw new Error(`MediaType has to be "tv" or "movies". Received: "${mediaType}"`);
-  }
-
-  url += `?session_id=${sessionId}&sort_by=created_at.desc&page=${page}&${commonQuery}`;
+  const url = `/account/${accountId}/favorite/${mediaType === MediaType.MOVIE ?
+    'movies' : mediaType}?session_id=${sessionId}&sort_by=created_at.desc&page=${page}&${commonQuery}`;
 
   return await fetchData(url);
 }
 
 // NOTE: favorites can be tv or movie (person not suported by the API)
-async function addFavorite(accountId, sessionId, mediaData) {
+async function setFavorite(accountId, sessionId, mediaData, favorite) {
   const url = `/account/${accountId}/favorite?session_id=${sessionId}`;
 
   const data = {
     media_type: fetchMediaType(mediaData),
     media_id: mediaData.id,
-    favorite: true,
+    favorite: favorite,
   };
 
   return await postData(url, data);
 }
 
-async function removeFavorite(accountId, sessionId, mediaData) {
-  const url = `/account/${accountId}/favorite?session_id=${sessionId}`;
-
-  const data = {
-    media_type: fetchMediaType(mediaData),
-    media_id: mediaData.id,
-    favorite: false,
-  };
-
-  return await postData(url, data);
-}
-
-async function addMovieRating(movieId, sessionId, rating) {
-  const url = `/movie/${movieId}/rating?session_id=${sessionId}`;
+async function addMediaRating(mediaId, mediaType, sessionId, rating) {
+  const url = `/${mediaType}/${mediaId}/rating?session_id=${sessionId}`;
   const data = { value: rating };
   return await postData(url, data);
 }
 
-async function deleteMovieRating(movieId, sessionId) {
-  const url = `/movie/${movieId}/rating?session_id=${sessionId}`;
+async function deleteMediaRating(mediaId, mediaType, sessionId) {
+  const url = API_BASE_URL + `/${mediaType}/${mediaId}/rating?session_id=${sessionId}`;
   const headers = { Authorization: `Bearer ${API_TOKEN}` };
-  const response = await axios.delete(API_BASE_URL + url, {headers});
-  return response.data;
-}
 
-async function addTvShowRating(tvShowId, sessionId, rating) {
-  const url = `/tv/${tvShowId}/rating?session_id=${sessionId}`;
-  const data = { value: rating };
-  return await postData(url, data);
-}
+  console.log(url);
 
-async function deleteTvShowRating(tvShowId, sessionId) {
-  const url = `/tv/${tvShowId}/rating?session_id=${sessionId}`;
-  const headers = { Authorization: `Bearer ${API_TOKEN}` };
-  const response = await axios.delete(API_BASE_URL + url, {headers});
+  const response = await axios.delete(url, {headers});
   return response.data;
 }
 
@@ -270,10 +240,7 @@ export default {
   fetchAccountDetailsBySessionId,
   fetchRated,
   fetchFavorites,
-  addFavorite,
-  removeFavorite,
-  addMovieRating,
-  deleteMovieRating,
-  addTvShowRating,
-  deleteTvShowRating,
+  setFavorite,
+  addMediaRating,
+  deleteMediaRating,
 }

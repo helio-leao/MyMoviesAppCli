@@ -32,23 +32,19 @@ export default function MovieDetails({movieId}) {
   }, []);
 
 
-  async function handleFavoriteAction() {
+  async function handleToggleFavorite() {
     try {
-      const favoriteAction = movieDetails.account_states
-        .favorite ? ApiService.removeFavorite : ApiService.addFavorite;
+      const favorite = !movieDetails.account_states.favorite;
 
-      const response = await favoriteAction(
-        session.user.id,
-        session.id,
-        movieDetails,
-      );
+      const response = await ApiService.setFavorite(
+        session.user.id, session.id, movieDetails, favorite);
 
       if(response.success) {
         setMovieDetails(prev => ({
           ...prev,
           account_states: {
             ...prev.account_states,
-            favorite: !prev.account_states.favorite,
+            favorite: favorite,
           }
         }))
       }
@@ -60,8 +56,9 @@ export default function MovieDetails({movieId}) {
 
   async function handleMovieRate(rating) {
     try {
-      const response = await ApiService.addMovieRating(
+      const response = await ApiService.addMediaRating(
         movieDetails.id,
+        ApiService.MediaType.MOVIE,
         session.id,
         rating,
       );
@@ -85,8 +82,9 @@ export default function MovieDetails({movieId}) {
 
   async function handleDeleteMovieRate() {
     try {
-      const response = await ApiService.deleteMovieRating(
+      const response = await ApiService.deleteMediaRating(
         movieDetails.id,
+        ApiService.MediaType.MOVIE,
         session.id,
       );
 
@@ -119,7 +117,7 @@ export default function MovieDetails({movieId}) {
       <MediaDetails
         mediaDetails={movieDetails}
         bodyContent={<MediaContent mediaData={movieDetails} />}
-        onFavoriteButtonPress={handleFavoriteAction}
+        onFavoriteButtonPress={handleToggleFavorite}
         onRate={handleMovieRate}
         onDeleteRating={handleDeleteMovieRate}
       />

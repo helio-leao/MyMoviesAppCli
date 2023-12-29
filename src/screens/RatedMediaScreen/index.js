@@ -38,7 +38,7 @@ export default function RatedMediaScreen() {
           setData(data);
           setIsLoading(false);
         } catch (error) {
-          console.log(error);
+          console.log(error.response.data);
           ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
         }
       }
@@ -61,7 +61,7 @@ export default function RatedMediaScreen() {
         results: [...prev.results, ...data.results],
       }));
     } catch (error) {
-      console.error(error);
+      console.error(error.response.data);
       ToastAndroid.show('Ocorreu um erro.', ToastAndroid.SHORT);
     }
   }
