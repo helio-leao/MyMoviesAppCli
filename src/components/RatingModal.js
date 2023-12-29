@@ -47,7 +47,7 @@ export default function RatingModal({
         }}
       >
 
-        {/* NOTE: this pressable avoids triggering parent's onPress when this wrapper is pressed */}
+        {/* NOTE: pressable used to avoid triggering parent's onPress when it's content is pressed */}
         <Pressable style={styles.container}>
 
           {/* big star on top */}

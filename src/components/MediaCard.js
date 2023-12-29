@@ -11,6 +11,15 @@ export default function MediaCard({mediaData, onPress, style}) {
       style={[style, {backgroundColor: '#333', overflow: 'hidden'}]}
       onPress={onPress}
     >
+      {(ApiService.fetchMediaType(mediaData) !== ApiService.MediaType.PERSON &&
+      mediaData.poster_path == null) && (
+        <View style={styles.alternativeToImage}>
+          <Text style={styles.text}>
+            {mediaData.title || mediaData.name}
+          </Text>
+        </View>
+      )}
+
       <LoadableImage
         style={styles.poster}
         source={{uri: ApiService.fetchFullImagePath(
@@ -18,46 +27,65 @@ export default function MediaCard({mediaData, onPress, style}) {
         placeholder={placeholder_poster}
       />
 
+      <Content mediaData={mediaData} />
+
+      {/* NOTE: testing code */}
+      {/* {mediaData.media_type && (
+        <Text
+          style={styles.text}
+        >
+          {mediaData.media_type}
+        </Text>
+      )} */}
+    </TouchableOpacity>
+  );
+}
+
+
+function Content({mediaData}) {
+  const mediaType = ApiService.fetchMediaType(mediaData);
+
+  if(mediaType === ApiService.MediaType.PERSON) {
+    return (
       <View style={styles.contentContainer}>
+        <Text
+          style={[styles.text, {fontWeight: 800}]}
+          numberOfLines={1}
+        >
+          {mediaData.name}
+        </Text>
+
         <Text
           style={styles.text}
           numberOfLines={1}
         >
-          {mediaData.title || mediaData.name}
+          {mediaData.character || mediaData.job}
         </Text>
-
-        {/* NOTE: if media is a cast person, shows the name of character */}
-        {/* NOTE: if media is a crew person, shows the job of the person */}
-        {(mediaData.character || mediaData.job) && (
-          <Text
-            style={[styles.text, {fontWeight: 800}]}
-            numberOfLines={1}
-          >
-            {mediaData.character || mediaData.job}
-          </Text>
-        )}
-
-        {mediaData.media_type && (
-          <Text
-            style={styles.text}
-          >
-            {mediaData.media_type}
-          </Text>
-        )}
-
-        {mediaData.rating && (
-          <View style={styles.ratingContainer}>
-            <Text style={styles.text}>
-              Avaliação: {mediaData.rating}
-            </Text>
-          </View>
-        )}
       </View>
+    );
+  }
 
-
-    </TouchableOpacity>
-  );
+  if(mediaData.character || mediaData.job) {
+    return (
+      <View style={styles.contentContainer}>
+        <Text style={styles.text} numberOfLines={1}>
+          {mediaData.character || mediaData.job}
+        </Text>
+      </View>
+    )
+  } else if(mediaData.rating) {
+    return (
+      <View style={styles.contentContainer}>
+        <Text style={styles.text}>
+          Avaliação: {mediaData.rating}
+        </Text>
+      </View>
+    )
+  } else {
+    return null;
+  }
 }
+
 
 const styles = StyleSheet.create({
   poster: {
@@ -71,5 +99,12 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#fff',
+  },
+  alternativeToImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    padding: 6,
+    zIndex: 1,
   },
 });

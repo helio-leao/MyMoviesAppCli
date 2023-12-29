@@ -191,7 +191,6 @@ async function fetchFavorites(accountId, sessionId, mediaType, page = 1) {
   return await fetchData(url);
 }
 
-// NOTE: favorites can be tv or movie (person not suported by the API)
 async function setFavorite(accountId, sessionId, mediaData, favorite) {
   const url = `/account/${accountId}/favorite?session_id=${sessionId}`;
 

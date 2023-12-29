@@ -25,7 +25,6 @@ export default function FollowingScreen() {
   const [data, setData] = useState(null);
   const [mediaType, setMediaType] = useState(ApiService.MediaType.MOVIE);
 
-  // NOTE: if there is no result, the api returns page 1 and total pages 0
   const isLastPage = data == null || data.page >= data.total_pages;
 
 

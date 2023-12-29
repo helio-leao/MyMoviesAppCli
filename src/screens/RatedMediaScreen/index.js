@@ -6,8 +6,6 @@ import SwitchButtons from "../../components/SwitchButtons";
 import { SessionContext } from "../../contexts/SessionContext";
 import { useFocusEffect } from "@react-navigation/native";
 
-// TODO: replicate empty result logic on favorite and following screens
-
 
 const switchOptions = [
   { label: 'Filmes', value: ApiService.MediaType.MOVIE },
@@ -22,7 +20,6 @@ export default function RatedMediaScreen() {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // NOTE: if there is no result, the api returns page 1 and total pages 0
   const isLastPage = data == null || data.page >= data.total_pages;
 
 
