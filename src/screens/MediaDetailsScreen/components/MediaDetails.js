@@ -49,7 +49,7 @@ export default function MediaDetails({
     <View style={styles.container}>
       <RatingModal
         visible={ratingModalVisible}
-        rating={mediaDetails.account_states.rated.value}
+        rating={mediaDetails.account_states?.rated.value}
         onRate={rating => {
           onRate(rating);
           setRatingModalVisible(false);

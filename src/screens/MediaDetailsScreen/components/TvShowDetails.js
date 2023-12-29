@@ -19,7 +19,7 @@ export default function TvShowDetails({tvShowId}) {
   useEffect(() => {
     async function loadTvShowDetails() {
       try {
-        const tvShowDetails = await ApiService.fetchTvShowDetails(tvShowId);
+        const tvShowDetails = await ApiService.fetchTvShowDetails(tvShowId, session?.id);
         setTvShowDetails(tvShowDetails);
         setIsLoading(false);
       } catch (error) {

@@ -24,10 +24,10 @@ export default function HomeScreen() {
       try {
         const [
           trendingMoviesData,
-          trendingTvShowsData
+          trendingTvShowsData,
         ] = await Promise.all([
           ApiService.fetchTrendingMovies(),
-          ApiService.fetchTrendingTvShows()
+          ApiService.fetchTrendingTvShows(),
         ]);
   
         setTrendingMovies(trendingMoviesData.results);

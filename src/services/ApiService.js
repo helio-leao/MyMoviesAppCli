@@ -45,39 +45,79 @@ const Genres = {
 // MEDIA FETCH FUNCTIONS
 
 async function fetchTrendingMovies(timeWindow = TrendingTimeWindow.DAY) {
-  const url = `/trending/movie/${timeWindow}?${commonQuery}`
+  const url = `/trending/movie/${timeWindow}?${commonQuery}`;
   return await fetchData(url);
 }
 
 async function fetchTrendingTvShows(timeWindow = TrendingTimeWindow.DAY) {
-  const url = `/trending/tv/${timeWindow}?${commonQuery}`
+  const url = `/trending/tv/${timeWindow}?${commonQuery}`;
   return await fetchData(url);
 }
 
-async function fetchMovieDetails(movieId) {
-  const url = `/movie/${movieId}?append_to_response=external_ids,recommendations,credits,videos,account_states,watch/providers&${commonQuery}`
-  return await fetchData(url);
+async function fetchMovieDetails(movieId, sessionId = undefined) {
+  const movieDetailsUrl = `/movie/${movieId}?append_to_response=external_ids,recommendations,credits,videos,watch/providers&${commonQuery}`;
+
+  if(!sessionId) {
+    return await fetchData(movieDetailsUrl);
+  }
+
+  const movieAccountStatesUrl = `/movie/${movieId}/account_states?session_id=${sessionId}`;
+
+  const [
+    movieDetails,
+    movieAccountStates,
+  ] = await Promise.all([
+    fetchData(movieDetailsUrl),
+    fetchData(movieAccountStatesUrl),
+  ]);
+
+  return {
+    ...movieDetails,
+    account_states: {
+      ...movieAccountStates,
+    }
+  };
 }
 
-async function fetchTvShowDetails(tvShowId) {
-  const url = `/tv/${tvShowId}?append_to_response=external_ids,recommendations,credits,videos,account_states,watch/providers&${commonQuery}`
-  return await fetchData(url);
+async function fetchTvShowDetails(tvShowId, sessionId = undefined) {
+  const tvShowDetailsUrl = `/tv/${tvShowId}?append_to_response=external_ids,recommendations,credits,videos,watch/providers&${commonQuery}`;
+
+  if(!sessionId) {
+    return await fetchData(tvShowDetailsUrl);
+  }
+
+  const tvShowAccountStatesUrl = `/tv/${tvShowId}/account_states?session_id=${sessionId}`;
+
+  const [
+    tvShowDetails,
+    tvShowAccountStates,
+  ] = await Promise.all([
+    fetchData(tvShowDetailsUrl),
+    fetchData(tvShowAccountStatesUrl),
+  ]);
+
+  return {
+    ...tvShowDetails,
+    account_states: {
+      ...tvShowAccountStates,
+    }
+  };
 }
 
 async function fetchPersonDetails(personId) {
-  const url = `/person/${personId}?append_to_response=external_ids,combined_credits&${commonQuery}`
+  const url = `/person/${personId}?append_to_response=external_ids,combined_credits&${commonQuery}`;
   return await fetchData(url);
 }
 
 async function fetchMulti(name = '', page = 1) {
-  const url = `/search/multi?query=${name}&page=${page}&${commonQuery}`
+  const url = `/search/multi?query=${name}&page=${page}&${commonQuery}`;
   return await fetchData(url);
 }
 
 async function fetchMoviesWithPeople(peopleIds = [], page = 1) {
   const url = `/discover/movie?include_video=false&page=${
     page}&sort_by=primary_release_date.desc&with_people=${
-      peopleIds.join('|')}&without_genres=${Genres.DOCUMENTARY}&${commonQuery}`
+      peopleIds.join('|')}&without_genres=${Genres.DOCUMENTARY}&${commonQuery}`;
     
   return await fetchData(url);
 }
@@ -162,7 +202,7 @@ async function deleteSession(sessionId) {
 }
 
 async function fetchAccountDetailsBySessionId(sessionId) {
-  const url = `/account?session_id=${sessionId}`
+  const url = `/account?session_id=${sessionId}`;
   return await fetchData(url);
 }
 
@@ -181,7 +221,7 @@ async function fetchRated(accountId, sessionId, mediaType, page = 1) {
     throw new Error(`MediaType has to be "tv" or "movies". Received: "${mediaType}"`);
   }
 
-  url += `?session_id=${sessionId}&sort_by=created_at.desc&page=${page}&${commonQuery}`
+  url += `?session_id=${sessionId}&sort_by=created_at.desc&page=${page}&${commonQuery}`;
   
   return await fetchData(url);
 }
@@ -197,7 +237,7 @@ async function fetchFavorites(accountId, sessionId, mediaType, page = 1) {
     throw new Error(`MediaType has to be "tv" or "movies". Received: "${mediaType}"`);
   }
 
-  url += `?session_id=${sessionId}&sort_by=created_at.desc&page=${page}&${commonQuery}`
+  url += `?session_id=${sessionId}&sort_by=created_at.desc&page=${page}&${commonQuery}`;
   
   return await fetchData(url);
 }
