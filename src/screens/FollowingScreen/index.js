@@ -154,12 +154,22 @@ export default function FollowingScreen() {
 
       {/* media */}
       <View style={styles.moviesGridContainer}>
-        <SwitchButtons
-          style={{padding: 14, alignSelf: 'flex-end'}}
-          options={switchOptions}
-          value={mediaType}
-          onChangeSelection={setMediaType}
-        />
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingHorizontal: 10,
+          paddingVertical: 10,
+        }}>
+          <Text style={{color: '#fff', fontSize: 18}}>
+            Total: {isLoadingMedia ? 0 : data.total_results}
+          </Text>
+          <SwitchButtons
+            options={switchOptions}
+            value={mediaType}
+            onChangeSelection={setMediaType}
+          />
+        </View>
 
         {isLoadingMedia ? (
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>

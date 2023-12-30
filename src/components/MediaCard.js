@@ -20,6 +20,25 @@ export default function MediaCard({mediaData, onPress, style}) {
         </View>
       )}
 
+      {mediaData.rating && (
+        <View style={{
+          position: 'absolute',
+          bottom: 4,
+          left: 4,
+          height: 40,
+          width: 40,
+          borderRadius: 20,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#333',
+          zIndex: 2,
+        }}>
+          <Text style={[styles.text, {fontSize: 22}]}>
+            {mediaData.rating}
+          </Text>
+        </View>
+      )}
+
       <LoadableImage
         style={styles.poster}
         source={{uri: ApiService.fetchFullImagePath(
@@ -43,7 +62,9 @@ export default function MediaCard({mediaData, onPress, style}) {
 
 
 function Content({mediaData}) {
+
   const mediaType = ApiService.fetchMediaType(mediaData);
+  
 
   if(mediaType === ApiService.MediaType.PERSON) {
     return (
@@ -72,18 +93,10 @@ function Content({mediaData}) {
           {mediaData.character || mediaData.job}
         </Text>
       </View>
-    )
-  } else if(mediaData.rating) {
-    return (
-      <View style={styles.contentContainer}>
-        <Text style={styles.text}>
-          Avaliação: {mediaData.rating}
-        </Text>
-      </View>
-    )
-  } else {
-    return null;
+    );
   }
+
+  return null;
 }
 
 
