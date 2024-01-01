@@ -5,9 +5,6 @@ import CollapsibleText from '../../../components/CollapsibleText';
 import MediaDetails from './MediaDetails';
 import { SessionContext } from '../../../contexts/SessionContext';
 
-// TODO: change some setMovieDetais to fetching the updated movie data would be
-// the correct behaviour instead of changing data just for speed.
-
 
 export default function MovieDetails({movieId}) {
 

@@ -74,6 +74,21 @@ export default function PersonDetails({personId}) {
     return b.vote_count - a.vote_count;
   }
 
+  function getAge() {
+    const now = new Date();
+    const birthdate = new Date(personDetails.birthday);
+    const age = now.getFullYear() - birthdate.getFullYear();
+    const currentMonth = now.getMonth();
+    const birthMonth = birthdate.getMonth();
+
+    if (birthMonth > currentMonth ||
+      (birthMonth === currentMonth && now.getDate() < birthdate.getDate())) {
+      age--;
+    }
+
+    return age;
+  }
+
 
   if(isLoading) {
     return(
@@ -97,8 +112,10 @@ export default function PersonDetails({personId}) {
 
           <View style={styles.headerCardData}>
             <Text style={styles.title}>{personDetails.name}</Text>
+            <Text style={styles.text}>{personDetails.place_of_birth}</Text>
             <Text style={styles.text}>
-              {new Intl.DateTimeFormat('pt-BR').format(new Date(personDetails.birthday))}
+              {new Intl.DateTimeFormat('pt-BR').format(
+                new Date(personDetails.birthday))} ({getAge()} anos)
             </Text>
             <Text style={[styles.subtitle, {color: '#888'}]}>
               {personDetails.known_for_department}

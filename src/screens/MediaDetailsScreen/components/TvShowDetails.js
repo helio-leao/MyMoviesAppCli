@@ -5,9 +5,6 @@ import CollapsibleText from '../../../components/CollapsibleText';
 import MediaDetails from './MediaDetails';
 import { SessionContext } from '../../../contexts/SessionContext';
 
-// TODO: change some setTvShowDetails to fetching the updated tv data would be
-// the correct behaviour instead of changing data just for speed.
-
 
 export default function TvShowDetails({tvShowId}) {
 
