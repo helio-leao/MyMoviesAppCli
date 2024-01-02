@@ -77,12 +77,11 @@ export default function PersonDetails({personId}) {
   function getAge() {
     const now = new Date();
     const birthdate = new Date(personDetails.birthday);
-    const age = now.getFullYear() - birthdate.getFullYear();
+    let age = now.getFullYear() - birthdate.getFullYear();
     const currentMonth = now.getMonth();
     const birthMonth = birthdate.getMonth();
 
-    if (birthMonth > currentMonth ||
-      (birthMonth === currentMonth && now.getDate() < birthdate.getDate())) {
+    if (birthMonth > currentMonth || (birthMonth === currentMonth && now.getDate() < birthdate.getDate())) {
       age--;
     }
 

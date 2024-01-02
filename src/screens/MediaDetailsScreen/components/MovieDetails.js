@@ -173,6 +173,9 @@ function MediaContent({mediaData}) {
         Lançamento: {mediaData.release_date &&
           new Intl.DateTimeFormat('pt-BR').format(new Date(mediaData.release_date))}
       </Text>
+      <Text style={styles.contentText}>
+        Duração: {mediaData.runtime} minutos
+      </Text>
     </View>
   );
 }

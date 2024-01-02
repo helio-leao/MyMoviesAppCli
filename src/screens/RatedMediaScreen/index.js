@@ -74,7 +74,7 @@ export default function RatedMediaScreen() {
         paddingVertical: 10,
       }}>
         <Text style={{color: '#fff', fontSize: 18}}>
-          Total: {isLoading ? 0 : data.total_results}
+          {!isLoading && `Total: ${data.total_results}`}
         </Text>
         <SwitchButtons
           options={switchOptions}

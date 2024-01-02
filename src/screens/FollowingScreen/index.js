@@ -162,7 +162,7 @@ export default function FollowingScreen() {
           paddingVertical: 10,
         }}>
           <Text style={{color: '#fff', fontSize: 18}}>
-            Total: {isLoadingMedia ? 0 : data.total_results}
+            {!isLoadingMedia && `Total: ${data.total_results}`}
           </Text>
           <SwitchButtons
             options={switchOptions}
